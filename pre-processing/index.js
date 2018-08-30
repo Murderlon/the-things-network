@@ -33,12 +33,14 @@ pipe(
   through.obj(parse),
   through.obj(cumulativeDay),
   to.obj(write),
-  err => {
+  async err => {
     if (err) {
       return console.error(err);
     }
     tEnd = performance.now();
     console.log(`Total time spent: ${(tEnd - tStart) / 1000} seconds`);
+    await writeStream.write(JSON.stringify(memory));
+    writeStream.end();
   },
 );
 
@@ -107,7 +109,7 @@ async function write(chunk, enc, cb) {
   } else {
     memory[chunk.time] = chunk;
   }
-  console.log(memory);
+  console.log(`processed ${chunk.time}`);
   cb();
 }
 
