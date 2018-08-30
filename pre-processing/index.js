@@ -1,4 +1,3 @@
-// @format
 const { createReadStream, createWriteStream } = require('fs');
 const { pipe, through, to } = require('mississippi');
 const { performance } = require('perf_hooks');
@@ -8,7 +7,7 @@ const delve = require('dlv');
 const merge = require('lodash.merge');
 
 const writeStream = createWriteStream('./data.json');
-const readStream = createReadStream('../biyearly.gateway_counters.csv', {
+const readStream = createReadStream('./biyearly.gateway_counters.csv', {
   encoding: 'utf8',
 });
 
@@ -33,11 +32,14 @@ pipe(
   csv(),
   through.obj(parse),
   through.obj(cumulativeDay),
-  to.obj(write, done => {
-    writeStream.end();
-    done();
-  }),
-  err => (err ? console.error(err) : console.log('\n super ram klaar \n')),
+  to.obj(write),
+  err => {
+    if (err) {
+      return console.error(err);
+    }
+    tEnd = performance.now();
+    console.log(`Total time spent: ${(tEnd - tStart) / 1000} seconds`);
+  },
 );
 
 function parse(chunk, enc, cb) {
@@ -85,24 +87,27 @@ async function cumulativeDay(chunk, enc, cb) {
     updateBandwidth(dayTotal, chunk),
     updateFrequency(dayTotal, chunk),
   ]);
-
   // Pass the copy to the next Transform stream
   copy ? cb(null, copy) : cb(null);
 }
 
 async function write(chunk, enc, cb) {
-  // const day = memory[chunk.time];
-  // if (day) {
-  //   const [staticChunk, bandwidthChunk, frequencyChunk] = await Promise.all([
-  //     updateStaticProperties(day, chunk),
-  //     updateBandwidth(day, chunk),
-  //     updateFrequency(day, chunk),
-  //   ]);
-  // } else {
-  //   memory[chunk.time] = chunk;
-  // }
-  console.log(chunk);
-  writeStream.write(JSON.stringify(chunk));
+  const day = memory[chunk.time];
+  if (day) {
+    const [staticChunk, bandwidths, frequencies] = await Promise.all([
+      updateStaticProperties(day, chunk),
+      updateBandwidth(day, chunk),
+      updateFrequency(day, chunk),
+    ]);
+    merge(memory[chunk.time], {
+      ...staticChunk,
+      bandwidths,
+      frequencies,
+    });
+  } else {
+    memory[chunk.time] = chunk;
+  }
+  console.log(memory);
   cb();
 }
 
@@ -115,7 +120,13 @@ function updateStaticProperties(day, chunk) {
       day.downlink_count = sum('downlink_count');
       day.uplink_bytes = sum('uplink_bytes');
       day.uplink_count = sum('uplink_count');
-      res(day);
+      res({
+        time: day.time,
+        downlink_bytes: day.downlink_bytes,
+        downlink_count: day.downlink_count,
+        uplink_bytes: day.uplink_bytes,
+        uplink_count: day.uplink_count,
+      });
     } catch (err) {
       rej(err);
     }
@@ -161,7 +172,7 @@ function updateBandwidth(day, chunk) {
           sf.downlinks = sf.downlinks + (chunk.downlink_count || 0);
         }
       }
-      res(day);
+      res(day.bandwidths);
     } catch (err) {
       rej(err);
     }
@@ -187,7 +198,7 @@ function updateFrequency(day, chunk) {
         freq.uplinks = freq.uplinks + (chunk.uplink_count || 0);
         freq.downlinks = freq.downlinks + (chunk.downlink_count || 0);
       }
-      res(day);
+      res(day.frequencies);
     } catch (err) {
       rej(err);
     }
