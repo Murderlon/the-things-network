@@ -1,7 +1,15 @@
 {
   "name": "the-things-network",
+  "description": "Data-driven experience about The Things Network",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "repository": "Murderlon/the-things-network",
+  "bugs": "https://github.com/Murderlon/the-things-network/issues",
+  "author": "Merlijn Vos <hello@murderlon.me> (https://murderlon.me)",
+  "contributors": [
+    "Merlijn Vos <hello@murderlon.me> (https://murderlon.me)"
+  ],
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
@@ -9,6 +17,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@reach/router": "^1.1.1",
     "polished": "^2.0.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
