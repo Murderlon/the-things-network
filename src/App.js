@@ -5,7 +5,9 @@ import { Router } from '@reach/router'
 import colors from './styles/themes/colors'
 import variables from './styles/themes/variables'
 
-let Home = () => <div>Home</div>
+import Map from './components/Map'
+
+let Home = () => <Map />
 
 class App extends Component {
   render() {
