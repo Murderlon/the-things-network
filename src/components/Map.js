@@ -19,20 +19,23 @@ const skurt = {
   ]
 }
 
-const createGeoJSONCircle = (center, radiusInKm, points = 64) => {
-  const coords = { latitude: center[1], longitude: center[0] }
+const createGeoJSONCircle = (
+  [longitude, latitude],
+  radiusInKm,
+  points = 64
+) => {
   let ret = []
-  let distanceX =
-    radiusInKm / (111.32 * Math.cos((coords.latitude * Math.PI) / 180))
+  let distanceX = radiusInKm / (111.32 * Math.cos((latitude * Math.PI) / 180))
   let distanceY = radiusInKm / 110.574
   let theta, x, y
+  let index = -1
 
-  for (var i = 0; i < points; i++) {
-    theta = (i / points) * (2 * Math.PI)
+  while (++index < points) {
+    theta = (index / points) * (2 * Math.PI)
     x = distanceX * Math.cos(theta)
     y = distanceY * Math.sin(theta)
 
-    ret.push([coords.longitude + x, coords.latitude + y])
+    ret.push([longitude + x, latitude + y])
   }
   ret.push(ret[0])
 
@@ -49,6 +52,7 @@ const createGeoJSONCircle = (center, radiusInKm, points = 64) => {
     ]
   }
 }
+
 const coverage = css`
   opacity: 0.2;
   transition: transform 300ms;
@@ -87,7 +91,6 @@ class Map extends Component {
   render() {
     return (
       <MapBox
-        // eslint-disable-next-line react/style-prop-object
         style={process.env.REACT_APP_MAPBOX_STYLE_URL}
         center={[4.888, 52.372]}
         zoom={[13.5]}
@@ -98,11 +101,8 @@ class Map extends Component {
         //   [4.815325463385619, 52.41871067473167]
         // ]}
         containerStyle={{
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          width: '100%'
+          width: '100vw',
+          height: '100vh'
         }}
       >
         <Layer type="fill" />
