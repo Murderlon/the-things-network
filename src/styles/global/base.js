@@ -13,6 +13,7 @@ const base = css`
 
   body {
     margin: 0;
+    color: white;
   }
 
   /**
@@ -63,6 +64,7 @@ const base = css`
     line-height: inherit;
     background: none;
     border: 0;
+    color: inherit;
   }
 `
 
