@@ -1,8 +1,10 @@
 import { css } from 'styled-components'
+import colors from '../themes/colors'
 
 const base = css`
   html {
     box-sizing: border-box;
+    background: ${colors.backgroundBlue};
   }
 
   *,
