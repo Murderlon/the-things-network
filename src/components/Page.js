@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
-import PrimaryNavigation from '../components/PrimaryNavigation'
+import PrimaryNavigation from './PrimaryNavigation/PrimaryNavigation'
 
 class Page extends Component {
   constructor(props) {
@@ -11,11 +11,10 @@ class Page extends Component {
       { label: 'Metrics', link: '/metrics' }
     ]
     this.state = {
-      activeItem: this.items.find(
-        item =>
-          this.props.location.pathname === item.link ||
-          this.props.location.pathname.includes(item.link)
-      )
+      activeItem: this.items.find(item => {
+        const { pathname } = this.props.location
+        return pathname === item.link || pathname.includes(item.link)
+      })
     }
   }
 
