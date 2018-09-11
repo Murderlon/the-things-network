@@ -3,7 +3,7 @@ import { ThemeProvider, injectGlobal } from 'styled-components'
 import { Router } from '@reach/router'
 
 import HowItWorks from './pages/HowItWorks'
-import Page from './components/Page'
+import PageWrapper from './components/PageWrapper'
 
 import colors from './styles/themes/colors'
 import variables from './styles/themes/variables'
@@ -20,9 +20,9 @@ class App extends Component {
     return (
       <ThemeProvider theme={{ ...colors, ...variables }}>
         <Router>
-          <Page path="/">
-            <HowItWorks path="how-it-works" />
-          </Page>
+          <PageWrapper path="/">
+            <HowItWorks default path="how-it-works" />
+          </PageWrapper>
         </Router>
       </ThemeProvider>
     )
