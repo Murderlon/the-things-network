@@ -68,6 +68,20 @@ const base = css`
     border: 0;
     color: inherit;
   }
+
+  @keyframes marching_ants {
+    from {
+      stroke-dashoffset: 24px;
+    }
+
+    to {
+      stroke-dashoffset: 0px;
+    }
+  }
+
+  .marching_ants_animation {
+    animation: marching_ants 0.7s linear infinite running;
+  }
 `
 
 export default base

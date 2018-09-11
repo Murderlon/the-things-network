@@ -1,13 +1,26 @@
-import React, { Component } from 'react'
-import ReactMapboxGl, { Marker, Layer, GeoJSONLayer } from 'react-mapbox-gl'
-import styled, { css, withTheme } from 'styled-components'
+import React, { Component, createRef } from 'react'
+import { withTheme } from 'styled-components'
+import MapboxGL from 'mapbox-gl'
+import { select } from 'd3-selection'
+import { geoPath, geoTransform } from 'd3-geo'
+// import debounce from 'lodash.debounce'
 
-import Gateway from '../icons/gateway.svg'
 import Device from '../icons/device.svg'
+import Gateway from '../icons/gateway.svg'
 
-const skurt = {
+MapboxGL.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
+
+const signal = {
   type: 'FeatureCollection',
   features: [
+    {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'LineString',
+        coordinates: [[4.8761694, 52.3683326], [4.8927703, 52.366764]]
+      }
+    },
     {
       type: 'Feature',
       properties: {},
@@ -19,140 +32,101 @@ const skurt = {
   ]
 }
 
-const createGeoJSONCircle = (
-  [longitude, latitude],
-  radiusInKm,
-  points = 64
-) => {
-  let ret = []
-  let distanceX = radiusInKm / (111.32 * Math.cos((latitude * Math.PI) / 180))
-  let distanceY = radiusInKm / 110.574
-  let theta, x, y
-  let index = -1
-
-  while (++index < points) {
-    theta = (index / points) * (2 * Math.PI)
-    x = distanceX * Math.cos(theta)
-    y = distanceY * Math.sin(theta)
-
-    ret.push([longitude + x, latitude + y])
-  }
-  ret.push(ret[0])
-
-  return {
-    type: 'FeatureCollection',
-    features: [
-      {
-        type: 'Feature',
-        geometry: {
-          type: 'Polygon',
-          coordinates: [ret]
-        }
-      }
-    ]
-  }
-}
-
-const coverage = css`
-  opacity: 0.2;
-  transition: transform 300ms;
-  transition-timing-function: cubic-bezier(0.5, 0, 0.58, 1.66);
-  transform: scale(50);
-`
-
-const GatewayCoverage = styled.div`
-  position: absolute;
-  z-index: -1;
-  background: ${({ theme }) => `radial-gradient(${theme.green}, #7BA7FD)`};
-  border-radius: 50%;
-  width: 2em;
-  height: 2em;
-  top: 1.1em;
-  left: 0.6em;
-  opacity: 0;
-  transition: all 200ms;
-  transition-timing-function: ${({ theme }) => theme.timingFunction};
-  ${({ showCoverage }) => showCoverage && coverage};
-`
-
-const MapBox = ReactMapboxGl({
-  accessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
-})
-
 class Map extends Component {
-  state = {
-    showCoverage: false
+  constructor(props) {
+    super(props)
+    this.mapRef = createRef()
+    this.deviceRef = createRef()
+    this.gatewayRef = createRef()
   }
 
-  handleMarkerClick = () => {
-    this.setState({ showCoverage: !this.state.showCoverage })
+  componentDidMount() {
+    this.map = new MapboxGL.Map({
+      container: this.mapRef.current,
+      center: [4.888, 52.372],
+      zoom: [13],
+      style: process.env.REACT_APP_MAPBOX_STYLE_URL
+    })
+
+    this.map.on('load', () => {
+      this.renderMarkers()
+      this.renderSignal()
+    })
+  }
+
+  componentWillUnmount() {
+    this.map.remove()
+  }
+
+  renderMarkers = () => {
+    new MapboxGL.Marker(this.deviceRef.current, { anchor: 'center' })
+      .setLngLat([4.8761694, 52.3683326])
+      .addTo(this.map)
+
+    new MapboxGL.Marker(this.gatewayRef.current, { anchor: 'center' })
+      .setLngLat([4.8927703, 52.366764])
+      .addTo(this.map)
+  }
+
+  renderSignal = () => {
+    const container = this.map.getCanvasContainer()
+    const svg = select(container)
+      .append('svg')
+      .style('position', 'absolute')
+      .style('z-index', '0')
+      .style('width', '100%')
+      .style('height', '100%')
+
+    const self = this.map
+    const transform = geoTransform({
+      point: function(lon, lat) {
+        const point = self.project(new MapboxGL.LngLat(lon, lat))
+        this.stream.point(point.x, point.y)
+      }
+    })
+    const path = geoPath().projection(transform)
+
+    const line = svg
+      .selectAll('path')
+      .data(signal.features)
+      .enter()
+      .append('path')
+      .attr('d', geoPath().projection(transform))
+      .attr('stroke', this.props.theme.green)
+      .attr('stroke-width', 4)
+      .attr('stroke-dasharray', (d, i) => (i > 0 ? null : [10, 14]))
+      .attr('stroke-opacity', (d, i) => (i > 0 ? 0.2 : null))
+      .attr('stroke-linecap', 'round')
+      .attr('stroke-join', 'round')
+      .classed('marching_ants_animation', (d, i) => i < 1)
+
+    function update() {
+      line.attr('d', path)
+    }
+
+    this.map.on('zoom', update)
+    this.map.on('move', update)
+
+    update()
   }
 
   render() {
+    const style = {
+      width: '100vw',
+      height: '100vh',
+      position: 'relative'
+    }
+
     return (
-      <MapBox
-        style={process.env.REACT_APP_MAPBOX_STYLE_URL}
-        center={[4.888, 52.372]}
-        zoom={[13.5]}
-        // maxBounds={[
-        //   // Southwest coordinates
-        //   [4.946478383254487, 52.29948930759633],
-        //   // Northeast coordinates
-        //   [4.815325463385619, 52.41871067473167]
-        // ]}
-        containerStyle={{
-          width: '100vw',
-          height: '100vh'
-        }}
-      >
-        <Layer type="fill" />
-        <Marker
-          coordinates={[4.8927703, 52.366764]}
-          anchor="center"
-          onClick={this.handleMarkerClick}
-        >
-          <Gateway />
-          <GatewayCoverage showCoverage={this.state.showCoverage} />
-        </Marker>
-
-        <Marker coordinates={[4.8761694, 52.3683326]} anchor="center">
+      <div style={style} ref={this.mapRef}>
+        <div ref={this.deviceRef}>
           <Device />
-        </Marker>
-
-        <GeoJSONLayer
-          data={createGeoJSONCircle([4.8927703, 52.366764], 2)}
-          fillPaint={{
-            'fill-color': '#3bb2d0',
-            'fill-opacity': 0.2
-          }}
-        />
-
-        <GeoJSONLayer
-          data={skurt}
-          lineLayout={{
-            'line-cap': 'round'
-          }}
-          linePaint={{
-            'line-width': 4,
-            'line-dasharray': [0.2, 2],
-            'line-color': this.props.theme.green
-          }}
-        />
-
-        <GeoJSONLayer
-          data={skurt}
-          lineLayout={{
-            'line-cap': 'round'
-          }}
-          linePaint={{
-            'line-width': 4,
-            'line-opacity': 0.2,
-            'line-color': this.props.theme.green
-          }}
-        />
-      </MapBox>
+        </div>
+        <div ref={this.gatewayRef}>
+          <Gateway />
+        </div>
+      </div>
     )
   }
 }
-
 export default withTheme(Map)
