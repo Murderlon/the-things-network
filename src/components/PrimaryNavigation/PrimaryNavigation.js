@@ -31,60 +31,69 @@ class PrimaryNavigation extends Component {
     this.setState({ shouldDisplayAsRow: matches })
   }
 
+  itemToString = item => {
+    if (item && (item.label || item.link)) {
+      if (item.label) {
+        return item.label
+      } else if (item.link) {
+        return item.link
+      }
+    }
+    return ''
+  }
+
   render() {
     const { items, activeItem, ...rest } = this.props
     return (
       <Downshift
         {...rest}
         id="PrimaryNavigation"
-        itemToString={item => {
-          if (item && (item.label || item.link)) {
-            if (item.label) {
-              return item.label
-            } else if (item.link) {
-              return item.link
-            }
-          }
-          return ''
-        }}
+        itemToString={this.itemToString}
       >
-        {({ getItemProps, isOpen, toggleMenu, getRootProps, itemToString }) => (
+        {({
+          getItemProps,
+          getMenuProps,
+          isOpen,
+          toggleMenu,
+          getRootProps,
+          itemToString
+        }) => (
           <Nav
             {...getRootProps({ refKey: 'innerRef' })}
             breakpoint={this.breakpoint}
           >
-            <div>
-              {!this.state.shouldDisplayAsRow && (
-                <ToggleButton
-                  type="button"
-                  onClick={toggleMenu}
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded={isOpen}
-                >
+            {!this.state.shouldDisplayAsRow && (
+              <ToggleButton
+                type="button"
+                onClick={toggleMenu}
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded={isOpen}
+              >
+                <div>
                   {itemToString(activeItem)}
                   <Caret />
-                </ToggleButton>
-              )}
-              {isOpen || this.state.shouldDisplayAsRow ? (
-                <List breakpoint={this.breakpoint}>
-                  {items.map(item => (
-                    <ListItem key={item.label}>
-                      <Link
-                        {...getItemProps({
-                          item
-                        })}
-                        to={item.link}
-                        breakpoint={this.breakpoint}
-                        active={item.link === activeItem.link ? 1 : null}
-                      >
-                        {itemToString(item)}
-                      </Link>
-                    </ListItem>
-                  ))}
-                </List>
-              ) : null}
-            </div>
+                </div>
+              </ToggleButton>
+            )}
+            {isOpen || this.state.shouldDisplayAsRow ? (
+              <List {...getMenuProps()} breakpoint={this.breakpoint}>
+                {items.map(item => (
+                  <ListItem key={item.label}>
+                    <Link
+                      {...getItemProps({
+                        item
+                      })}
+                      to={item.link}
+                      breakpoint={this.breakpoint}
+                      active={item.link === activeItem.link ? 1 : null}
+                    >
+                      {itemToString(item)}
+                    </Link>
+                  </ListItem>
+                ))}
+              </List>
+            ) : null}
           </Nav>
         )}
       </Downshift>
