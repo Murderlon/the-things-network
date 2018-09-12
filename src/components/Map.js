@@ -2,36 +2,14 @@ import React, { Component, Fragment, createRef } from 'react'
 import { withTheme } from 'styled-components'
 import MapboxGL from 'mapbox-gl'
 import { select } from 'd3-selection'
-import { geoPath, geoTransform } from 'd3-geo'
-// import debounce from 'lodash.debounce'
+
+import marchingAnts from '../lib/marchingAnts'
 
 import Device from '../icons/device.svg'
 import Gateway from '../icons/gateway.svg'
 import TTN from '../icons/ttn.svg'
 
 MapboxGL.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
-
-const signal = {
-  type: 'FeatureCollection',
-  features: [
-    {
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'LineString',
-        coordinates: [[4.8761694, 52.3683326], [4.8927703, 52.3667641]]
-      }
-    },
-    {
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'LineString',
-        coordinates: [[4.8761694, 52.3683326], [4.8927703, 52.3667641]]
-      }
-    }
-  ]
-}
 
 class Map extends Component {
   constructor(props) {
@@ -51,7 +29,17 @@ class Map extends Component {
       zoom: link === 'the-things-network' ? [6] : [13]
     })
 
-    this.map.on('load', () => this.update())
+    this.map.on('load', () => {
+      const container = this.map.getCanvasContainer()
+      this.svg = select(container)
+        .append('svg')
+        .style('position', 'absolute')
+        .style('z-index', '0')
+        .style('width', '100%')
+        .style('height', '100%')
+
+      this.update()
+    })
   }
 
   componentDidUpdate() {
@@ -83,16 +71,22 @@ class Map extends Component {
     }
   }
 
+  renderMarker = (ref, [lng, lat]) => {
+    return new MapboxGL.Marker(ref.current, { anchor: 'center' })
+      .setLngLat([lng, lat])
+      .addTo(this.map)
+  }
+
   renderDevice = () => {
-    if (this.gatewayMarker) {
+    if (this.gatewayMarker && this.props.currentStep.link !== 'gateway') {
       this.gatewayMarker.remove()
       this.svg.selectAll('path').remove()
     }
-    this.deviceMarker = new MapboxGL.Marker(this.deviceRef.current, {
-      anchor: 'center'
-    })
-      .setLngLat([4.8761694, 52.3683326])
-      .addTo(this.map)
+
+    this.deviceMarker = this.renderMarker(this.deviceRef, [
+      4.8761694,
+      52.3683326
+    ])
   }
 
   renderGateway = () => {
@@ -103,49 +97,35 @@ class Map extends Component {
         zoom: [13]
       })
     }
-    this.gatewayMarker = new MapboxGL.Marker(this.gatewayRef.current, {
-      anchor: 'center'
+
+    this.gatewayMarker = this.renderMarker(this.gatewayRef, [
+      4.8927703,
+      52.3667641
+    ])
+
+    marchingAnts({
+      map: this.map,
+      data: [
+        {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: [[4.8761694, 52.3683326], [4.8927703, 52.3667641]]
+          }
+        },
+        {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: [[4.8761694, 52.3683326], [4.8927703, 52.3667641]]
+          }
+        }
+      ],
+      svg: this.svg,
+      color: this.props.theme.green
     })
-      .setLngLat([4.8927703, 52.3667641])
-      .addTo(this.map)
-
-    const container = this.map.getCanvasContainer()
-    this.svg = select(container)
-      .append('svg')
-      .style('position', 'absolute')
-      .style('z-index', '0')
-      .style('width', '100%')
-      .style('height', '100%')
-
-    const self = this.map
-    const transform = geoTransform({
-      point: function(lon, lat) {
-        const point = self.project(new MapboxGL.LngLat(lon, lat))
-        this.stream.point(point.x, point.y)
-      }
-    })
-    const path = geoPath().projection(transform)
-
-    const line = this.svg
-      .selectAll('path')
-      .data(signal.features)
-      .enter()
-      .append('path')
-      .attr('d', geoPath().projection(transform))
-      .attr('stroke', this.props.theme.green)
-      .attr('stroke-width', 4)
-      .attr('stroke-dasharray', (d, i) => (i > 0 ? null : [10, 14]))
-      .attr('stroke-opacity', (d, i) => (i > 0 ? 0.2 : null))
-      .attr('stroke-linecap', 'round')
-      .attr('stroke-join', 'round')
-      .classed('marching_ants_animation', (d, i) => i < 1)
-
-    function update() {
-      line.attr('d', path)
-    }
-
-    this.map.on('zoom', update)
-    this.map.on('move', update)
   }
 
   renderTTN = () => {
