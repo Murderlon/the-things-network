@@ -52,6 +52,8 @@ export const Link = styled(RouterLink)`
 `
 
 export const ToggleButton = styled.button`
+  font-family: ${({ theme }) => theme.monoTypo};
+  text-transform: uppercase;
   display: block;
   width: 100%;
   text-align: center;
@@ -62,7 +64,7 @@ export const ToggleButton = styled.button`
 
   &[aria-expanded='true'] {
     svg {
-      transform: rotate(360deg);
+      transform: rotate(180deg);
     }
   }
 
@@ -71,12 +73,12 @@ export const ToggleButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: inherit;
   }
 
   svg {
     margin-left: ${({ theme }) => theme.spacing.small};
     transition: transform 200ms;
-    transform: rotate(180deg);
     width: 13px;
     height: 13px;
   }

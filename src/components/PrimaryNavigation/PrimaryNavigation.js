@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Downshift from 'downshift'
 
-import Caret from '../../icons/Caret.svg'
+import DropdownIcon from '../../icons/dropdown.svg'
 import {
   Nav,
   ToggleButton,
@@ -72,7 +72,7 @@ class PrimaryNavigation extends Component {
               >
                 <div>
                   {itemToString(activeItem)}
-                  <Caret />
+                  <DropdownIcon />
                 </div>
               </ToggleButton>
             )}

@@ -13,7 +13,8 @@ const variables = {
     enormous: modularScale(10)
   },
   transitionDuration: '150ms',
-  timingFunction: 'cubic-bezier(0.5, 0 , 0.5, 1)'
+  timingFunction: 'cubic-bezier(0.5, 0 , 0.5, 1)',
+  monoTypo: '"Input Mono Cond Med", mono'
 }
 
 export default variables

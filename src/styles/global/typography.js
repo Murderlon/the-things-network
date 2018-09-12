@@ -4,7 +4,7 @@ import modularScale from '../helpers/modular-scale'
 
 const typography = css`
   @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,700');
-
+  @import url('//cloud.typenetwork.com/projects/2762/fontface.css/');
   @media screen and (min-width: 110em) {
     html {
       font-size: calc(1.125em + 0.05vw);
