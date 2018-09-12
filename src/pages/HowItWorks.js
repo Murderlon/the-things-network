@@ -18,26 +18,22 @@ const Map = Loadable({
 
 const HowItWorks = ({ step }) => {
   const steps = [
-    { label: 'Intro', link: 'intro' },
     { label: 'Device', link: 'device' },
     { label: 'Gateway', link: 'gateway' },
     { label: 'TTN', link: 'the-things-network' },
     { label: 'Application', link: 'application' }
   ]
+  const currentStep = steps.find(({ link }) => link === step) || steps[0]
+
   return (
     <Fragment>
       <SecondaryNavigation
         path="/*"
         aria-labelledby="secondary-navigation"
         steps={steps}
-        currentStep={
-          steps.find(s => s.link === step) || {
-            label: 'Device',
-            link: 'device'
-          }
-        }
+        currentStep={currentStep}
       />
-      <Map path="/*" />/
+      <Map path="/*" currentStep={currentStep} />
     </Fragment>
   )
 }

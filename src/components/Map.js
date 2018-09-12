@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react'
+import React, { Component, Fragment, createRef } from 'react'
 import { withTheme } from 'styled-components'
 import MapboxGL from 'mapbox-gl'
 import { select } from 'd3-selection'
@@ -7,6 +7,7 @@ import { geoPath, geoTransform } from 'd3-geo'
 
 import Device from '../icons/device.svg'
 import Gateway from '../icons/gateway.svg'
+import TTN from '../icons/ttn.svg'
 
 MapboxGL.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
 
@@ -18,7 +19,7 @@ const signal = {
       properties: {},
       geometry: {
         type: 'LineString',
-        coordinates: [[4.8761694, 52.3683326], [4.8927703, 52.366764]]
+        coordinates: [[4.8761694, 52.3683326], [4.8927703, 52.3667641]]
       }
     },
     {
@@ -26,7 +27,7 @@ const signal = {
       properties: {},
       geometry: {
         type: 'LineString',
-        coordinates: [[4.8761694, 52.3683326], [4.8927703, 52.366764]]
+        coordinates: [[4.8761694, 52.3683326], [4.8927703, 52.3667641]]
       }
     }
   ]
@@ -38,39 +39,78 @@ class Map extends Component {
     this.mapRef = createRef()
     this.deviceRef = createRef()
     this.gatewayRef = createRef()
+    this.TTNRef = createRef()
   }
 
   componentDidMount() {
+    const { link } = this.props.currentStep
     this.map = new MapboxGL.Map({
       container: this.mapRef.current,
-      center: [4.888, 52.372],
-      zoom: [13],
-      style: process.env.REACT_APP_MAPBOX_STYLE_URL
+      style: process.env.REACT_APP_MAPBOX_STYLE_URL,
+      center: link === 'the-things-network' ? [5.5, 53] : [4.888, 52.372],
+      zoom: link === 'the-things-network' ? [6] : [13]
     })
 
-    this.map.on('load', () => {
-      this.renderMarkers()
-      this.renderSignal()
-    })
+    this.map.on('load', () => this.update())
+  }
+
+  componentDidUpdate() {
+    this.update()
   }
 
   componentWillUnmount() {
     this.map.remove()
   }
 
-  renderMarkers = () => {
-    new MapboxGL.Marker(this.deviceRef.current, { anchor: 'center' })
-      .setLngLat([4.8761694, 52.3683326])
-      .addTo(this.map)
+  update = () => {
+    switch (this.props.currentStep.link) {
+      case 'device':
+        this.renderDevice()
+        break
+      case 'gateway':
+        this.renderDevice()
+        this.renderGateway()
+        break
+      case 'the-things-network':
+        this.renderTTN()
+        break
+      case 'application':
+        this.renderApplication()
+        break
+      default:
+        this.renderDevice()
+        break
+    }
+  }
 
-    new MapboxGL.Marker(this.gatewayRef.current, { anchor: 'center' })
-      .setLngLat([4.8927703, 52.366764])
+  renderDevice = () => {
+    if (this.gatewayMarker) {
+      this.gatewayMarker.remove()
+      this.svg.selectAll('path').remove()
+    }
+    this.deviceMarker = new MapboxGL.Marker(this.deviceRef.current, {
+      anchor: 'center'
+    })
+      .setLngLat([4.8761694, 52.3683326])
       .addTo(this.map)
   }
 
-  renderSignal = () => {
+  renderGateway = () => {
+    if (this.TTNMarker) {
+      this.TTNMarker.remove()
+      this.map.flyTo({
+        center: [4.888, 52.372],
+        zoom: [13]
+      })
+    }
+    this.gatewayMarker = new MapboxGL.Marker(this.gatewayRef.current, {
+      anchor: 'center'
+    })
+      .setLngLat([4.8927703, 52.3667641])
+      .addTo(this.map)
+
     const container = this.map.getCanvasContainer()
-    const svg = select(container)
+    this.svg = select(container)
       .append('svg')
       .style('position', 'absolute')
       .style('z-index', '0')
@@ -86,7 +126,7 @@ class Map extends Component {
     })
     const path = geoPath().projection(transform)
 
-    const line = svg
+    const line = this.svg
       .selectAll('path')
       .data(signal.features)
       .enter()
@@ -106,26 +146,53 @@ class Map extends Component {
 
     this.map.on('zoom', update)
     this.map.on('move', update)
+  }
 
-    update()
+  renderTTN = () => {
+    if (this.gatewayMarker) {
+      this.svg.selectAll('path').remove()
+    } else {
+      this.gatewayMarker = new MapboxGL.Marker(this.gatewayRef.current, {
+        anchor: 'center'
+      })
+        .setLngLat([4.8927703, 52.3667641])
+        .addTo(this.map)
+    }
+    if (this.deviceMarker) {
+      this.deviceMarker.remove()
+    }
+    this.map.flyTo({
+      center: [5.5, 53],
+      zoom: [6]
+    })
+    this.TTNMarker = new MapboxGL.Marker(this.TTNRef.current, {
+      anchor: 'center'
+    })
+      .setLngLat([6.857646, 53.4240285])
+      .addTo(this.map)
   }
 
   render() {
-    const style = {
-      width: '100vw',
-      height: '100vh',
-      position: 'relative'
-    }
-
     return (
-      <div style={style} ref={this.mapRef}>
+      <Fragment>
+        <div
+          style={{
+            width: '100vw',
+            height: '100vh',
+            position: 'relative'
+          }}
+          ref={this.mapRef}
+        />
         <div ref={this.deviceRef}>
           <Device />
         </div>
         <div ref={this.gatewayRef}>
           <Gateway />
         </div>
-      </div>
+        <div ref={this.TTNRef}>
+          <TTN />
+        </div>
+      </Fragment>
     )
   }
 }
