@@ -21,7 +21,7 @@ class App extends Component {
       <ThemeProvider theme={{ ...colors, ...variables }}>
         <Router>
           <PageWrapper path="/">
-            <HowItWorks default path="how-it-works" />
+            <HowItWorks path="how-it-works/:step" />
           </PageWrapper>
         </Router>
       </ThemeProvider>

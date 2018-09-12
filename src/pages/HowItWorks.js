@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import Loadable from 'react-loadable'
 
 import SecondaryNavigation from '../components/SecondaryNavigation/SecondaryNavigation'
@@ -16,15 +16,30 @@ const Map = Loadable({
   ...loadableOptions
 })
 
-class HowItWorks extends Component {
-  render() {
-    return (
-      <Fragment>
-        <SecondaryNavigation path="/*" aria-labelledby="secondary-navigation" />
-        <Map path="/" />/
-      </Fragment>
-    )
-  }
+const HowItWorks = ({ step }) => {
+  const steps = [
+    { label: 'Intro', link: 'intro' },
+    { label: 'Device', link: 'device' },
+    { label: 'Gateway', link: 'gateway' },
+    { label: 'TTN', link: 'the-things-network' },
+    { label: 'Application', link: 'application' }
+  ]
+  return (
+    <Fragment>
+      <SecondaryNavigation
+        path="/*"
+        aria-labelledby="secondary-navigation"
+        steps={steps}
+        currentStep={
+          steps.find(s => s.link === step) || {
+            label: 'Device',
+            link: 'device'
+          }
+        }
+      />
+      <Map path="/*" />/
+    </Fragment>
+  )
 }
 
 export default HowItWorks
