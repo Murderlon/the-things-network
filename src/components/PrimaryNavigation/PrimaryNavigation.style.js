@@ -29,7 +29,7 @@ const activeStyles = css`
     width: 100%;
     height: 10px;
     left: 0;
-    bottom: -17px;
+    bottom: -5px;
     background: ${({ theme }) => theme.green};
     border-radius: 3px;
     ${boxShadow};
@@ -41,6 +41,8 @@ export const ListItem = styled.li`
 `
 
 export const Link = styled(RouterLink)`
+  font-family: ${({ theme }) => theme.monoTypo};
+  text-transform: uppercase;
   position: relative;
   display: block;
   padding: ${({ theme }) => theme.spacing.small};

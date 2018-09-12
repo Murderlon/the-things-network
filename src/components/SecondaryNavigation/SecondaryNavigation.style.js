@@ -1,5 +1,6 @@
 import { Link as Routerlink } from '@reach/router'
 import styled from 'styled-components'
+
 import { boxShadow } from '../../styles/base-classes'
 
 export const Nav = styled.nav`
@@ -9,8 +10,10 @@ export const Nav = styled.nav`
   right: 0;
   z-index: 1;
   background: ${({ theme }) => theme.backgroundBlue};
-  ${boxShadow} h1 {
-    margin: 0;
+  ${boxShadow};
+
+  @media screen and (min-width: 42rem) {
+    top: 63px;
   }
 `
 

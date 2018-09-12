@@ -5,7 +5,7 @@ import { Nav, List, Link } from './SecondaryNavigation.style'
 
 const SecondaryNavigation = ({ currentStep, steps }) => {
   const previous = steps.findIndex(step => step.link === currentStep.link) - 1
-  const next = steps.findIndex(step => step.link === currentStep.link) + 1
+  const next = previous + 2
 
   return (
     <Nav>
