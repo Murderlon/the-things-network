@@ -2,8 +2,11 @@ import React, { Component, Fragment, createRef } from 'react'
 import { withTheme } from 'styled-components'
 import MapboxGL from 'mapbox-gl'
 import { select } from 'd3-selection'
+import { geoPath, geoTransform } from 'd3-geo'
+import debounce from 'lodash.debounce'
 
 import generateLineGeoJSON from '../lib/generateLineGeoJSON'
+import createGeoJSONCircle from '../lib/createGeoJSONCircle'
 import marchingAnts from '../lib/marchingAnts'
 
 import Device from '../icons/device.svg'
@@ -32,7 +35,7 @@ class Map extends Component {
       style: process.env.REACT_APP_MAPBOX_STYLE_URL,
       center: link === 'the-things-network' ? [6, 53] : [4.888, 52.372],
       zoom: link === 'the-things-network' ? [6.5] : [13],
-      interactive: false
+      interactive: true
     })
 
     this.map.on('load', () => {
@@ -44,7 +47,18 @@ class Map extends Component {
         .style('width', '100%')
         .style('height', '100%')
 
-      this.marchingAnts = marchingAnts({ map: this.map, svg: this.svg })
+      const self = this.map
+      this.transform = geoTransform({
+        point: function(lon, lat) {
+          const { x, y } = self.project(new MapboxGL.LngLat(lon, lat))
+          this.stream.point(x, y)
+        }
+      })
+      this.marchingAnts = marchingAnts({
+        map: this.map,
+        svg: this.svg,
+        transform: this.transform
+      })
       this.update()
     })
   }
@@ -123,6 +137,24 @@ class Map extends Component {
       }),
       color: this.props.theme.green
     })
+
+    const path = geoPath().projection(this.transform)
+
+    const coverage = svg
+      .selectAll('path.coverage')
+      .data(createGeoJSONCircle([4.8927703, 52.366764], 2).features)
+      .enter()
+      .append('path')
+      .attr('d', geoPath().projection(this.transform))
+      .attr('fill', '#3bb2d0')
+      .attr('fill-opacity', 0.2)
+
+    function update() {
+      coverage.attr('d', path)
+    }
+
+    map.on('zoom', debounce(update, 10))
+    map.on('move', debounce(update, 10))
   }
 
   renderTTN = () => {
@@ -155,6 +187,10 @@ class Map extends Component {
         to: TTNCoords
       }),
       color: this.props.theme.red
+    })
+
+    map.fitBounds([gatewayMarker.getLngLat(), this.TTNMarker.getLngLat()], {
+      padding: { top: 200, bottom: 50, left: 50, right: 50 }
     })
   }
 

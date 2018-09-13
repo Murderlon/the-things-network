@@ -1,18 +1,11 @@
-import MapboxGL from 'mapbox-gl'
-import { geoPath, geoTransform } from 'd3-geo'
+import { geoPath } from 'd3-geo'
+import debounce from 'lodash.debounce'
 
-export default ({ map, svg }) => ({ data, color }) => {
-  const self = map
-  const transform = geoTransform({
-    point: function(lon, lat) {
-      const point = self.project(new MapboxGL.LngLat(lon, lat))
-      this.stream.point(point.x, point.y)
-    }
-  })
+export default ({ map, svg, transform }) => ({ data, color }) => {
   const path = geoPath().projection(transform)
 
   const line = svg
-    .selectAll('path')
+    .selectAll('path.ants')
     .data(data)
     .enter()
     .append('path')
@@ -29,6 +22,6 @@ export default ({ map, svg }) => ({ data, color }) => {
     line.attr('d', path)
   }
 
-  map.on('zoom', update)
-  map.on('move', update)
+  map.on('zoom', debounce(update, 10))
+  map.on('move', debounce(update, 10))
 }
