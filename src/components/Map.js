@@ -3,6 +3,7 @@ import { withTheme } from 'styled-components'
 import MapboxGL from 'mapbox-gl'
 import { select } from 'd3-selection'
 
+import generateLineGeoJSON from '../lib/generateLineGeoJSON'
 import marchingAnts from '../lib/marchingAnts'
 
 import Device from '../icons/device.svg'
@@ -18,6 +19,10 @@ class Map extends Component {
     this.deviceRef = createRef()
     this.gatewayRef = createRef()
     this.TTNRef = createRef()
+
+    this.deviceCoords = [4.8761694, 52.3683326]
+    this.gatewayCoords = [4.8927703, 52.3667641]
+    this.TTNCoords = [6.857646, 53.4240285]
   }
 
   componentDidMount() {
@@ -25,8 +30,9 @@ class Map extends Component {
     this.map = new MapboxGL.Map({
       container: this.mapRef.current,
       style: process.env.REACT_APP_MAPBOX_STYLE_URL,
-      center: link === 'the-things-network' ? [5.5, 53] : [4.888, 52.372],
-      zoom: link === 'the-things-network' ? [6] : [13]
+      center: link === 'the-things-network' ? [6, 53] : [4.888, 52.372],
+      zoom: link === 'the-things-network' ? [6.5] : [13],
+      interactive: false
     })
 
     this.map.on('load', () => {
@@ -38,6 +44,7 @@ class Map extends Component {
         .style('width', '100%')
         .style('height', '100%')
 
+      this.marchingAnts = marchingAnts({ map: this.map, svg: this.svg })
       this.update()
     })
   }
@@ -78,78 +85,77 @@ class Map extends Component {
   }
 
   renderDevice = () => {
-    if (this.gatewayMarker && this.props.currentStep.link !== 'gateway') {
-      this.gatewayMarker.remove()
-      this.svg.selectAll('path').remove()
+    const { gatewayMarker, svg, deviceRef, deviceCoords } = this
+
+    if (gatewayMarker && this.props.currentStep.link !== 'gateway') {
+      gatewayMarker.remove()
+      svg.selectAll('path').remove()
     }
 
-    this.deviceMarker = this.renderMarker(this.deviceRef, [
-      4.8761694,
-      52.3683326
-    ])
+    this.deviceMarker = this.renderMarker(deviceRef, deviceCoords)
   }
 
   renderGateway = () => {
-    if (this.TTNMarker) {
-      this.TTNMarker.remove()
-      this.map.flyTo({
+    const {
+      TTNMarker,
+      svg,
+      map,
+      gatewayRef,
+      gatewayCoords,
+      deviceCoords
+    } = this
+
+    if (TTNMarker) {
+      TTNMarker.remove()
+      svg.selectAll('path').remove()
+      map.flyTo({
         center: [4.888, 52.372],
         zoom: [13]
       })
     }
 
-    this.gatewayMarker = this.renderMarker(this.gatewayRef, [
-      4.8927703,
-      52.3667641
-    ])
+    this.gatewayMarker = this.renderMarker(gatewayRef, gatewayCoords)
 
-    marchingAnts({
-      map: this.map,
-      data: [
-        {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'LineString',
-            coordinates: [[4.8761694, 52.3683326], [4.8927703, 52.3667641]]
-          }
-        },
-        {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'LineString',
-            coordinates: [[4.8761694, 52.3683326], [4.8927703, 52.3667641]]
-          }
-        }
-      ],
-      svg: this.svg,
+    this.marchingAnts({
+      data: generateLineGeoJSON({
+        from: deviceCoords,
+        to: gatewayCoords
+      }),
       color: this.props.theme.green
     })
   }
 
   renderTTN = () => {
-    if (this.gatewayMarker) {
-      this.svg.selectAll('path').remove()
-    } else {
-      this.gatewayMarker = new MapboxGL.Marker(this.gatewayRef.current, {
-        anchor: 'center'
-      })
-        .setLngLat([4.8927703, 52.3667641])
-        .addTo(this.map)
-    }
-    if (this.deviceMarker) {
-      this.deviceMarker.remove()
-    }
-    this.map.flyTo({
-      center: [5.5, 53],
-      zoom: [6]
+    let {
+      deviceMarker,
+      gatewayMarker,
+      svg,
+      gatewayRef,
+      gatewayCoords,
+      map,
+      TTNRef,
+      TTNCoords
+    } = this
+
+    deviceMarker && deviceMarker.remove()
+    gatewayMarker
+      ? svg.selectAll('path').remove()
+      : (gatewayMarker = this.renderMarker(gatewayRef, gatewayCoords))
+
+    map.flyTo({
+      center: [6, 53],
+      zoom: [6.5]
     })
-    this.TTNMarker = new MapboxGL.Marker(this.TTNRef.current, {
-      anchor: 'center'
+
+    this.TTNMarker = this.renderMarker(TTNRef, TTNCoords)
+
+    this.marchingAnts({
+      data: generateLineGeoJSON({
+        from: gatewayCoords,
+        to: TTNCoords
+      }),
+      color: this.props.theme.red
     })
-      .setLngLat([6.857646, 53.4240285])
-      .addTo(this.map)
   }
 
   render() {

@@ -1,7 +1,7 @@
 import MapboxGL from 'mapbox-gl'
 import { geoPath, geoTransform } from 'd3-geo'
 
-export default ({ map, data, svg, color }) => {
+export default ({ map, svg }) => ({ data, color }) => {
   const self = map
   const transform = geoTransform({
     point: function(lon, lat) {
