@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ThemeProvider, injectGlobal } from 'styled-components'
-import { Router } from '@reach/router'
+import { Router, Redirect } from '@reach/router'
 
 import HowItWorks from './pages/HowItWorks'
 import PageWrapper from './components/PageWrapper'
@@ -21,6 +21,7 @@ class App extends Component {
       <ThemeProvider theme={{ ...colors, ...variables }}>
         <Router>
           <PageWrapper path="/">
+            <Redirect noThrow from="how-it-works" to="how-it-works/device" />
             <HowItWorks path="how-it-works/:step" />
           </PageWrapper>
         </Router>
