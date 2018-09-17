@@ -60,6 +60,7 @@ class PrimaryNavigation extends Component {
         }) => (
           <Nav
             {...getRootProps({ refKey: 'innerRef' })}
+            aria-labelledby="primary-navigation"
             breakpoint={this.breakpoint}
           >
             {!this.state.shouldDisplayAsRow && (

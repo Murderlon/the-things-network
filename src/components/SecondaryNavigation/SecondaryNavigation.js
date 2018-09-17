@@ -8,7 +8,7 @@ const SecondaryNavigation = ({ currentStep, steps }) => {
   const next = previous + 2
 
   return (
-    <Nav>
+    <Nav aria-labelledby="secondary-navigation">
       <List>
         <li>
           {steps[previous] && (

@@ -29,7 +29,7 @@ const activeStyles = css`
     width: 100%;
     height: 10px;
     left: 0;
-    bottom: -5px;
+    bottom: -15px;
     background: ${({ theme }) => theme.green};
     border-radius: 3px;
     ${boxShadow};
@@ -45,8 +45,7 @@ export const Link = styled(RouterLink)`
   text-transform: uppercase;
   position: relative;
   display: block;
-  padding: ${({ theme }) => theme.spacing.small};
-  margin: 0 ${({ theme }) => theme.spacing.small};
+  margin: ${({ theme }) => `${theme.spacing.small} ${theme.spacing.medium}`};
 
   @media screen and (min-width: ${p => p.breakpoint}) {
     ${({ active }) => active && activeStyles};

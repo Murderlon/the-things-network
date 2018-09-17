@@ -16,23 +16,19 @@ const Map = Loadable({
   ...loadableOptions
 })
 
+const steps = [
+  { label: 'Device', link: 'device' },
+  { label: 'Gateway', link: 'gateway' },
+  { label: 'TTN', link: 'the-things-network' },
+  { label: 'Application', link: 'application' }
+]
+
 const HowItWorks = ({ step }) => {
-  const steps = [
-    { label: 'Device', link: 'device' },
-    { label: 'Gateway', link: 'gateway' },
-    { label: 'TTN', link: 'the-things-network' },
-    { label: 'Application', link: 'application' }
-  ]
   const currentStep = steps.find(({ link }) => link === step) || steps[0]
 
   return (
     <Fragment>
-      <SecondaryNavigation
-        path="/*"
-        aria-labelledby="secondary-navigation"
-        steps={steps}
-        currentStep={currentStep}
-      />
+      <SecondaryNavigation path="/*" steps={steps} currentStep={currentStep} />
       <Map path="/*" currentStep={currentStep} />
     </Fragment>
   )

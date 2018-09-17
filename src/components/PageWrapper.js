@@ -27,7 +27,6 @@ class PageWrapper extends Component {
       <Fragment>
         <header>
           <PrimaryNavigation
-            aria-labelledby="primary-navigation"
             activeItem={this.state.activePrimaryNavItem}
             onChange={this.handlePrimaryNavChange}
             items={this.PrimaryNavItems}
