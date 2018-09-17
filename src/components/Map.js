@@ -5,7 +5,7 @@ import { select } from 'd3-selection'
 import { geoPath, geoTransform } from 'd3-geo'
 import debounce from 'lodash.debounce'
 
-import generateLineGeoJSON from '../lib/generateLineGeoJSON'
+import createGeoJSONLine from '../lib/createGeoJSONLine'
 import createGeoJSONCircle from '../lib/createGeoJSONCircle'
 import marchingAnts from '../lib/marchingAnts'
 
@@ -92,9 +92,9 @@ class Map extends Component {
     }
   }
 
-  renderMarker = (ref, [lng, lat]) => {
+  renderMarker = (ref, coords) => {
     return new MapboxGL.Marker(ref.current, { anchor: 'center' })
-      .setLngLat([lng, lat])
+      .setLngLat(coords)
       .addTo(this.map)
   }
 
@@ -131,7 +131,7 @@ class Map extends Component {
     this.gatewayMarker = this.renderMarker(gatewayRef, gatewayCoords)
 
     this.marchingAnts({
-      data: generateLineGeoJSON({
+      data: createGeoJSONLine({
         from: deviceCoords,
         to: gatewayCoords
       }),
@@ -140,6 +140,7 @@ class Map extends Component {
 
     const path = geoPath().projection(this.transform)
 
+    // TODO: https://stackoverflow.com/questions/45421774/how-to-draw-circles-with-radii-given-in-kilometers-accurately-on-world-map
     const coverage = svg
       .selectAll('path.coverage')
       .data(createGeoJSONCircle([4.8927703, 52.366764], 2).features)
@@ -182,7 +183,7 @@ class Map extends Component {
     this.TTNMarker = this.renderMarker(TTNRef, TTNCoords)
 
     this.marchingAnts({
-      data: generateLineGeoJSON({
+      data: createGeoJSONLine({
         from: gatewayCoords,
         to: TTNCoords
       }),
