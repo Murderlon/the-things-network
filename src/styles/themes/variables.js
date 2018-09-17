@@ -14,6 +14,8 @@ const variables = {
   },
   transitionDuration: '150ms',
   timingFunction: 'cubic-bezier(0.5, 0 , 0.5, 1)',
+  mainTypo:
+    "'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
   monoTypo: '"Input Mono Cond Med", mono'
 }
 

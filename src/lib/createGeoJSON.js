@@ -1,4 +1,4 @@
-export default ({ from, to }) => [
+export const Line = ({ from, to }) => [
   {
     type: 'Feature',
     properties: {},

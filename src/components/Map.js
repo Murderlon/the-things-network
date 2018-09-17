@@ -1,12 +1,11 @@
 import React, { Component, Fragment, createRef } from 'react'
-import { withTheme } from 'styled-components'
+import styled, { css, withTheme, keyframes } from 'styled-components'
 import MapboxGL from 'mapbox-gl'
 import { select } from 'd3-selection'
-import { geoPath, geoTransform } from 'd3-geo'
+import { geoPath, geoTransform, geoCircle } from 'd3-geo'
 import debounce from 'lodash.debounce'
 
-import createGeoJSONLine from '../lib/createGeoJSONLine'
-import createGeoJSONCircle from '../lib/createGeoJSONCircle'
+import * as createGeoJSON from '../lib/createGeoJSON'
 import marchingAnts from '../lib/marchingAnts'
 
 import Device from '../icons/device.svg'
@@ -14,6 +13,54 @@ import Gateway from '../icons/gateway.svg'
 import TTN from '../icons/ttn.svg'
 
 MapboxGL.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
+
+const pulse = keyframes`
+  to {
+    box-shadow: 0 0 0 45px rgba(120, 254, 224, 0);
+  }
+`
+
+const active = css`
+  &::after {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 0.1em;
+    height: 0.1em;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    box-shadow: 0 0 0 0 rgba(120, 254, 224, 0.7);
+    border-radius: 50%;
+    animation: ${pulse} 3s infinite cubic-bezier(0.66, 0, 0, 1);
+  }
+`
+
+const MarkerButton = styled.button`
+  padding: 0;
+  position: relative;
+  cursor: help;
+
+  span {
+    position: absolute;
+    top: 3em;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 1.2em;
+    font-weight: 500;
+    font-family: ${({ theme }) => theme.mainTypo};
+    color: ${({ color = 'white' }) => color};
+  }
+
+  div {
+    position: relative;
+    width: 3.3em;
+    height: 3.3em;
+    ${({ current }) => current && active};
+  }
+`
 
 class Map extends Component {
   constructor(props) {
@@ -26,6 +73,8 @@ class Map extends Component {
     this.deviceCoords = [4.8761694, 52.3683326]
     this.gatewayCoords = [4.8927703, 52.3667641]
     this.TTNCoords = [6.857646, 53.4240285]
+
+    this.state = { showGatewayContext: false }
   }
 
   componentDidMount() {
@@ -92,6 +141,44 @@ class Map extends Component {
     }
   }
 
+  toggleGateway = () => {
+    const { showGatewayContext } = this.state
+    this.setState({ showGatewayContext: !showGatewayContext })
+
+    if (showGatewayContext) {
+      const { deviceCoords, gatewayCoords, svg, map, transform } = this
+      const path = geoPath().projection(transform)
+      const angle = (2000 / (6371000 * Math.PI * 2)) * 360
+
+      this.marchingAnts({
+        data: createGeoJSON.Line({
+          from: deviceCoords,
+          to: gatewayCoords
+        }),
+        color: this.props.theme.green
+      })
+
+      var circle = geoCircle()
+        .center(gatewayCoords)
+        .radius(angle)
+
+      const coverage = svg
+        .append('path')
+        .attr('d', path(circle()))
+        .attr('fill', '#3bb2d0')
+        .attr('fill-opacity', 0.2)
+
+      function update() {
+        coverage.attr('d', path(circle()))
+      }
+
+      map.on('zoom', debounce(update, 10))
+      map.on('move', debounce(update, 10))
+    } else {
+      this.svg.selectAll('path').remove()
+    }
+  }
+
   renderMarker = (ref, coords) => {
     return new MapboxGL.Marker(ref.current, { anchor: 'center' })
       .setLngLat(coords)
@@ -129,33 +216,6 @@ class Map extends Component {
     }
 
     this.gatewayMarker = this.renderMarker(gatewayRef, gatewayCoords)
-
-    this.marchingAnts({
-      data: createGeoJSONLine({
-        from: deviceCoords,
-        to: gatewayCoords
-      }),
-      color: this.props.theme.green
-    })
-
-    const path = geoPath().projection(this.transform)
-
-    // TODO: https://stackoverflow.com/questions/45421774/how-to-draw-circles-with-radii-given-in-kilometers-accurately-on-world-map
-    const coverage = svg
-      .selectAll('path.coverage')
-      .data(createGeoJSONCircle([4.8927703, 52.366764], 2).features)
-      .enter()
-      .append('path')
-      .attr('d', geoPath().projection(this.transform))
-      .attr('fill', '#3bb2d0')
-      .attr('fill-opacity', 0.2)
-
-    function update() {
-      coverage.attr('d', path)
-    }
-
-    map.on('zoom', debounce(update, 10))
-    map.on('move', debounce(update, 10))
   }
 
   renderTTN = () => {
@@ -183,7 +243,7 @@ class Map extends Component {
     this.TTNMarker = this.renderMarker(TTNRef, TTNCoords)
 
     this.marchingAnts({
-      data: createGeoJSONLine({
+      data: createGeoJSON.Line({
         from: gatewayCoords,
         to: TTNCoords
       }),
@@ -207,13 +267,30 @@ class Map extends Component {
           ref={this.mapRef}
         />
         <div ref={this.deviceRef}>
-          <Device />
+          <MarkerButton>
+            <div>
+              <Device />
+            </div>
+            <span>Device</span>
+          </MarkerButton>
         </div>
         <div ref={this.gatewayRef}>
-          <Gateway />
+          <MarkerButton
+            color={this.props.theme.green}
+            onClick={this.toggleGateway}
+            current={this.props.currentStep.link === 'gateway' ? 1 : null}
+          >
+            <div>
+              <Gateway />
+            </div>
+            <span>Gateway</span>
+          </MarkerButton>
         </div>
         <div ref={this.TTNRef}>
-          <TTN />
+          <MarkerButton>
+            <TTN />
+            <span>The Things Network</span>
+          </MarkerButton>
         </div>
       </Fragment>
     )
