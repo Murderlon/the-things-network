@@ -5,7 +5,7 @@ export default ({ map, svg, transform }) => ({ data, color }) => {
   const path = geoPath().projection(transform)
 
   const line = svg
-    .selectAll('path.ants')
+    .selectAll('path')
     .data(data)
     .enter()
     .append('path')
@@ -17,6 +17,7 @@ export default ({ map, svg, transform }) => ({ data, color }) => {
     .attr('stroke-linecap', 'round')
     .attr('stroke-join', 'round')
     .classed('marching_ants_animation', (d, i) => i < 1)
+    .classed('ants', true)
 
   function update() {
     line.attr('d', path)

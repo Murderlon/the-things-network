@@ -1,9 +1,12 @@
 import React, { Component, Fragment, createRef } from 'react'
 import styled, { css, withTheme, keyframes } from 'styled-components'
 import MapboxGL from 'mapbox-gl'
+import debounce from 'lodash.debounce'
 import { select } from 'd3-selection'
 import { geoPath, geoTransform, geoCircle } from 'd3-geo'
-import debounce from 'lodash.debounce'
+import { interpolatePath } from 'd3-interpolate-path'
+import { easeCubicInOut } from 'd3-ease'
+import 'd3-transition'
 
 import * as createGeoJSON from '../lib/createGeoJSON'
 import marchingAnts from '../lib/marchingAnts'
@@ -143,13 +146,21 @@ class Map extends Component {
 
   toggleGateway = () => {
     const { showGatewayContext } = this.state
+    const { deviceCoords, gatewayCoords, svg, map, transform } = this
+    const path = geoPath().projection(transform)
+    const circumference = 6371000 * Math.PI * 2
+
+    const prevPathString = geoCircle()
+      .center(gatewayCoords)
+      .radius((10 / circumference) * 360)
+
+    const pathString = geoCircle()
+      .center(gatewayCoords)
+      .radius((2000 / circumference) * 360)
+
     this.setState({ showGatewayContext: !showGatewayContext })
 
     if (showGatewayContext) {
-      const { deviceCoords, gatewayCoords, svg, map, transform } = this
-      const path = geoPath().projection(transform)
-      const angle = (2000 / (6371000 * Math.PI * 2)) * 360
-
       this.marchingAnts({
         data: createGeoJSON.Line({
           from: deviceCoords,
@@ -158,24 +169,37 @@ class Map extends Component {
         color: this.props.theme.green
       })
 
-      var circle = geoCircle()
-        .center(gatewayCoords)
-        .radius(angle)
-
-      const coverage = svg
+      svg
         .append('path')
-        .attr('d', path(circle()))
+        .classed('coverage', true)
+        .transition()
+        .duration(400)
+        .ease(easeCubicInOut)
         .attr('fill', '#3bb2d0')
         .attr('fill-opacity', 0.2)
+        .attrTween('d', () =>
+          interpolatePath(path(prevPathString()), path(pathString()))
+        )
 
       function update() {
-        coverage.attr('d', path(circle()))
+        svg.selectAll('path.coverage').attr('d', path(pathString()))
       }
 
       map.on('zoom', debounce(update, 10))
       map.on('move', debounce(update, 10))
     } else {
-      this.svg.selectAll('path').remove()
+      svg
+        .selectAll('path.coverage')
+        .transition()
+        .duration(300)
+        .ease(easeCubicInOut)
+        .attrTween('d', () =>
+          interpolatePath(path(pathString()), path(prevPathString()))
+        )
+        .delay(300)
+        .remove()
+
+      svg.selectAll('path.ants').remove()
     }
   }
 
@@ -197,14 +221,7 @@ class Map extends Component {
   }
 
   renderGateway = () => {
-    const {
-      TTNMarker,
-      svg,
-      map,
-      gatewayRef,
-      gatewayCoords,
-      deviceCoords
-    } = this
+    const { TTNMarker, svg, map, gatewayRef, gatewayCoords } = this
 
     if (TTNMarker) {
       TTNMarker.remove()
@@ -278,7 +295,12 @@ class Map extends Component {
           <MarkerButton
             color={this.props.theme.green}
             onClick={this.toggleGateway}
-            current={this.props.currentStep.link === 'gateway' ? 1 : null}
+            current={
+              !this.state.showGatewayContext &&
+              this.props.currentStep.link === 'gateway'
+                ? 1
+                : null
+            }
           >
             <div>
               <Gateway />
