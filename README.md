@@ -3,9 +3,9 @@
 - [Designbrief](#designbrief)
   - [The Things Network](#the-things-network)
   - [Target audience](#target-audience)
-  - [CLEVER°FRANKE (WIP)](#clever%C2%B0franke)
+  - [CLEVER°FRANKE](#clever%C2%B0franke)
   - [Design challenge](#design-challenge)
-  - [Focus (WIP)](#focus)
+  - [Focus](#focus)
   - [Vision](#vision)
   - [Planning](#planning)
 - [Research](#research)
@@ -15,13 +15,9 @@
 	- [Data](#data)
 		- [Analysis](#analysis)
 		- [Workshop](#workshop)
-	- Benchmark creation
-		- Online
-		- Books
-- Inzichten
-	- Data priority
-	- User requirements
-	- Moodboard
+	- [Benchmark creation](#benchmark-creation)
+- Insights
+	- Interactivity in storytelling
 - Product
 	- Concept schetsen
 	- Top 3 concepts
@@ -116,6 +112,8 @@ The challenges from the meeting also resulted in certain expectations.
 - Easy to understand during conference presentation.
 - Using storytelling techniques to tell the story behind TTN.
 
+---
+
 ### Target audience
 **The target audience are early adopter and early majority Internet of Things developers who are interested yet unfamiliar with LoRaWAN.**
 
@@ -140,10 +138,20 @@ Right now The Things Network is making the jump from early adopters to early maj
 
 Because TTN is transitioning between these two, the product should therefor focus on a mixture of both.
 
+---
+
 ### CLEVER°FRANKE
 ![Screenshot of The Things Network website](./docs/cf.png)
 
-This project is done with help of C°F.
+[CLEVER°FRANKE](http://cleverfranke.com/) is a data driven design agency located in Utrecht. Their focus lies mostly within visualising complex data structures on the web to provide insights which normally wouldn't be possible.
+
+Their vision as they put it themselves:
+
+> We want to provide people with the means to interact with and experience the world in new and exciting ways. Through these enriched experiences, we aim to reveal new perspectives, ultimately leading to a better understanding of the world we live in.
+
+C°F's co-founder Gert Franke will provide occasional guidance and feedback during this project. C°F's incentive to help comes from a educational stance, and thus will this project be treated similarly to an internship.
+
+---
 
 ### Design challenge
 **How can an interactive and storytelling data driven experience convince
@@ -158,17 +166,30 @@ early adopter and early majority Internet of Things developers who are intereste
 5. How do you integrate the clarification of LoRaWAN into the product?
 6. How do you make a user eager to participate?
 
-### Focus
-In order or importance:
-#### 1. Concept
-The concept is the groundwork of the entire project
+---
 
-#### 2. Technical realisation
+### Focus
+It is imporant to note that this graduation project isn't just the execution of a single discipline, but all the disciplines that make up CMD. I am responsible for the communication/project/expectation management with the client (TTN), the concept, it's user experience and visual design, and the full technical realisation of a new experience for the largest global distributed LoRa network.
+
+But because of that this project won't be about thoroughly researched and heavily iterated UX/visual design or the most perfect possible match for it's target audience, at least not in full. To finish such an ambitious project within the given time, the focus becomes more a series of choices and prioritisations that result in continuously keeping this project afloat, while minimally affecting the end-user. That's what makes this project valuable, an ode to everything I learned at CMD shaped into a real-world project with real-world compromises, stakeholders, and deliveries.
+
+Even though I'm taking it upon myself to do this, I'm offially a Front-end Developer and see myself graduating as such. However, this obviously can't all resolve around the code so below are the disciplines in order of importance for me. 
+
+#### 1. Concept
+The concept is the fundament of the product. Exploring multiple concepts and finding the best fit in conjuction with The Things Network and the target audience is definitely important.
+
+#### 2. Technical prototype
+As discussed and promised with The Things Network, a working 0.9 product should be delivered in the end. It is therefor the highest priority after the concept itself.
 
 #### 3. UX/Visual design
+User experience is key into making the concept work and will not be treated lightly. However, continuous iterations into the nitty gritty details of the UX and visual design might be out of scope. My expertise of choice is development after all.
+
+---
 
 ### Vision
 As the data will be the main starting point besides the requirements and the problems of the target audience, we can already predict possible interesting correlations regardless of the concept. For example the aggregated data, the technical summaries of the gateways, is very contrasting in nature to social data such as communities which is about meet-ups and updates from closely gathered people. Yet adding a more everyday social side to the performance metrics is what potentially could make it more compelling, as it could involve the user on a more personal and/or local level. In the end it will come down to a carefully chosen ratio between technical and social, one more apparent than the other, based on what the target audience values the most as the outcome should increase the conversion in participation, but the form remains unknown for now.
+
+---
 
 ### Planning
 ![Timeline planning](./docs/timeline.png)
