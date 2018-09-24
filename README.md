@@ -9,13 +9,13 @@
   - [Vision](#vision)
   - [Planning](#planning)
 - [Research](#research)
-	- [Target audience](#target-audience)
-		- [Interviews](#interviews)
+	- [Target audience](#target-audience2)
+		- [Interviews (WIP)](#interviews)
 		- [Survey](#survey)
 	- [Data](#data)
 		- [Analysis](#analysis)
-		- [Workshop](#workshop)
-	- [Benchmark creation](#benchmark-creation)
+		- [Workshop (WIP)](#workshop)
+	- [Benchmark creation (WIP)](#benchmark-creation)
 - Insights
 	- Interactivity in storytelling
 - Product
@@ -125,16 +125,16 @@ Early majority and adopters are terms part of the diffusion of innovations theor
   <p><i>https://cryptosigma.files.wordpress.com/2014/09/graph.jpg</i></p>
 </div>
 
-Everett Rogers, a professor of communication studies, summarized the categories (Wikipedia, 2018) as:
+The Diffusion of Innovation Theory (Wayne W, 2018), summarized the categories as:
 
-- **Innovators** – Innovators are willing to take risks, have the highest social status, have financial liquidity, are social and have closest contact to scientific sources and interaction with other innovators. Their risk tolerance allows them to adopt technologies that may ultimately fail. Financial resources help absorb these failures.
-- **Early adopters** – These individuals have the highest degree of opinion leadership among the adopter categories. Early adopters have a higher social status, financial liquidity, advanced education and are more socially forward than late adopters. They are more discreet in adoption choices than innovators. They use judicious choice of adoption to help them maintain a central communication position.
-- **Early majority** – They adopt an innovation after a varying degree of time that is significantly longer than the innovators and early adopters. Early Majority have above average social status, contact with early adopters and seldom hold positions of opinion leadership in a system.
-- **Late majority** – They adopt an innovation after the average participant. These individuals approach an innovation with a high degree of skepticism and after the majority of society has adopted the innovation. Late Majority are typically skeptical about an innovation, have below average social status, little financial liquidity, in contact with others in late majority and early majority and little opinion leadership. 
-- **Laggards** – They are the last to adopt an innovation. Unlike some of the previous categories, individuals in this category show little to no opinion leadership. These individuals typically have an aversion to change-agents. Laggards typically tend to be focused on "traditions", lowest social status, lowest financial liquidity, oldest among adopters, and in contact with only family and close friends. 
+- **Innovators** – These are people who want to be the first to try the innovation. They are venturesome and interested in new ideas. These people are very willing to take risks, and are often the first to develop new ideas. Very little, if anything, needs to be done to appeal to this population..
+- **Early adopters** – These are people who represent opinion leaders. They enjoy leadership roles, and embrace change opportunities. They are already aware of the need to change and so are very comfortable adopting new ideas. Strategies to appeal to this population include how-to manuals and information sheets on implementation. They do not need information to convince them to change.
+- **Early majority** – These people are rarely leaders, but they do adopt new ideas before the average person. That said, they typically need to see evidence that the innovation works before they are willing to adopt it. Strategies to appeal to this population include success stories and evidence of the innovation's effectiveness.
+- **Late majority** – These people are skeptical of change, and will only adopt an innovation after it has been tried by the majority. Strategies to appeal to this population include information on how many other people have tried the innovation and have adopted it successfully.
+- **Laggards** – These people are bound by tradition and very conservative. They are very skeptical of change and are the hardest group to bring on board. Strategies to appeal to this population include statistics, fear appeals, and pressure from people in the other adopter groups.
 
 #### So how does this translate back to our IoT developers?
-Right now The Things Network is making the jump from early adopters to early majority and that causes a shift in how you want to approach them. Early adopters tend to need some assurances of credbility and reliability, where's that should be a given for the early majority and they rather see what you can do with it.
+Right now The Things Network is making the jump from early adopters to early majority and that causes a shift in how you want to approach them. Early adopters tend to need some assurances of credibility and reliability, where's that should be a given for the early majority and they rather see what you can do with it.
 
 Because TTN is transitioning between these two, the product should therefor focus on a mixture of both.
 
@@ -325,7 +325,9 @@ Promo video and finalise documentation.
 Presentation and finalise documentation.
 
 ## Research
-### Target audience
+### Target audience 
+<div id='target-audience2'/>
+
 #### Interviews
 We want to find out what drives people to learn about TTN and what topics and metrics of the available data are especially relevant so they can be prioritised.
 
@@ -455,15 +457,30 @@ The Things network send out a survey with multiple questions through their newsl
 ##### Conclusion
 So what does this tell us about the target audience? It seems the most profound use of The Things Network is to experiment with LoRaWAN and secondly to pursue a commercial goal. But if you take the other non-commercial motivations like hobby's and research into account it's fair to say that most people are in it for themselves. The interest in LoRaWAN is further proven as it comes in as the second subject their most interested in, together with Community building. Further more, the companies these people work for seem to be the most into product development and also a surprisingly large education or research part. Overall does the target audience mainly consist of Software Developers who are also into Open Source development.
 
+---
+
 ### Data
 
 #### Analysis
-A Broker handles a range of device addresses and is responsible for finding the right Handler to forward each message to.
+Because The Things Network recieves massive amounts of data every second real-time it became undoable to store everything. Instead, they **aggregate every 30 seconds, which is stored for 2 hours, and every hour, which is stored for 2 years**. Unfortunately the sets have to be manually exported from their backends.
 
-The Handler is responsible for encryption, decryption and conversion of messages and for forwarding messages to applications
+The following datasets are available:
+
+- **Broker** - handles a range of device addresses and is responsible for finding the right Handler to forward each message to.
+- **Handler** - responsible for encryption, decryption and conversion of messages and for forwarding messages to applications
+- **Gateway** - the main building block of the network, the intermediary to the internet by recieving packets over LoRaWAN.
+
+There are also non-technical data sets available:
+
+- **Communities** - platform for meetups, discussing usecases, and helping each other out in the world of IoT.
+- **Labs** - place where user's share their creations and optional tutortials on how to recreate them.
+
+Lastly, TTN also has a public API called **[NOC](http://noc.thethingsnetwork.org:8085/api/v2/gateways)**, but it's subdue to heavy change in the foreseeable future as they're upgrading their stack from V2 to V3	.
+
+Below are listed the possible insights after careful analysis of all the individual data points from the available data sets.
 
 ##### Aggregations (30 sec & 1 hour summaries)
-###### Broker / Handler
+###### Broker / Handler	
 
 * Apps with the most uplinks
 * Apps with the most downlinks
@@ -486,8 +503,6 @@ The Handler is responsible for encryption, decryption and conversion of messages
 
 *Percentage of…*
 * ID’s (a.k.a regions e.g. ’ttn-broker-eu’)
- 
----
 
 ###### Gateway
 
@@ -518,8 +533,6 @@ The Handler is responsible for encryption, decryption and conversion of messages
 * Bandwidth (125 vs 250 vs 500)
 * Spreading factor (1 vs … vs. 12)
 * Frequency range
-
----
 
 ###### Communities
 
@@ -638,6 +651,8 @@ N.A. (2018, September 19). Diffusion of innovations. Retrieved September 23, 201
 Roland, C. (2009). Designing Connected Products. Retrieved April 19, 2018 from http://www.designingconnectedproducts.com/
 
 Thompson, T. & Baran, N. (1988, November). "The NeXT Computer". Retrieved May 10, 2018, from http://simson.net/ref/NeXT/byte_article.html
+
+Wayne, W. (2018, August 29). Diffusion of Innovation Theory. Retrieved September 24, 2018, from http://sphweb.bumc.bu.edu/otlt/MPH-Modules/SB/BehavioralChangeTheories/BehavioralChangeTheories4.html
 
 Weiser, M. (1991, September). The Computer for the 21st Century [PDF]. Retrieved April 19, 2018 from 
 https://www.lri.fr/~mbl/ENS/FONDIHM/2012/papers/Weiser-SciAm91.pdf
