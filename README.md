@@ -3,17 +3,18 @@
 - [Designbrief](#designbrief)
   - [The Things Network](#the-things-network)
   - [Target audience](#target-audience)
-  - [CLEVER°FRANKE](#clever%C2%B0franke)
+  - [CLEVER°FRANKE (WIP)](#clever%C2%B0franke)
   - [Design challenge](#design-challenge)
+  - [Focus (WIP)](#focus)
   - [Vision](#vision)
   - [Planning](#planning)
 - [Research](#research)
 	- [Target audience](#target-audience)
 		- [Interviews](#interviews)
 		- [Survey](#survey)
-	- Data
-		- Analysis
-		- Workshop
+	- [Data](#data)
+		- [Analysis](#analysis)
+		- [Workshop](#workshop)
 	- Benchmark creation
 		- Online
 		- Books
@@ -144,6 +145,463 @@ Because TTN is transitioning between these two, the product should therefor focu
 
 This project is done with help of C°F.
 
+### Design challenge
+**How can an interactive and storytelling data driven experience convince
+early adopter and early majority Internet of Things developers who are interested yet unfamiliar with LoRaWAN, of the credibility, impact, and underlying technology of the network so they are eager to participate?**
+
+#### Sub-challenges
+
+1. What is interactivity?
+2. What is storytelling?
+3. How do you validate the target audience's needs and priorities?
+4. How do you assure users of the creditability and impact of the network? 
+5. How do you integrate the clarification of LoRaWAN into the product?
+6. How do you make a user eager to participate?
+
+### Focus
+In order or importance:
+#### 1. Concept
+The concept is the groundwork of the entire project
+
+#### 2. Technical realisation
+
+#### 3. UX/Visual design
+
+### Vision
+As the data will be the main starting point besides the requirements and the problems of the target audience, we can already predict possible interesting correlations regardless of the concept. For example the aggregated data, the technical summaries of the gateways, is very contrasting in nature to social data such as communities which is about meet-ups and updates from closely gathered people. Yet adding a more everyday social side to the performance metrics is what potentially could make it more compelling, as it could involve the user on a more personal and/or local level. In the end it will come down to a carefully chosen ratio between technical and social, one more apparent than the other, based on what the target audience values the most as the outcome should increase the conversion in participation, but the form remains unknown for now.
+
+### Planning
+![Timeline planning](./docs/timeline.png)
+
+#### 13 April
+The fist meeting with The Things Network is mainly introductory  to get the know the organisation and what it stands for.
+
+*Deliverables*
+
+	- What are TTN's foremost challenges for the near future.
+	- Who are the users.
+	- What does TTN hope to gain out of this project.
+	- The extend, availability, and maintainability of the data.
+
+*How*
+
+	- Interview
+	- Sketchnotes
+
+#### 23 - 27 April (1 week)
+Knocking out remaining uncertainties surrounding the data and the target audience while doing desk research on Internet of Things, The Things Network, and LoRaWAN.
+
+*Deliverables*
+
+	- Target audience specification with their main problem, when it occurs, and why.
+
+*How*
+
+	- Follow-up interview
+	- Survey
+	- Sketchnotes
+	- Deskresearch
+
+#### 30 April - 4 May (1 week)
+Reces.
+
+#### 7 - 30 May (3 weeks)
+The prerequisites are there, now it is time to come up with an idea.
+
+*Deliverables*
+
+	- Acquire definitive goals and requirements
+	- Inspiration research on similar products.
+	- Concept brainstorm
+	- Proof of concept
+	- Finalise concept 
+
+*How*
+
+	- Competitive analyses
+	- Benchmark creation
+	- Brainstorm
+	- Peer review
+
+#### 1 June
+Pitch the concept to The Things Network.
+
+#### 2 - 31 June (4 weeks)
+These weeks are all about defining the UX and how a storytelling experience could be achieved.
+
+*Deliverables*
+
+	- Low-fidelity prototype
+	- Style guide (typography, colours, layout)
+	- High-fidelity prototype
+	- Tech stack
+
+*How*
+
+	- Prototyping
+	- Storytelling
+	- Co-creation
+
+#### 2 - 6 July (1 week)
+Because this is the final week before the summer break this time will be spend on splitting everything up into small tasks and create an entire backlog for development. This is also the week where to concept will be tested in the form of a prototype with the target audience.
+
+*Deliverables*
+
+	- Backlog
+	- User testing results
+	- Possible concept, UX, or visual adjustments
+
+*How*
+	
+	- Defining features
+	- Splitting up features
+	- Interviews
+
+#### 7 July - 12 August
+Summer break.
+
+#### 13 August - 7 September (4 weeks)
+In these weeks to product will come to life in the form of a MVP, which will also be user tested.
+
+*Deliverables*
+
+	- Minimal viable product
+	- User testing rapport
+
+*How*
+
+	- Development
+	- User testing
+
+#### 10 - 28 September (3 weeks)
+Iteration will be the sole purpose of these weeks.
+
+*Deliverables*
+
+	- Product 0.9
+
+*How*
+
+	- Development
+
+#### 1 - 19 October (3 weeks)
+Iteration will be the sole purpose of these weeks.
+
+*Deliverables*
+
+	- Product 1.0
+
+*How*
+
+	- Development
+	- Visual adjustments
+	- UX adjustments
+
+#### 22 - 26 October (1 week)
+Promo video and finalise documentation.
+
+#### 29 October - 2 November (1 week)
+Presentation and finalise documentation.
+
+## Research
+### Target audience
+#### Interviews
+We want to find out what drives people to learn about TTN and what topics and metrics of the available data are especially relevant so they can be prioritised.
+
+##### Goals
+- What drives them to find out about LoRaWAN and The Things Network?
+- How important is the credibility of the network? (how mature and stable)?
+- How relevant is it to understand the underlying technology?
+- How much do they care about real-time performance metrics of the network?
+- How much do they care about communities and what goes on near them?
+- What is the most important thing they'd need to know before they consider participating?
+
+##### Introduction
+Before jumping straight to the questions surrounding TNN and the underlying technology, a few introductory questions are asked to make each other feel comfortable and to get a better understanding of whom I am talking to.
+
+1. Could you tell me a bit about yourself?
+2. When did you first get into IoT and why?
+3. Are you currently into IoT professionally or more has a hobby?
+4. At what scale do of IoT do you operate on?
+5. Could you chronologically tell me about a few of your creations or IoT projects you participated in?
+
+##### The Things Network
+1. How do you usually approach internet connectivity?
+	1. Is that process troublesome? If so, why?
+2. Have you heard of a technology called LoRaWAN?
+	1. Could you elaborate how it works?
+3. Have you heard of The Things Network?
+	1. Could you elaborate how it works?
+
+*Explain or elaborate LoRaWAN and The Things Network*
+
+The Things Network (TTN) is building a network for the Internet of Things by creating abundant data connectivity, so applications and businesses can flourish. It is a distributed network by the users, for the users, and there are currently already 3838 gateways up and running worldwide. TTN is an open-source and non-profit organisation and one can participate in multiple ways to help the network and yourself.
+
+The technology they use is called LoRaWAN and it allows for things to talk to the internet without 3G or WiFi. So no WiFi codes and no mobile subscriptions.
+
+It features low battery usage, long range and low bandwidth. Perfect for the internet of things.
+
+More information: https://www.thethingsnetwork.org/
+
+1. Do you have any questions that immediately come to mind?
+2. Is this something that interests and might help you?
+3. What would you consider to be the most important factors before considering your participation in the network?
+3. In what way would you be interested to participate? (Infra, hardware, software)
+4. Is it important to you to comprehend how the network runs on LoRaWAN?
+5. How important is the maturity and stableness of the network to you? Is there some sort of minimal requirement? Would you be interested in (real-time) performance metrics?
+6. Are active communities within the network near you something that would interest you? Why? Would you consider working together with someone through the network?
+7. Now that we talked about multiple aspects of the network such as the communities, the hardware, software, performance, maturity, and the underlying technology - what things matter to most to you? (ranking)
+
+##### Results
+Some answers are only documented in part to leave out irrelevant context.
+
+###### Daan Rongen
+**Could you tell me a bit about yourself?**
+
+> Student of the Intelligent Environments minor.
+
+**When did you first get into IoT and why?**
+
+
+**Are you currently into IoT professionally or more has a hobby?**
+
+**At what scale do of IoT do you operate on?**
+
+**Could you chronologically tell me about a few of your creations or IoT projects you participated in?**
+
+##### Conclusion
+
+#### Survey
+The Things network send out a survey with multiple questions through their newsletter. A summary of the results can be found below.
+
+##### What are you mainly using The Things Network for?
+
+| Reason                                                                  | Count   | Percentage |
+| :---------------------------------------------------------------------- | :------ | :--------- |
+| To learn about / experiment with LoRa and LoRaWAN                       | 124     | 29%        |
+| To develop commercial LoRa / LoRaWAN products or services               | 88      | 21%        |
+| Personal reasons / hobby                                                | 68      | 16%        |
+| To join the mission of building an open and decentralized network       | 60      | 14%        |
+| Research & education                                                    | 44      | 10%        |
+| To build a PoC                                                          | 20      | 5%         |
+| To build professional relationships in the LoRaWAN industry             | 10      | 2%         |
+| To interact with the community (on the Forum, Slack or community pages) | 5       | 1%         |
+| Other                                                                   | 22      | 5%         |
+| **Total**                                                               | **426** | **100%**   |
+
+##### What subjects are you mainly interested in?
+*This questions was multiple choice which means every reason is relative to the total amount of participants.*
+
+| Reason                                                        | Percentage |
+| :------------------------------------------------------------ | :--------- |
+| Open Source development                                       | 58%        |
+| LoRaWAN education                                             | 52%        |
+| Community building                                            | 44%        |
+| Interoperability with other LoRaWAN networks                  | 40%        |
+| Conferences and events                                        | 26%        |
+| Offering products/services via The Things Network Marketplace | 23%        |
+| Access to professional LoRaWAN partners                       | 21%        |
+| Buying/reselling private LoRaWAN networks                     | 20%        |
+
+##### What is your occupation?
+
+| Occupation                 | Count   | Percentage |
+| :------------------------- | :------ | :--------- |
+| Software developer         | 111     | 26%        |
+| Hardware developer         | 62      | 15%        |
+| Network engineer/architect | 54      | 13%        |
+| Academic or researcher     | 47      | 11%        |
+| Student                    | 36      | 9%         |
+| Product manager            | 33      | 8%         |
+| Sales or account manager   | 5       | 1%         |
+| Marketeer                  | 3       | 1%         |
+| Other                      | 79      | 19%        |
+| **Total**                  | **422** | **100%**   |
+
+##### How would you describe the main activity of your company?
+
+| Activity                     | Percentage |
+| :--------------------------- | :--------- |
+| Product Development          | 30%        |
+| Education or research        | 19%        |
+| IT consultancy               | 15%        |
+| Systems Integrator           | 12%        |
+| Application service provider | 8%         |
+| Network Operator             | 5%         |
+| (Electronic) distributor     | 1%         |
+| Other                        | 10%        |
+
+##### Conclusion
+So what does this tell us about the target audience? It seems the most profound use of The Things Network is to experiment with LoRaWAN and secondly to pursue a commercial goal. But if you take the other non-commercial motivations like hobby's and research into account it's fair to say that most people are in it for themselves. The interest in LoRaWAN is further proven as it comes in as the second subject their most interested in, together with Community building. Further more, the companies these people work for seem to be the most into product development and also a surprisingly large education or research part. Overall does the target audience mainly consist of Software Developers who are also into Open Source development.
+
+### Data
+
+#### Analysis
+A Broker handles a range of device addresses and is responsible for finding the right Handler to forward each message to.
+
+The Handler is responsible for encryption, decryption and conversion of messages and for forwarding messages to applications
+
+##### Aggregations (30 sec & 1 hour summaries)
+###### Broker / Handler
+
+* Apps with the most uplinks
+* Apps with the most downlinks
+* Devs with the most uplinks
+* Devs with the most downlinks
+* Uplinks overtime
+* Downlinks overtime
+* Hour or day with the most uplinks
+* Hour or day with the most downlinks
+* Hour or day with the most uplink bytes
+* Hour or day with the most downlink bytes
+
+*Amount of…*
+* Uplinks
+* Downlinks
+* Apps
+* Devs
+* Gateways
+* ID’s (a.k.a regions e.g. ’ttn-broker-eu’)
+
+*Percentage of…*
+* ID’s (a.k.a regions e.g. ’ttn-broker-eu’)
+ 
+---
+
+###### Gateway
+
+* Percentage bandwidth x with spreading factor x
+* Uplinks vs. bandwidth
+* Downlinks vs. bandwidth
+* Uplinks vs. spreading factor
+* Downlinks vs. spreading factor
+* Gateways responsible for half of uplink network traffic
+* Hour or day with the most uplinks
+* Hour or day with the most downlinks
+* Hour or day with the most uplink bytes
+* Hour or day with the most downlink bytes
+
+*If total gateways is known:*
+* Active gateways (online at least once during period)
+* Online ratio of active gateways during period
+* Gateways with online ratio >= 0.99 during period
+* % of gateways with online ratio >= 0.99 during period
+
+*Amount of…*
+* Uplinks
+* Downlinks
+* Uplink bytes
+* Downlink bytes
+
+*Percentage of…*
+* Bandwidth (125 vs 250 vs 500)
+* Spreading factor (1 vs … vs. 12)
+* Frequency range
+
+---
+
+###### Communities
+
+* Date of creation vs. communities (e.g. 5 communities exist for 2 years)
+* Number of gateways per community
+* Official communities vs. Communities
+
+*Total…*
+* Communities
+* Official communities
+* Contributors
+* Core contributions
+* Meet-ups
+* Posts
+* Stories
+
+*Updates:*
+ * Community published
+ * New post
+ * New meet-ups
+ * New gateway
+ * Story is public on Labs
+ * New group on Labs
+ * New partner
+ * New community
+ * Reach N contributors
+ * Community becomes official
+ * New member community
+ * Update community page
+ * Nearby community is published
+ * Nearby community official
+ * Nearby community meetup
+ * New community resource
+ * New core member
+ * New story from community contributor
+ * Month Anniversary Community
+ * Year Anniversary Community
+
+###### NOC
+* Location of gateways (long, lat)
+* Altitude of gateways (1 …. 300?)
+
+###### Cross-set combinations
+* Uplinks vs. gateway locations
+* Downlinks vs. gateway locations
+* Meetups vs. Locations
+* Gateways responsible for half of uplink network traffic vs. Locations
+
+#### Workshop
+![Photo of the workshop meeting room](docs/workshop-overview.jpg)
+▶ *Photo of the meeting room where the data workshop took place*
+
+The data workshop was setup to prioritise the findings from the data analysis. The presentation can be found [here](./docs/data-workshop.pdf).
+
+
+*explain the steps of the workshop...*
+
+---
+
+##### Result
+- Multiple scales: global, country, city
+- Make certain metrics more appealing by contextualising it in the most relevant scale.
+- Potential gamification through uptime and uplink / downlink efficiency
+- Slightly move from proving trust to this is what you can do.
+
+###### Data priority
+
+These are the metrics with the highest priority.
+
+*Brokers & handlers*
+- Total Apps
+- Total Devs
+- % ID's
+- Uplinks / downlinks broken down by time (e.g by day)
+- Hour or day with the most uplinks / downlinks
+
+*Gateways*
+- Total uplinks / downlinks
+- Uplinks / downlinks vs. Spreading factor
+- Uplinks / downlinks vs. Location
+- Frequency range usage
+- Gateways responsible for half of the uplink/downlink traffic
+- Active gateways (online at least once during period)
+- Online ratio of active gateways during period
+- Gateways with online ratio >= 0.99 during period
+- % of gateways with online ratio >= 0.99 during period
+
+*Communities*
+- Total communities
+- Total meetups
+
+*Updates*
+- New meet-up
+- New community
+- Community becomes official
+- Anniversaries
+
+
+### Benchmark creation
+| Infographic Designer's Sketchbooks                          | Visual Storytelling                                       | Information Graphics                                       |
+| :---------------------------------------------------------- | :-------------------------------------------------------- | :--------------------------------------------------------- |
+| <img width="500px" src="./docs/infographic-designers.jpg"/> | <img width="500px" src="./docs/visual-storytelling.gif"/> | <img width="500px" src="./docs/information-graphics.jpg"/> |
+
 ## Sources
 
 Burrus, D. N.D. The Internet of Things Is Far Bigger Than Anyone Realizes. Retrieved April 19, 2018 from https://www.wired.com/insights/2014/11/the-internet-of-things-bigger/
@@ -154,7 +612,7 @@ N.A. (2017, December 20). Mark Weiser. Retrieved April 19, 2018 from https://en.
 
 N.A. The Things Network. Building a fully distributed Internet of Things infrastructure. Retrieved April 19, 2018 from https://www.thethingsnetwork.org/
 
-N.A. (2018, September 19). Diffusion of innovations. Retrieved September 23 2018 from https://en.wikipedia.org/wiki/Diffusion_of_innovations
+N.A. (2018, September 19). Diffusion of innovations. Retrieved September 23, 2018 from https://en.wikipedia.org/wiki/Diffusion_of_innovations
 
 Roland, C. (2009). Designing Connected Products. Retrieved April 19, 2018 from http://www.designingconnectedproducts.com/
 
