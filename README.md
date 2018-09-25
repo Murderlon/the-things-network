@@ -14,19 +14,21 @@
 		- [Survey](#survey)
 	- [Data](#data)
 		- [Analysis](#analysis)
-		- [Workshop (WIP)](#workshop)
-	- [Benchmark creation (WIP)](#benchmark-creation)
+		- [Workshop](#workshop)
 - Insights
-	- Interactivity in storytelling
-- Product
-	- Concept schetsen
-	- Top 3 concepts
-	- High-fi 3 concepts
+	- Storytelling direction
+	- Data drawbacks
+- [Product](#product)
+	- [Brainstorm](#brainstorm)
+	- [Top 3 concepts](#top-3-concepts)
+	- [Concept presentation](#concept-presentation)
+	- [Ideation](Ideation)
 	- Design 0.1
+	- Design presentation
+	- Expert review
 	- Design 0.2
-	- Design 0.3
+	- Expert review
 	- Data pre-processing
-	- Tech stack
 	- Prototype
 - [Sources](#sources)
 
@@ -475,7 +477,7 @@ There are also non-technical data sets available:
 - **Communities** - platform for meetups, discussing usecases, and helping each other out in the world of IoT.
 - **Labs** - place where user's share their creations and optional tutortials on how to recreate them.
 
-Lastly, TTN also has a public API called **[NOC](http://noc.thethingsnetwork.org:8085/api/v2/gateways)**, but it's subdue to heavy change in the foreseeable future as they're upgrading their stack from V2 to V3	.
+Lastly, TTN also has a public API called **[NOC](http://noc.thethingsnetwork.org:8085/api/v2/gateways)** which has similar data to the above data sets, but with a few unique data points like gateway location (lat, long) and gateway altitude.
 
 Below are listed the possible insights after careful analysis of all the individual data points from the available data sets.
 
@@ -585,12 +587,7 @@ Below are listed the possible insights after careful analysis of all the individ
 ![Photo of the workshop meeting room](docs/workshop-overview.jpg)
 ▶ *Photo of the meeting room where the data workshop took place*
 
-The data workshop was setup to prioritise the findings from the data analysis. The presentation can be found [here](./docs/data-workshop.pdf).
-
-
-*explain the steps of the workshop...*
-
----
+The data workshop was setup to prioritise the findings from the data analysis. The presentation and steps can be found [here](./docs/data-workshop.pdf).
 
 ##### Result
 - Multiple scales: global, country, city
@@ -599,7 +596,7 @@ The data workshop was setup to prioritise the findings from the data analysis. T
 - Slightly move from proving trust to this is what you can do.
 
 ###### Data priority
-
+![Photo of the workshop meeting room](docs/workshop-wall.jpg)
 These are the metrics with the highest priority.
 
 *Brokers & handlers*
@@ -628,13 +625,158 @@ These are the metrics with the highest priority.
 - New meet-up
 - New community
 - Community becomes official
-- Anniversaries
+	- Anniversaries
+
+###### Maintainability & responsibility
+
+*Real-time*
+
+The workshop showed great interest in using their public API ro showcase the prioritised data real-time. But that would require additional endpoints as well as changes to the structure of some existing API responses. The exact estimate and feasibility of this remains unknown for now.
+
+*Ownership*
+
+Data responsibility was also discussed in order to clear things up about who should deliver what. TTN becomes responsible for the delivery of all the needed data, but the exact structure and formatting the front-end might need, is up to me. This would most likely require data pre-processing through an automated handmade script.
+
+## Product
+
+### Brainstorm
+![](docs/books.jpg)
+The brainstorm is a series of sketches, some of them inspired by the wide range of data visualisation books available at CLEVER°FRANKE.
+
+These three books served the most as reference:
+- **Infographic Designer's Sketchbooks** *by S. Heller & R. Landers*
+- **Visual Storytelling** *by R. Klanten, S. Ehmann, F. Schulze*
+- **Information Graphics** *by S. Rendgen*
+
+<img src="./docs/sketches/IMG_20180925_103615.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103638.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103641.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103649.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103652.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103700.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103703.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103715.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103725.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103728.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103735.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103737.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103755.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103801.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103809.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103815.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103818.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103823.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103827.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103838.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103909.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103926.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103938.jpg" width="442px"/>
+
+### Top 3 concepts
+The above sketches eventually eventually led to the following concepts, they are mostly combinations of multiple sketched out ideas. 
+
+The high-fi concepts in this section initially looked like literal digitized sketches, like this example below, but I recieved the feedback that clients usually can't look further than the sketch itself and it's therefor important to add some visual style to it for their imagination. For clarity sake I'm only showing the visual ones.
+
+<img src="./docs/raw-concept-dashboard.png" width="442px"/>
 
 
-### Benchmark creation
-| Infographic Designer's Sketchbooks                          | Visual Storytelling                                       | Information Graphics                                       |
-| :---------------------------------------------------------- | :-------------------------------------------------------- | :--------------------------------------------------------- |
-| <img width="500px" src="./docs/infographic-designers.jpg"/> | <img width="500px" src="./docs/visual-storytelling.gif"/> | <img width="500px" src="./docs/information-graphics.jpg"/> |
+
+#### Performance dashboard
+The first concept is a safe choice, an interactive analytics dachboard. It represents the current state of The Things Network and is mostly focused on performance metrics.
+
+![](docs/concept-dashboard.png)
+
+
+#### Packet Traveller
+The Packet Traveller is a storytelling and animated experience in which the user follows a single packet through all the network's underlying steps. It's also very convenient that the underlying steps happen to be almost the same as the available data sets (e.g Broker step has a broker data set). Small details like LoRa's [modulation](https://duckduckgo.com/?q=modulation&t=ffab&iax=images&ia=images) wave could also be visually incorporated into this concept.
+
+![](docs/concept-packettraveller.png)
+
+#### Compare
+![](docs/concept-compare.jpg)
+![](docs/concept-compare2.jpg)
+
+### Concept presentation
+These concepts were then brought to The Things Network to find out which direction we were going to take.
+The presentation can be found [here](./docs/concepts.pdf).
+
+The Packet Traveller was eventually chosen as the concept.
+
+### Ideation
+Now that the concept direction has been chosen, it's time to go into how things are going to look and work.
+
+#### Jeremy Raider
+![](docs/jeremy-wall.jpg)
+
+I did a small ideation session with a fellow intern at CLEVER°FRANKE.
+
+##### Result
+- 'Zooming' effect might be interesting. TTN is a global network but you can create suspense by showing only a city and then gradually zoom out to reveal it's worldwide coverage.
+- The encryption step in the Packet Traveller could be a riddle that gradually onfolds. For instance, the value of the packet might be glitched but in the end it shows itself.
+- Let the packets move towards gateways on the map to create some sort of marching ants effect.
+
+---
+
+#### Sketches
+
+<img src="./docs/sketches/IMG_20180925_104000.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_103952.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104013.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104018.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104037.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104045.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104050.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104053.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104100.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104106.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104109.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104204.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104206.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104212.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104216.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104230.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104237.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104240.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104250.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104302.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104308.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104316.jpg" width="442px"/>
+<img src="./docs/sketches/IMG_20180925_104640.jpg" width="442px"/>
+
+### Design 0.1
+First version of the design can be found [here](./docs/design-0.1.pdf).
+
+### Design presentation
+The design presentation can be found [here](./docs/design-presentation.pdf).
+
+### Expert review
+
+Every Wednesday from 9:00 till 10:00 there's design review at CLEVER°FRANKE by and for all the (UX) designers. One can scheduele some time for something they'd like a review on and so I did for my first draft of the design.
+
+The design review team consists of:
+- **Thomas Clever** - Co-founder & Director
+- **Wouter van Dijk** - Lead UX Designer
+- **Roel De Jonge** - Lead Visual Designer
+- **Pietro Lodi** - Designer
+- **Joe Chrisman** - UX Designer
+- **Bas Van Den Brugh** - Designer
+- **Joost Mommers** - Designer
+- **Jonas Groot Kormelink** - Creative Coder
+- **Marigo Heijboer** - UX Designer
+
+#### Feedback
+- Clicking a story on the map expands it's context and allows to enter the Packet Travaller via a button. This, however, falsely indicates the underlying steps differ per story.
+- Separate stories and packet traveller
+- Traveller icons too abstract, hard to find meaning.
+- Make gateways toggle instead of switch between states.
+- Don’t reuse shapes for different purposes.
+- Make signal more consistent.
+- Put context on each signal, for instance, it's a heat sensor value.
+
+### Design 0.2
+### Expert review
+### Data pre-processing
+### Prototype
 
 ## Sources
 
