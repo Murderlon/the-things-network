@@ -727,7 +727,16 @@ I did a small ideation session with a fellow intern at CLEVER°FRANKE.
 First version of the design can be found [here](./docs/design-0.1.pdf).
 
 ### Design presentation
+Now that the first version of the design is finished, it is time to present it to The Things Network. This was also the moment to further discuss the feasibility of using their API in the front-end, as mentioned before in the data workshop.
+
 The design presentation can be found [here](./docs/design-presentation.pdf).
+
+I also made a small [API specification](./docs/api.md) to make things more concrete. This acted as a guideline when I sat down with the tech-lead on the API. Unfurtunately it became clear that it's for the better to do manual exports of the data and manually update the front-end. This is because their API is subdue to heavy change as they go from V2 to V3. The good news is that as I know what structure and format of the data is required for the front-end, they offered to change the API at a later stage to match that. 
+
+#### Design feedback
+- Packet Traveller should contain less steps. Router, Broker, and Handler are unnecessarily detailed and should together just become 'The Things Network'.
+- TTN's servers could be displayed on the map as well, as they have physical locations.
+- When explaining the gateway, add a link to the gateway marketplace.
 
 ### Expert review
 
@@ -754,7 +763,7 @@ The design review team consists of:
 - Put context on each signal, for instance, it's a heat sensor value.
 
 ### Design 0.2
-to be continued..
+Second version of the design can be found [here](./docs/design-0.2.pdf).
 
 ### Expert review
 to be continued..
