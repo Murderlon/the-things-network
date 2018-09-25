@@ -10,7 +10,7 @@
   - [Planning](#planning)
 - [Research](#research)
 	- [Target audience](#target-audience2)
-		- [Interviews (WIP)](#interviews)
+		- [Interviews](#interviews)
 		- [Survey](#survey)
 	- [Data](#data)
 		- [Analysis](#analysis)
@@ -23,9 +23,9 @@
 	- [Top 3 concepts](#top-3-concepts)
 	- [Concept presentation](#concept-presentation)
 	- [Ideation](Ideation)
-	- Design 0.1
-	- Design presentation
-	- Expert review
+	- [Design 0.1](#design-0.1)
+	- [Design presentation](#design-presentation)
+	- [Expert review](#expert-review)
 	- Design 0.2
 	- Expert review
 	- Data pre-processing
@@ -377,25 +377,6 @@ More information: https://www.thethingsnetwork.org/
 6. Are active communities within the network near you something that would interest you? Why? Would you consider working together with someone through the network?
 7. Now that we talked about multiple aspects of the network such as the communities, the hardware, software, performance, maturity, and the underlying technology - what things matter to most to you? (ranking)
 
-##### Results
-Some answers are only documented in part to leave out irrelevant context.
-
-###### Daan Rongen
-**Could you tell me a bit about yourself?**
-
-> Student of the Intelligent Environments minor.
-
-**When did you first get into IoT and why?**
-
-
-**Are you currently into IoT professionally or more has a hobby?**
-
-**At what scale do of IoT do you operate on?**
-
-**Could you chronologically tell me about a few of your creations or IoT projects you participated in?**
-
-##### Conclusion
-
 #### Survey
 The Things network send out a survey with multiple questions through their newsletter. A summary of the results can be found below.
 
@@ -679,13 +660,10 @@ The high-fi concepts in this section initially looked like literal digitized ske
 
 <img src="./docs/raw-concept-dashboard.png" width="442px"/>
 
-
-
 #### Performance dashboard
 The first concept is a safe choice, an interactive analytics dachboard. It represents the current state of The Things Network and is mostly focused on performance metrics.
 
 ![](docs/concept-dashboard.png)
-
 
 #### Packet Traveller
 The Packet Traveller is a storytelling and animated experience in which the user follows a single packet through all the network's underlying steps. It's also very convenient that the underlying steps happen to be almost the same as the available data sets (e.g Broker step has a broker data set). Small details like LoRa's [modulation](https://duckduckgo.com/?q=modulation&t=ffab&iax=images&ia=images) wave could also be visually incorporated into this concept.
@@ -693,6 +671,8 @@ The Packet Traveller is a storytelling and animated experience in which the user
 ![](docs/concept-packettraveller.png)
 
 #### Compare
+Date & location compare dashoard. It's focused on performance metrics as well, but in a different form.
+
 ![](docs/concept-compare.jpg)
 ![](docs/concept-compare2.jpg)
 
@@ -774,9 +754,16 @@ The design review team consists of:
 - Put context on each signal, for instance, it's a heat sensor value.
 
 ### Design 0.2
+to be continued..
+
 ### Expert review
+to be continued..
+
 ### Data pre-processing
+to be continued..
+
 ### Prototype
+to be continued..
 
 ## Sources
 
