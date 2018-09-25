@@ -9,27 +9,25 @@
   - [Vision](#vision)
   - [Planning](#planning)
 - [Research](#research)
-	- [Target audience](#target-audience2)
-		- [Interviews](#interviews)
-		- [Survey](#survey)
-	- [Data](#data)
-		- [Analysis](#analysis)
-		- [Workshop](#workshop)
-- Insights
-	- Storytelling direction
-	- Data drawbacks
+  - [Target audience](#target-audience2)
+    - [Interviews](#interviews)
+    - [Survey](#survey)
+  - [Data](#data)
+    - [Analysis](#analysis)
+    - [Workshop](#workshop)
+- [Insights](#insights)
+  - [Data complexity](#data-complexity)
 - [Product](#product)
-	- [Brainstorm](#brainstorm)
-	- [Top 3 concepts](#top-3-concepts)
-	- [Concept presentation](#concept-presentation)
-	- [Ideation](Ideation)
-	- [Design 0.1](#design-0.1)
-	- [Design presentation](#design-presentation)
-	- [Expert review](#expert-review)
-	- Design 0.2
-	- Expert review
-	- Data pre-processing
-	- Prototype
+  - [Brainstorm](#brainstorm)
+  - [Top 3 concepts](#top-3-concepts)
+  - [Concept presentation](#concept-presentation)
+  - [Ideation](Ideation)
+  - [Design 0.1](#design-0.1)
+  - [Design presentation](#design-presentation)
+  - [Expert review](#expert-review)
+  - [Design-0.2](#design-0.2)
+  - [Expert review](#export-review2)
+  - [Prototype]()
 - [Sources](#sources)
 
 ## Designbrief
@@ -618,6 +616,140 @@ The workshop showed great interest in using their public API ro showcase the pri
 
 Data responsibility was also discussed in order to clear things up about who should deliver what. TTN becomes responsible for the delivery of all the needed data, but the exact structure and formatting the front-end might need, is up to me. This would most likely require data pre-processing through an automated handmade script.
 
+## Insights
+### Data complexity
+Let's take a single row from a single dataset, in the case the hourly aggregated gateway dataset in `csv` (comma serparated values).
+
+| name             | time        | downlink_bytes | downlink_count | id             | lorawan.bandwidth | lorawan.frequency | lorawan.net_id | lorawan.spreading_factor | status_count | uplink_bytes | uplink_count |
+| :--------------- | :---------- | :------------- | :------------- | :------------- | :---------------- | :---------------- | :------------- | :----------------------- | :----------- | :----------- | :----------- |
+| gateway_counters | 1,52717E+18 |                |                | arjanvanb-gw-1 | 125               | 868300000         | 10             | 12                       |              | 19           | 1            |
+
+#### Size
+You've seen the above column, now picture there are **±90 million of them**, per dataset.
+Because of the size of the datasets it's not possible to import them into a programming langauge's memory directly. Instead, you have to spread the file into little chunks called `buffer`'s and manually detect when those buffers become a single column. Once you do, you can pass it on and edit it down the line, without waiting for the rest of the columns (or buffers). This approach is significantly more complex but neccessary.
+
+#### Types
+You can't currently see it, but a computer can't distinguish these values from each other as they're all `String`'s, in other words, meaningless text. So to start off it's important that values have their correct type (e.g `Date`, `Number`, `String`, etc.)
+
+#### Non-chronological aggregations
+There is basicly a summary of every gateway from every hour but that's unnecessarily detailed. For this project, we'd only need a summary of every day. This means applying addition on bytes and counts but the data isn't chronological, which means 50 million columns down the line that very same day might appear again. This is challenging because you have to keep all aggregations in memory en constantly check whether it already exists partially or completely, of which partially consists of the most checks.
+
+#### Structure
+To work with the data dynamicly on the front-end a vastly different structure is required. An example of what an aggregated day would look like can be seen below.
+
+```json
+{
+  "Thu May 24 2018 23:00:00 GMT+0200 (Central European Summer Time)": {
+    "time": "2018-05-24T21:00:00.000Z",
+    "downlink_bytes": 1227055,
+    "downlink_count": 87668,
+    "uplink_bytes": 21880575,
+    "uplink_count": 882977,
+    "bandwidths": [
+      {
+        "mhz": 125,
+        "spreading_factors": [
+          {
+            "spreading_factor": 12,
+            "uplinks": 250986,
+            "downlinks": 473
+          },
+          {
+            "spreading_factor": 7,
+            "uplinks": 419014,
+            "downlinks": 10089
+          },
+          {
+            "spreading_factor": 11,
+            "uplinks": 25531,
+            "downlinks": 0
+          },
+          {
+            "spreading_factor": 10,
+            "uplinks": 54090,
+            "downlinks": 758
+          },
+          {
+            "spreading_factor": 8,
+            "uplinks": 59443,
+            "downlinks": 3490
+          },
+          {
+            "spreading_factor": 9,
+            "uplinks": 59888,
+            "downlinks": 45739
+          }
+        ]
+      },
+      {
+        "mhz": 250,
+        "spreading_factors": [
+          {
+            "spreading_factor": 7,
+            "uplinks": 13322,
+            "downlinks": 1
+          }
+        ]
+      },
+      {
+        "mhz": 500,
+        "spreading_factors": [
+          {
+            "spreading_factor": 10,
+            "uplinks": 0,
+            "downlinks": 7299
+          },
+          {
+            "spreading_factor": 9,
+            "uplinks": 0,
+            "downlinks": 2254
+          },
+          {
+            "spreading_factor": 8,
+            "uplinks": 640,
+            "downlinks": 3321
+          },
+          {
+            "spreading_factor": 12,
+            "uplinks": 0,
+            "downlinks": 3354
+          },
+          {
+            "spreading_factor": 7,
+            "uplinks": 0,
+            "downlinks": 10890
+          }
+        ]
+      }
+    ],
+    "frequencies": [
+      {
+        "frequency": 868300000,
+        "uplinks": 131825,
+        "downlinks": 2908
+      },
+      {
+        "frequency": 867500000,
+        "uplinks": 42029,
+        "downlinks": 868
+      },
+      {
+        "frequency": 867700000,
+        "uplinks": 65610,
+        "downlinks": 911
+      },
+     // etc ...
+    ]
+  }
+}
+```
+
+#### Cross data set combinations
+An extra challenge appears when trying to realize the different scales (global, country, city) mentioned in the [data workshop](#workshop). In order to create data per location, the API has to be referenced to match a gateway ID with it's coordinates.
+
+#### Conclusion
+To drastically scale down the scope of data pre-processing, the location based scales will not be implemented.
+
 ## Product
 
 ### Brainstorm
@@ -723,20 +855,28 @@ I did a small ideation session with a fellow intern at CLEVER°FRANKE.
 <img src="./docs/sketches/IMG_20180925_104316.jpg" width="442px"/>
 <img src="./docs/sketches/IMG_20180925_104640.jpg" width="442px"/>
 
+---
+
 ### Design 0.1
 First version of the design can be found [here](./docs/design-0.1.pdf).
 
+---
+
 ### Design presentation
-Now that the first version of the design is finished, it is time to present it to The Things Network. This was also the moment to further discuss the feasibility of using their API in the front-end, as mentioned before in the data workshop.
+Now that the first version of the design is finished, it is time to present it to The Things Network. The design presentation can be found [here](./docs/design-presentation.pdf).
 
-The design presentation can be found [here](./docs/design-presentation.pdf).
+#### API
+This was also the moment to further discuss the feasibility of using their API in the front-end, as mentioned before in the [data workshop](#workshop). I  made a small [API specification](./docs/api.md) to make things more concrete. This acted as a guideline when I sat down with the tech-lead on the API. Unfurtunately it became clear that it's for the better to do manual exports of the data and manually update the front-end. This is because their API is subdue to heavy change as they go from V2 to V3. The good news is that as I know what structure and format of the data is required for the front-end, they offered to change the API at a later stage to match that.
 
-I also made a small [API specification](./docs/api.md) to make things more concrete. This acted as a guideline when I sat down with the tech-lead on the API. Unfurtunately it became clear that it's for the better to do manual exports of the data and manually update the front-end. This is because their API is subdue to heavy change as they go from V2 to V3. The good news is that as I know what structure and format of the data is required for the front-end, they offered to change the API at a later stage to match that. 
+#### Time ranges
+The [data analysis](#analysis) showed two years worth of aggregated data is stored, but what time range is relevant to show? The full two year? One year? One day? After a small discussion, TTN finds that the last month and last three months are the most interesting to visualise.
 
 #### Design feedback
 - Packet Traveller should contain less steps. Router, Broker, and Handler are unnecessarily detailed and should together just become 'The Things Network'.
 - TTN's servers could be displayed on the map as well, as they have physical locations.
 - When explaining the gateway, add a link to the gateway marketplace.
+
+---
 
 ### Expert review
 
@@ -762,17 +902,45 @@ The design review team consists of:
 - Make signal more consistent.
 - Put context on each signal, for instance, it's a heat sensor value.
 
+---
+
 ### Design 0.2
 Second version of the design can be found [here](./docs/design-0.2.pdf).
 
-### Expert review
-to be continued..
+#### Design decisions:
+- Less steps for the packet traveller (how it works). Router, broker, and handler have been removed and together became TTN.
+- The site is split into three parts, how it works, coverage, and metrics. Now it’s less monolithic and easier to reason about.
 
-### Data pre-processing
-to be continued..
+#### Techical decisions:
+- Still depends on NOC for the mapping of the gateway locations in coverage (lat, long).
+
+---
+
+### Expert review
+<div id='expert-review2'/>
+
+Like the previous expert review, I joined the design review at CLEVER°FRANKE.
+
+The design review team consists of:
+- **Thomas Clever** - Co-founder & Director
+- **Wouter van Dijk** - Lead UX Designer
+- **Roel De Jonge** - Lead Visual Designer
+- **Pietro Lodi** - Designer
+- **Joe Chrisman** - UX Designer
+- **Bas Van Den Brugh** - Designer
+- **Joost Mommers** - Designer
+- **Jonas Groot Kormelink** - Creative Coder
+- **Marigo Heijboer** - UX Designer
+
+#### Feedback
+- Make the map and the content more complementary, they feel out of touch as the content is quite literally an overlay on top of the map. You'd want to tell the story from inside the map.
+
+---
+
 
 ### Prototype
-to be continued..
+Currently in the making.
+
 
 ## Sources
 
