@@ -626,7 +626,7 @@ Let's take a single row from a single dataset, in the case the hourly aggregated
 
 #### Size
 You've seen the above column, now picture there are **±90 million of them**, per dataset.
-Because of the size of the datasets it's not possible to import them into a programming langauge's memory directly. Instead, you have to spread the file into little chunks called `buffer`'s and manually detect when those buffers become a single column. Once you do, you can pass it on and edit it down the line, without waiting for the rest of the columns (or buffers). This approach is significantly more complex but neccessary.
+Because of the size of the datasets it's not possible to import them into a programming language's memory directly. Instead, you have to spread the file into little chunks called `buffer`'s and manually detect when those buffers become a single column. Once you do, you can pass it on and edit it down the line, without waiting for the rest of the columns (or buffers). This approach is significantly more complex but neccessary.
 
 #### Types
 You can't currently see it, but a computer can't distinguish these values from each other as they're all `String`'s, in other words, meaningless text. So to start off it's important that values have their correct type (e.g `Date`, `Number`, `String`, etc.)
