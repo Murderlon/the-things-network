@@ -1,6 +1,8 @@
 # The Things Network 🌍
 
-> (WIP) A new data-driven and storytelling experience for The Things Network
+> A new data-driven and storytelling experience for The Things Network
+>
+> 🚨 **Work in progress** 🚨
 
 ▶️ [Product biography](./docs/product-biography.md)
 
