@@ -21,6 +21,7 @@ class App extends Component {
       <ThemeProvider theme={{ ...colors, ...variables }}>
         <Router>
           <PageWrapper path="/">
+            <Redirect noThrow from="/" to="how-it-works/device" />
             <Redirect noThrow from="how-it-works" to="how-it-works/device" />
             <HowItWorks path="how-it-works/:step" />
           </PageWrapper>

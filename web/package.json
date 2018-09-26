@@ -34,13 +34,7 @@
     "styled-components": "^3.4.4"
   },
   "devDependencies": {
-    "csv-parser": "^1.12.1",
-    "date-fns": "^1.29.0",
-    "dlv": "^1.1.2",
     "dotenv": "^6.0.0",
-    "lodash.merge": "^4.6.1",
-    "mississippi": "^3.0.0",
-    "perf_hooks": "0.0.1",
     "prop-types": "^15.6.2",
     "react-app-rewire-polished": "^1.0.3",
     "react-app-rewire-styled-components": "^3.0.2",

@@ -17,6 +17,13 @@ import TTN from '../icons/ttn.svg'
 
 MapboxGL.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
 
+// const Device = styled.div`
+//   width: 3em;
+//   height: 3em;
+//   border-radius: 50%;
+//   background: white;
+// `
+
 const pulse = keyframes`
   to {
     box-shadow: 0 0 0 45px rgba(120, 254, 224, 0);
@@ -61,7 +68,6 @@ const MarkerButton = styled.button`
     position: relative;
     width: 3.3em;
     height: 3.3em;
-    ${({ current }) => current && active};
   }
 `
 
@@ -173,7 +179,7 @@ class Map extends Component {
         .append('path')
         .classed('coverage', true)
         .transition()
-        .duration(400)
+        .duration(300)
         .ease(easeCubicInOut)
         .attr('fill', '#3bb2d0')
         .attr('fill-opacity', 0.2)
@@ -295,12 +301,6 @@ class Map extends Component {
           <MarkerButton
             color={this.props.theme.green}
             onClick={this.toggleGateway}
-            current={
-              !this.state.showGatewayContext &&
-              this.props.currentStep.link === 'gateway'
-                ? 1
-                : null
-            }
           >
             <div>
               <Gateway />
