@@ -15,6 +15,7 @@
   - [Data](#data)
     - [Analysis](#analysis)
     - [Workshop](#workshop)
+  - [Persuasive storytelling](#persuasive-storytelling)
 - [Insights](#insights)
   - [Data complexity](#data-complexity)
 - [Product](#product)
@@ -25,9 +26,9 @@
   - [Design 0.1](#design-0.1)
   - [Design presentation](#design-presentation)
   - [Expert review](#expert-review)
-  - [Design-0.2](#design-0.2)
-  - [Expert review](#export-review2)
-  - [Prototype]()
+  - [Design 0.2](#design-0.2)
+  - [Expert review](#expert-review2)
+  - [Design 0.3](#design-0.3)
 - [Sources](#sources)
 
 ## Designbrief
@@ -39,7 +40,7 @@ This idea came to be in a conversation between the CEO of The Things Network (TT
 ### The Things Network
 
 <div align="center">
-  <img width="50%" src="./assets/ttn-logo.svg"/>
+  <img width="40%" src="./assets/ttn-logo.svg"/>
 </div>
 
 Before we dive into the details of this project, it is important to understand what problem The Things Network originally tried to solve, what _Internet of Things_ means, and how the network works.
@@ -375,6 +376,17 @@ More information: https://www.thethingsnetwork.org/
 6. Are active communities within the network near you something that would interest you? Why? Would you consider working together with someone through the network?
 7. Now that we talked about multiple aspects of the network such as the communities, the hardware, software, performance, maturity, and the underlying technology - what things matter to most to you? (ranking)
 
+##### Results
+**Jurjen De Vries**
+
+Jurjen is a entrepreneur and helps companies with technological innovation. This usually entails providing support in research or applying new technologies such as AI, Blockchain, or 3D printing within a company. Jurjen is a true innovator and likes to immediately jump on bleeding edge things to try them out. In his free time he also helps small initiatives, like The Things Network a while ago, when he started the [TTN Utrecht community](https://www.thethingsnetwork.org/community/utrecht/).
+
+
+
+**Daan Rongen**
+
+..
+
 #### Survey
 The Things network send out a survey with multiple questions through their newsletter. A summary of the results can be found below.
 
@@ -615,6 +627,218 @@ The workshop showed great interest in using their public API ro showcase the pri
 *Ownership*
 
 Data responsibility was also discussed in order to clear things up about who should deliver what. TTN becomes responsible for the delivery of all the needed data, but the exact structure and formatting the front-end might need, is up to me. This would most likely require data pre-processing through an automated handmade script.
+
+---
+
+### Persuasive storytelling
+> "Storytelling is the interactive art of using words and actions to reveal the elements and images of a story while encouraging the listener’s imagination" - [storytelling.design](https://storytelling.design)
+
+According to Ceros Inc. (2016, May 25) writes that telling a visual story isn’t the same as designing a website or landing page. Your job is one of co-author, crafting the graphic part of the narrative that intertwines with the verbal part of the story. Following similar steps to that of a traditional writer—nailing down your story, defining you visual grammar, developing a story arc, and finding threads to weave through the entire narrative—you’ll be able to design content that makes a lasting impact on your audience.
+
+#### How do we design stories to be great user experiences?
+
+Adam Westbrook in *'Storytelling + Design Thinking'* states that it begins by identifying the problem, in the case of narrative: what is the idea or the meaning we are trying to convey? In narrative terms this is known as the Controlling Idea and it is, from experience, the hardest part of the process. We must distill and refine a complex idea into an essence that is simple and yet loaded with meaning. Try to tell the jury ten things, a lawyer once quipped, and you tell them nothing.
+
+So how do we come up with such an "Controlling Idea"? Simon Sinek, in his TED talk "How great leaders inspire action", couldn't put it more perfectly:
+
+> If Apple were like everyone else, a marketing message from them might sound like this: "We make great computers. They're beautifully designed, simple to use and user friendly. Want to buy one?" "Meh." That's how most of us communicate. That's how most marketing and sales are done, that's how we communicate interpersonally. We say what we do, we say how we're different or better and we expect some sort of a behaviour, a purchase, a vote, something like that. Here's our new law firm: We have the best lawyers with the biggest clients, we always perform for our clients. Here's our new car: It gets great gas mileage, it has leather seats. Buy our car. But it's uninspiring.
+
+> Here's how Apple actually communicates. "Everything we do, we believe in challenging the status quo. We believe in thinking differently. The way we challenge the status quo is by making our products beautifully designed, simple to use and user friendly. We just happen to make great computers. Want to buy one?" Totally different, right? You're ready to buy a computer from me. I just reversed the order of the information. What it proves to us is that people don't buy what you do; people buy why you do it.
+
+##### People buy why you do it.
+Sinek further talks about his discovery of a universal pattern called "The Golden Circle" which explains why people tend to believe in something when you start with why. 
+
+![](http://image.slidesharecdn.com/gc100212-13497124030829-phpapp01-121008111025-phpapp01/95/start-with-why-how-to-present-the-golden-circle-5-638.jpg?cb=1415966918)
+▶︎ The Golden Circle ([image.slidesharecdn.com](http://image.slidesharecdn.com/gc100212-13497124030829-phpapp01-121008111025-phpapp01/95/start-with-why-how-to-present-the-golden-circle-5-638.jpg?cb=1415966918))
+
+> Here's the best part: None of what I'm telling you is my opinion. It's all grounded in the tenets of biology. Not psychology, biology. If you look at a cross-section of the human brain, from the top down, the human brain is actually broken into three major components that correlate perfectly with the golden circle. Our newest brain, our Homo sapien brain, our neocortex, corresponds with the "what" level. The neocortex is responsible for all of our rational and analytical thought and language. The middle two sections make up our limbic brains, and our limbic brains are responsible for all of our feelings, like trust and loyalty. It's also responsible for all human behavior, all decision-making, and it has no capacity for language.
+
+> In other words, when we communicate from the outside in, yes, people can understand vast amounts of complicated information like features and benefits and facts and figures. It just doesn't drive behavior. When we can communicate from the inside out, we're talking directly to the part of the brain that controls behavior, and then we allow people to rationalize it with the tangible things we say and do. This is where gut decisions come from. Sometimes you can give somebody all the facts and figures, and they say, "I know what all the facts and details say, but it just doesn't feel right." Why would we use that verb, it doesn't "feel" right? Because the part of the brain that controls decision-making doesn't control language. The best we can muster up is, "I don't know. It just doesn't feel right." Or sometimes you say you're leading with your heart or soul. I hate to break it to you, those aren't other body parts controlling your behavior. It's all happening here in your limbic brain, the part of the brain that controls decision-making and not language.
+
+It's clear that in order to effectively reach the target audience, we should start with why. And that's the start of coming up with our story; why is The Things Network building a fully distributed IoT network? Their website, as well as the initial briefing, showed it's **to enable applications and businesses to flourish.**
+
+We know now how to construct or formulate the things we want to say to reach the target audience the most effective way, but this doesn't mean the story should literally start with the reason The Things Network are doing what they do and then carry on to explain how they do it. There's more to it if we want to convey an entire story.
+
+#### The Contour of Communication
+In 'Resonate', a book about presenting visual stories that transform audiences written by Nancy Duarte, The Contour of Communication is laid out as a presentation form derived from mythological, literary, and cinematic structures. Though it's technically about presentations, it's wisdom can definitely be applied to storytelling in general.
+
+![](assets/contour-of-communication.png)
+▶︎ The Contour of Communication ([cdn.www.duarte.com](http://cdn.www.duarte.com/wp-content/uploads/2013/04/p36-37_contourofcommunication_RGB.jpg))
+
+> Presentations should have a clear beginning, middle, and end. Two clear turning points in a presentation’s structure guide the audience through the content and distinctively separate the beginning from the middle and the middle from the end. The first is the call to adventure—this should show the audience a gap between what is and what could be—jolting the audience from complacency. When effectively constructed—an imbalance is created—the audience will want your presentation to resolve this imbalance. The second turning point is the call to action, which identifies what the audience needs to do, or how they need to change. This second transition point signifies that you’re coming to the presentation’s conclusion.
+
+> Notice how the middle moves up and down as if something new is happening continually. This back and forth structural motion pushes and pulls the audience to feel as if events are constantly unfolding. An audience will stay engaged as you unwrap ideas and perspectives frequently.
+
+##### The Beginning and Call to Adventure
+![](http://cdn.resonate.duarte.com/wp-content/uploads/2013/05/the_gap_HD-e1368743900697-300x170.png)
+▶︎ The Beginning and Call to Adventure ([cdn.www.duarte.com](http://resonate.duarte.com/lessons-from-myths-and-movies/the-beginning-and-call-to-adventure/))
+
+> The beginning of your presentation is represented by the first flat line of the presentation form. This is where you describe the audience’s ordinary world and set the baseline of what is. You can use historical information about what has been, or the current state of what is, which often includes the problem you’re currently facing.
+
+> You should deliver a concise formulation of what everyone agrees is true. Accurately capturing the current reality and sentiments of the audience’s world demonstrates that you have experience and insights on their situation, and that you understand their perspective, context, and values.
+
+> Done effectively, this description of where your audience currently is will create a common bond between you and them, and will open them up to hear your unique perspective more readily. Audiences are grateful when their contribution, intelligence, and experience are acknowledged.
+
+> Additionally, describing their existing world gives you the opportunity to create a dramatic dichotomy between what is and what could be. Proposing what could be should throw the audience’s current reality out of balance. Without first setting up what is, the dramatic effect of your new idea will be lost.
+
+##### The Middle: Contrast
+![](http://cdn.resonate.duarte.com/wp-content/uploads/2013/05/s1.a.jpeg)
+▶︎ The Middle: Contrast ([cdn.www.duarte.com](http://resonate.duarte.com/lessons-from-myths-and-movies/the-middle-contrast))
+
+> The middle of a presentation is made up of various types of contrast. People are naturally drawn to contrast, because life is surrounded with it. Day and night. Male and female. Up and down. Good and evil. Love and hate.
+
+> **Your job as a communicator is to create and resolve the tension created by contrast.**
+
+> Building highly contrasting elements into a presentation holds the audience’s attention. Audiences enjoy experiencing a dilemma and its resolution—even if that dilemma is caused by a viewpoint that’s opposed to their own. It keeps them interested. 
+
+> **Oppositional content is stimulating; familiar content is comforting. Together, these two types of content produce forward movement.**
+
+> There are three distinct types of contrast you can build into a presentation:
+
+> - **Content**: Content contrast moves back and forth to compare what is to what could be—and your views versus the audience’s.
+- **Emotion**: Emotional contrast moves back and forth between analytical and emotional content.
+- **Delivery**: Delivery contrast moves back and forth between traditional and nontraditional delivery methods.
+
+> Contrast is a motif woven throughout this entire book, and is at the heart of communication because people are attracted to things that stand out.
+
+##### Call to Action
+![](http://cdn.resonate.duarte.com/wp-content/uploads/2013/05/s1.a1.jpeg)
+▶︎ Call to Action ([cdn.www.duarte.com](http://resonate.duarte.com/lessons-from-myths-and-movies/call-to-action))
+
+> The second transition, the call to action, clearly defines what you’re asking the audience to do. Successful persuasion leads to action, and it is important to clearly state exactly how you want the audience to take action. This step in the presentation gives the audience discrete tasks that will help bring the ideas you convey in your presentation to fruition. Once this line is crossed, the audience needs to decide if they are with you or not—so make it clear what needs to be accomplished.
+
+> **Whether a presentation is political, corporate, or academic, the audience consists of four distinct types of people**
+**capable of taking action: doers, suppliers, influencers,**
+**and innovators.**
+
+![](http://cdn.resonate.duarte.com/wp-content/uploads/2013/05/call_to_action_cropped.png)
+▶︎ Four distinct types of people ([cdn.www.duarte.com](http://resonate.duarte.com/lessons-from-myths-and-movies/call-to-action/2-2))
+
+---
+##### Conclusion
+In order to tell an effective and compelling story that resonates with the target audience the following things need to happen:
+
+- **Start with why.** People don't buy what you do, people buy why you do it. We shouldn't start off by mentioning the benefits of the network, how it's better than certain competitors, or a few performance metrics; we should start with the reason The Things Network exists — to enable applications and businesses to flourish.
+- **Call to Adventure.** Without first setting up what is, the dramatic effect of our new idea will be lost. To start with TTN's why we need to first set the stage by succinctly describing the problems around traditional methods of IoT connectivity.
+- **Contrast.** People are naturally drawn to contrast. The story itself should continuously switch between what is and what could be.
+- **Call to Action.** It is important to clearly state exactly how we want the audience to take action. As there are multiple types of people: doers, suppliers, influencers, and innovators; there should be multiple CTA's in the end.
+
+#### Creating meaningful content
+![](https://anabelmoncada.files.wordpress.com/2015/06/pathos-ethos-logos-ii.jpg?w=600)
+▶︎ Pathos, Ethos, Logos ([anabelmoncada.files.wordpress.com](https://anabelmoncada.files.wordpress.com/2015/06/pathos-ethos-logos-ii.jpg?w=600))
+
+> "Emotions and belief are masters, reason their servant. Ignore emotion, and reason slumbers; triggers emotion, and reason comes rushing to help" - *Henry M. Boettinger*
+
+##### Ethical appeal (ethos)
+- Open-source
+- Crowdsourced
+- Vision (why)
+
+##### Logical appeal (logos)
+- LoRaWAN
+	- Low battery usage
+	- Long range
+	- Low bandwidth
+- Secure (encrypted messages)
+- Distributed
+- Cheap (20% of the cost compared to other products currently on the market)
+- Data facts and figures
+
+##### Emotional appeal (pathos)
+- Communities
+- Existing user/product stories
+
+#### Clustering
+To get ideas to messages it's easier to create topics which are mutually exclusive (no overlap) and collectively exhaustive (don't leave anything out).
+
+- Users
+	- Stories
+	- Communities
+- Technology
+	- LoRaWAN
+	- Secure
+	- Distributed
+	- Cheap
+- Organisation
+	- Open-source
+	- Crowdsourced
+	- Vision (why)
+
+#### Turning information into stories
+Stories are easy to remember and repeat. When you present information in an anecdotal form you add an emotional charge. Stories are also a more digestible format for information. We'll be using a shortened version of the The Hero's Journey from the book Resonate (2010).
+
+1. Who, what, where
+2. Context
+3. Conflict
+4. Proposed resolution
+5. Complication
+6. Actual resolution
+7. Most important point
+
+*Below is the high-level overview of our Hero's Journey:*
+
+1. Internet of Things introduction **(who, what, where)**.
+> This is where you describe the audience’s ordinary world and set the baseline of what is
+2. Issues with 2G/3G/4G and WiFi **(context)**.
+> Accurately capturing the current reality and sentiments of the audience’s world demonstrates that you have experience and insights on their situation, and that you understand their perspective, context, and values.
+3. A new technology came out, LoRaWAN **(proposed resolution)**.
+> Traditional connectivity methods are like a pager, LoRaWAN is like the first mobile phone.
+4. But is was centralised and expensive to roll out as an individual **(complication)**.
+5. Imagine an Internet of Things network that is created by the people and free and open for everyone to use **(actual resolution)**.
+> Proposing what could be should throw the audience’s current reality out of balance.
+6. In 2015, as a proof of concept the city of Amsterdam was fully covered in just four weeks.
+7. However, the gateways are expensive (€1,000/$1,100) and not that easy to use.
+8. The Things Network community then went on a mission to crowdsource a global open and independent Internet Of Things network with gateways only a fraction of the cost (€200) — and they did.
+9. The users are in control.
+10. The technological benefits.
+11. The organisational values (**most important point**. As mentioned before, people don't buy what you do; people buy why you do it).
+
+#### Defining the Call to Action
+We know every audience consists of the following people and therefor we know what request matches their interest.
+
+- **Doers** — ask doers to assemble, make decisions, gather, respond, or attempt.
+- **Suppliers** — ask suppliers to acquire, fund, support, or provide resources.
+- **Influencers** — ask influencers to activate, convert, empower, or promote.
+- **Innovators** — ask innovators to create, discover, invent, or pioneer.
+
+These types of people correlate nicely with the participating options of TTN.
+
+- Connect your own device
+- Extend the network, setup your own gateway
+- Create or join a community, organise or join meetups.
+
+They correspond in the following way.
+
+| Who | What  |
+|:--|:--|
+| Doers | Connect your own device |
+| Suppliers | Extend the network | 
+| Influencers, innovators | Communities / meetups |
+
+##### Not just a button  
+Dr. Robert Cialdini's Principles of Persuasion are proven factors of influence. The list consists of:
+
+1. **Reciprocity** <br>
+People are obliged to give something back in exchange for receiving something.
+2. **Scarcity** <br>
+People want more of those things they can have less of.
+3. **Authority** <br>
+People follow the lead of credible, knowledgeable experts.
+4. **Consistency** <br>
+People like to be consistent with the things they have previously said or done.
+5. **Liking** <br>
+People prefer to say yes to those that they like.
+6. **Consensus** (Social Proof) <br>
+Especially when they are uncertain, people will look to the actions and behaviors of others to determine their own.
+
+In the context of our story it's not possible to implement every one of theses principles, but the following are.
+
+- **Authority** <br>
+Data facts and figures should help with gaining authority.
+- **Liking** <br>
+Areas of similarity that you share with the users result in higher conversion, TTN's vision and mission might very well be same as some of their users.
+- **Consensus** (Social Proof) <br>
+Industry leaders who already participated in certain ways could help persuade users. For instance, "Last year Jurjen, a technical entrepreneur, noticed his city didn't have a community yet. He wondered how beneficial it would be, but after setting one up he saw a burst in LoRa adoption, knowledge sharing, and meetups. Every city could benefit from this. Start or join a community".
 
 ## Insights
 ### Data complexity
@@ -937,14 +1161,190 @@ The design review team consists of:
 
 ---
 
+### Design 0.3
+> **NOTE:** version 0.3 is completely revamped based on a new research direction which can be found [here](#persuasive-storytelling).
 
-### Prototype
-Currently in the making.
+Third version of the design can be found [here](./attachments/design-0.3.png). There are multiple moments where text scrolls over a fixed component/visualisation but because a static design can't show this, some screens are duplicated with the changes that would normally fly over.
 
+---
+
+### User testing
+We want to find out if the end-product is the answer to the design challenge.
+
+In her Moderating Usability Tests article, Jen Romano Bergstrom notes that choosing the best moderating technique for your test depends on your session goals. Because our goal is understanding participants’ thoughts as they occur and as they attempt to work through issues they encounter, 'Concurrent Think Aloud' is the best approach.
+
+Concurrent Think Aloud (CTA) is used to understand participants thoughts as they interact with a product by having them think aloud while they work. The goal is to encourage participants to keep a running stream of consciousness as they work.
+
+**[explain multiple choice]**
+
+#### Goals
+How can an interactive and storytelling data driven experience **convince** early adopter and early majority Internet of Things developers who are interested yet unfamiliar with LoRaWAN, of the **credibility**, **impact**, and **underlying technology** of the network so they are **eager to participate**?
+
+- Does the flow of the story make sense to the user? Is there confusion along the way?
+- Does the user have a correct mental model about LoRaWAN? And the differences with traditional connectivity methods?
+- Does the user feel confident to use to network? What are the doubts?
+
+#### The test
+
+##### Multiple choice
+
+1 = Strong 👎
+
+5 = Strong 👍
+
+| Question | 1 | 2 | 3 | 4 | 5 |
+|:--|:--|:--|:--|:--|:--|
+| Do you have a basic understanding of LoRaWAN? |  |  |  |  |  |
+| Does TTN feel like a stable and credible platform?  |  |  |  |  |  |
+| How interested are you to try to connect your own device through TTN? |  |  |  |  |  |
+| How interested are you to setup your own gateway? |  |  |  |  |  |
+| How interested are you to participate in communities (e.g. meetups, sharing your creations)? |  |  |  |  |  |
+
+##### Open questions
+1. Why are you more interested in doing x than y/z?
+2. Could you explain how TTN roughly works?
+
+#### Fabian van der Sluijs
+> Co-founder and curator at FIBER, Initiator of Creative Coding Utrecht (CCU), Lab manager Sensor Lab.
+
+##### Walkthrough
+
+- And first, it appeared the circle size is relative to its adoption/usage. But but once 3G/4G appeared it became clear it's about the connectivity range.
+
+- The global coverage map could be made stronger by adding metrics such as how many countries or cities are covered.
+
+- The fact that TTN is secure is a bit subtle throughout the story, it could be made more apparent. 
+
+- 'How it works' has too much text, it could be more like devices where it's visually supported. The TTN step should feel like the step where network processing happens.
+
+- What role does the community have? This isn't clear enough.
+
+- I want more details on the ways of participation.
+
+##### Multiple choice
+| Question | 1 | 2 | 3 | 4 | 5 |
+|:--|:--|:--|:--|:--|:--|
+| Do you have a basic understanding of LoRaWAN? |  |  |  | x |  |
+| Does TTN feel like a stable and credible platform?  |  |  |  | x |  |
+| How interested are you to try to connect your own device through TTN? |  |  |  | x |  |
+| How interested are you to setup your own gateway? |  |  | x |  |  |
+| How interested are you to participate in communities (e.g. meetups, sharing your creations)? |  |  |  | x |  |
+
+##### Open questions
+1. Why are you more interested in doing x than y/z?
+> I'm very interested in smart cities and what role the users have in it. I'm therefor interested the most in the community aspect. 
+
+2. Could you explain how TTN roughly works?
+
+Fabian seemed to have a correct mental model of how TTN works.
+
+#### Design changes based on Fabian
+![](assets/change-earth.png)
+Added number of countries and cities covered by TTN to better grasp it's impact. Left is old, right is new.
+
+![](assets/change-howitworks1.png)
+![](assets/change-howitworks2.png)
+Attempts to make 'How it works' more visual.
+
+![](assets/change-howitworks3.png)
+Overview of the choosen new visual style for 'How it works'. Left is old, right is new.
+
+![](assets/change-metrics.png)
+The metrics from the previous designs have made a comeback to support the story. The uplinks/downlinks visualisation shows the global recieved data from the past three months while explaining uplinks/downlinks. The bandwidth vs. spreading factor visualisation shows you can setup your gateway to be more reliable or faster.
+
+#### Daan Rongen
+> Intelligent Environments Designer
+
+- De starting subtitle isn't catchy enough for me.
+- At first in the connectivity approaches it isn't clear that the circular size means range, but that's okay because it becomes clear when the next technology appears.
+- Connectivity approaches should only be about power usage, range, and cost as is shown in the chart. The pros and cons list other variables but they might be better somewhere else.
+- What does 'How it works' entail? The protocol or the community? Perhaps a subtitle would help.
+- As a maker, I want to see how big the LoRaWAN devices are and the technical specifications.
+- I don’t immediately understand the uplinks/downlinks chart without reading the text next to it. What are uplinks/downlinks?
+- Bandwidth vs. Spreading factor is a bit hard to understand. What is congestion?
+- In 'The Things Network' step of 'How it works', I'm wondering if TTN can see my data? Is it secure?
+- Vision doesn't feel like a vision. They visually look like points but they are sentences. It's also more like an approach than a vision.
+- Call to Action's are not predictable. What will I see when I click one?
+
+##### Multiple choice
+| Question | 1 | 2 | 3 | 4 | 5 |
+|:--|:--|:--|:--|:--|:--|
+| Do you have a basic understanding of LoRaWAN? |  |  |  |  | x |
+| Does TTN feel like a stable and credible platform?  |  |  |  | x |  |
+| How interested are you to try to connect your own device through TTN? |  |  |  |  | x |
+| How interested are you to setup your own gateway? |  |  | |  | x |
+| How interested are you to participate in communities (e.g. meetups, sharing your creations)? |  | x |  | |  |
+
+##### Open questions
+1. Why are you more interested in doing x than y/z?
+> I'm very curious about experimenting with LoRaWAN. When I do, I'd probably go all the way and get my own gateway as well. Communities, however, are probably too superficial for me. 
+
+2. Could you explain how TTN roughly works?
+
+Daan seemed to have a correct mental model of how TTN works.
+
+#### Design changes based on Daan
+
+![](assets/change-subtitle.png)
+Sparking more curiosity with an improved subtitle.
+
+![](assets/change-device.png)
+The device step now contains much more info, including a schematic from one of TTN most popular LoRA devices.
+
+![](assets/change-vision.png)
+Vision now feels more like a vision rather than bullet points.
+
+![](assets/change-cta.png)
+A lot more context for the call to action's. Design rationale will go into greater detail about this.
+
+*Small changes:*
+- Rewrite 'Bandwidth vs. spreading factor' to make it easier to comprehend.
+- Change label of 'Uplinks/downlinks' to 'Recieved data packets'
+- Add "Your are in control of your data with privacy through end-to-end encryption" in the TTN step of 'How it works' to emphasize security.
+
+#### Wilco Thomassen
+> Back-end Developer, ubicomp enthusiast.
+
+- I didn't immediately grasp that the IoT global market visualisation is a future prediction.
+- The messages on the map are a bit long, I want to know the key points.
+- Same for the text in 'How it works', some highlighting could help me.
+
+##### Multiple choice
+| Question | 1 | 2 | 3 | 4 | 5 |
+|:--|:--|:--|:--|:--|:--|
+| Do you have a basic understanding of LoRaWAN? |  |  |  |  | x |
+| Does TTN feel like a stable and credible platform?  |  |  |  | x |  |
+| How interested are you to try to connect your own device through TTN? |  |  |  |  | x |
+| How interested are you to setup your own gateway? |  |  |x |  | |
+| How interested are you to participate in communities (e.g. meetups, sharing your creations)? |  | x |  | |  |
+
+##### Open questions
+1. Why are you more interested in doing x than y/z?
+> I play around with sensors a lot so I'm the most interested in connecting a device of mine over The Things Network. I'm less about the meetups and maintaining gateways myself.
+
+1. Could you explain how TTN roughly works?
+
+Wilco seemed to have a correct mental model of how TTN works.
+
+#### Design changes based on Wilco.
+
+![](assets/change-future.png)
+Clearly distinguish the present and future 
+
+![](assets/change-highlighting.png)
+Add highlighting throughout the page. This is done in more places then shown here but is left out of this section to avoid overly large screenhots.
 
 ## Sources
 
+Bergstrom, J. (2013, April 2). Moderating Usability Tests. Retrieved October 23, 2018 from https://www.usability.gov/get-involved/blog/2013/04/moderating-usability-tests.html
+
 Burrus, D. N.D. The Internet of Things Is Far Bigger Than Anyone Realizes. Retrieved April 19, 2018 from https://www.wired.com/insights/2014/11/the-internet-of-things-bigger/
+
+Ceros, INC. (2016, May 25). Visual Storytelling: A Primer for Digital Designers. Retrieved October 2, 2018 from https://www.ceros.com/originals/visual-storytelling-primer-digital-designers/
+
+Cialdini, R. (2012, November 26). Principles of Persuasion. Retrieved October 10, 2018 from https://www.influenceatwork.com/principles-of-persuasion/
+
+Duarte, N. (2010). Resonate, present visual stories that transform audiences. New Jersey, Hoboken: John Wiley & Sons Inc.
 
 Giezeman, W. N.D. The Things Network. Retrieved September 23, 2018 from https://www.kickstarter.com/projects/419277966/the-things-network
 
@@ -956,9 +1356,13 @@ N.A. (2018, September 19). Diffusion of innovations. Retrieved September 23, 201
 
 Roland, C. (2009). Designing Connected Products. Retrieved April 19, 2018 from http://www.designingconnectedproducts.com/
 
+Sinek, S. (2009, September). How great leaders inspire action [Video]. Retrieved October 2, 2018 from https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action
+
 Thompson, T. & Baran, N. (1988, November). "The NeXT Computer". Retrieved May 10, 2018, from http://simson.net/ref/NeXT/byte_article.html
 
 Wayne, W. (2018, August 29). Diffusion of Innovation Theory. Retrieved September 24, 2018, from http://sphweb.bumc.bu.edu/otlt/MPH-Modules/SB/BehavioralChangeTheories/BehavioralChangeTheories4.html
 
 Weiser, M. (1991, September). The Computer for the 21st Century [PDF]. Retrieved April 19, 2018 from 
 https://www.lri.fr/~mbl/ENS/FONDIHM/2012/papers/Weiser-SciAm91.pdf
+
+Westbrook, A. (2014, Februari 26). Storytelling + Design Thinking. Retrieved October 2, 2018 from https://medium.com/story-design-for-nonfiction/storytelling-design-thinking-ed914117f7c1
