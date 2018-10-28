@@ -10,11 +10,7 @@
   - [Planning](#planning)
 - [Research](#research)
   - [Target audience](#target-audience2)
-    - [Interviews](#interviews)
-    - [Survey](#survey)
   - [Data](#data)
-    - [Analysis](#analysis)
-    - [Workshop](#workshop)
   - [Persuasive storytelling](#persuasive-storytelling)
 - [Insights](#insights)
   - [Data complexity](#data-complexity)
@@ -29,11 +25,12 @@
   - [Design 0.2](#design-0.2)
   - [Expert review](#expert-review2)
   - [Design 0.3](#design-0.3)
+  - [User testing](#user-testing)
 - [Sources](#sources)
 
 ## Designbrief
 
-This graduation project is about using **The Things Network's** data to help their target audience understand that they are building a global, crowdsourced, open, free and decentralized _Internet of Things_ network.
+This graduation project is about using **The Things Network's** story and data to help their target audience understand that they are building a global, crowdsourced, open, free and decentralized _Internet of Things_ network.
 
 This idea came to be in a conversation between the CEO of The Things Network (TTN) and the co-founder of CLEVER°FRANKE (C°F) in which they discussed a potential collaboration, but due to TTN's non-profit nature it couldn't be a commercial one. It was therefor decided that when C°F acquired a talented graduate, who also happens to be interested in the network, a pro-bono project mainly led by the graduate would take place.
 
@@ -97,8 +94,6 @@ The initial briefing at The Things Network illustrated that this product is nece
 - Reaching their target audience.
 - Finding professional partners who can build solid solutions with TTN.
 
-If you were to take a look at their website, you'll only see a map with the locations of the connected gateways as can be seen above. Owners of a gateway can log-in to gain insights into their gateway's traffic, but that's only for those who are authorised to see it. There isn't something that shows what is really going on inside the network for newcomers or people interested in metrics beyond their sole gateway.
-
 ##### Expectations
 
 The challenges from the meeting also resulted in certain expectations.
@@ -160,12 +155,12 @@ early adopter and early majority Internet of Things developers who are intereste
 
 #### Sub-challenges
 
-1. What is interactivity?
-2. What is storytelling?
+1. What is storytelling?
+2. What data is important?
 3. How do you validate the target audience's needs and priorities?
 4. How do you assure users of the creditability and impact of the network? 
 5. How do you integrate the clarification of LoRaWAN into the product?
-6. How do you make a user eager to participate?
+6. How do you design to convice and make people eager to participate?
 
 ---
 
@@ -379,13 +374,15 @@ More information: https://www.thethingsnetwork.org/
 ##### Results
 **Jurjen De Vries**
 
-Jurjen is a entrepreneur and helps companies with technological innovation. This usually entails providing support in research or applying new technologies such as AI, Blockchain, or 3D printing within a company. Jurjen is a true innovator and likes to immediately jump on bleeding edge things to try them out. In his free time he also helps small initiatives, like The Things Network a while ago, when he started the [TTN Utrecht community](https://www.thethingsnetwork.org/community/utrecht/).
+> Jurjen is a entrepreneur and helps companies with technological innovation. This usually entails providing support in research or applying new technologies such as AI, Blockchain, or 3D printing within a company. Jurjen is a true innovator and likes to immediately jump on bleeding edge things to try them out. In his free time he also helps small initiatives, like The Things Network a while ago, when he started the [TTN Utrecht community](https://www.thethingsnetwork.org/community/utrecht/).
 
+Because Jurjen considers himself an innovator his barriers before considering participation are a bit lower. It's more about the promise of the technology and whether he believs in it, he says. Social proof from peers is less relevant to him but what the organisation stands to do with a certain technology is. He is also an advocate for open-source as a method of trust and transparency.
 
 
 **Daan Rongen**
+> Daan is an Intelligent Environments Designer and IoT hobbyist. Daan doesn't really consider himself an innovator, but also definitely not a lacker. In his free time he likes try out new sensors and hardware libaries.
 
-..
+Daan wasn't really aware of either TTN or LoRa, but finds it really promising and interesting. Privacy is always a big concern for him and knowing about the security of a connectivity approach is imporant. In order for him to participate he wants to have the feeling it's stable and mature. 
 
 #### Survey
 The Things network send out a survey with multiple questions through their newsletter. A summary of the results can be found below.
@@ -978,7 +975,7 @@ To drastically scale down the scope of data pre-processing, the location based s
 
 ### Brainstorm
 ![](assets/books.jpg)
-The brainstorm is a series of sketches, some of them inspired by the wide range of data visualisation books available at CLEVER°FRANKE.
+The brainstorm is a series of sketches, some of them inspired by a wide range of data visualisation books available at CLEVER°FRANKE.
 
 These three books served the most as reference:
 - **Infographic Designer's Sketchbooks** *by S. Heller & R. Landers*
@@ -1175,7 +1172,7 @@ In her Moderating Usability Tests article, Jen Romano Bergstrom notes that choos
 
 Concurrent Think Aloud (CTA) is used to understand participants thoughts as they interact with a product by having them think aloud while they work. The goal is to encourage participants to keep a running stream of consciousness as they work.
 
-**[explain multiple choice]**
+Afterwards, a few open and multiple choice questions are asked. The latter are based on a scale from 1(👎) to 5(👍).
 
 #### Goals
 How can an interactive and storytelling data driven experience **convince** early adopter and early majority Internet of Things developers who are interested yet unfamiliar with LoRaWAN, of the **credibility**, **impact**, and **underlying technology** of the network so they are **eager to participate**?
