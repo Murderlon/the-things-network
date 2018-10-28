@@ -99,8 +99,6 @@ What are you mainly using The Things Network for?
 
 One of the more interesting discoveries is that it seems the most profound use of The Things Network is to experiment with LoRaWAN and secondly to pursue a commercial goal. But if you take the other non-commercial motivations like hobby's and research into account it's fair to say that most people are in it for themselves. The interest in LoRaWAN is further proven as it comes in as the second subject their most interested in, together with community building (see product biography).
 
-[**interviews**]
-
 #### The most important data
 ![Photo of the workshop meeting room](assets/workshop-overview.jpg)
 
@@ -148,18 +146,130 @@ I realised I needed to take that step back, research again, and follow similar s
 The question is, how do we design stories to be great user experiences?
 
 ### Persuasive storytelling, a new approach
-The new research backed approach can be found in the [product biography](./product-biography). 
+The new research backed approach, to answer the concluding question above, can be found in the [product biography](./product-biography). 
 
 ## Actual resolution, a scroll based storytelling single-page app
+This new product has been tailored to the audience through multiple iterations based on user testing. See it all in the [product biography](./product-biography).
 
 [Click here to see a video of the end result](https://vimeo.com/297553711).
 
 ### Storytelling
+Based on the 'Contour of Communication', the following description is taken from the product biography.
+
+> Presentations should have a clear beginning, middle, and end. Two clear turning points in a presentation’s structure guide the audience through the content and distinctively separate the beginning from the middle and the middle from the end. The first is the call to adventure—this should show the audience a gap between what is and what could be—jolting the audience from complacency. When effectively constructed—an imbalance is created—the audience will want your presentation to resolve this imbalance. The second turning point is the call to action, which identifies what the audience needs to do, or how they need to change. This second transition point signifies that you’re coming to the presentation’s conclusion.
+
+> Notice how the middle moves up and down as if something new is happening continually. This back and forth structural motion pushes and pulls the audience to feel as if events are constantly unfolding. An audience will stay engaged as you unwrap ideas and perspectives frequently.
+
+![](assets/contour-of-communication.png)
+
+> The 'Contour of Communication' from Nancy Duarte's book 'Resonate'. 
+
+![](assets/story-sparkline.png)
+
+> The Things Network's contour of the story.
 
 ### Data driven
+Based on the data workshop with The Things Network (see product biography), their prefered data has been visualised to support the story.
+
+![](assets/data-driven.png)
 
 ### Credibility, impact, and underlying technology.
+At the end of the user tests some questions were asked, partially open and partially multiple choice. The latter were statements to which users needed to  choose a number from a scale, based on how much they agreed with it. In which 1 is strong disagree, and 5 strong agree. The following two questions are related to the credibility, impact, and underlying technology.
+
+- **Do you have a basic understanding of LoRaWAN?**
+> Two out of three users chose 5 (strong agree) and one chose 4.
+- **Does TTN feel like a stable and credible platform?**
+> Two out of Three users chose 4, one chose 5.
 
 ### Convincing to participate
+![](http://image.slidesharecdn.com/gc100212-13497124030829-phpapp01-121008111025-phpapp01/95/start-with-why-how-to-present-the-golden-circle-5-638.jpg?cb=1415966918)
+
+▶︎ The Golden Circle ([image.slidesharecdn.com](http://image.slidesharecdn.com/gc100212-13497124030829-phpapp01-121008111025-phpapp01/95/start-with-why-how-to-present-the-golden-circle-5-638.jpg?cb=1415966918))
+
+The research into persuasive storytelling showed that *people don't buy what you do, people buy why you do it*. We therefor don't want a closing note with emphasis on how it's the biggest and cheapest IoT network out there. We rather want to tell why The Things Network does what they do.
+
+Simon Sinek, in his TED talk "How great leaders inspire action" explains it:
+
+> In other words, when we communicate from the outside in, yes, people can understand vast amounts of complicated information like features and benefits and facts and figures. It just doesn't drive behavior. When we can communicate from the inside out, we're talking directly to the part of the brain that controls behavior, and then we allow people to rationalize it with the tangible things we say and do.
+
+In the story, we present The Things Network's vision from the inside out.
+
+![](assets/vision.png)
+
+This is than followed up with the call to actions. 
+
+Accoring to Duarte (2012), whether a presentation is political, corporate, or academic, the audience consists of four distinct types of people capable of taking action: doers, suppliers, influencers, and innovators
+
+- **Doers** — ask doers to assemble, make decisions, gather, respond, or attempt.
+- **Suppliers** — ask suppliers to acquire, fund, support, or provide resources.
+- **Influencers** — ask influencers to activate, convert, empower, or promote.
+- **Innovators** — ask innovators to create, discover, invent, or pioneer.
+
+These types of people correlate nicely with the participating options of TTN.
+
+- Connect your own device
+- Extend the network, setup your own gateway
+- Create or join a community, organise or join meetups.
+
+They correspond in the following way.
+
+| Who | What  |
+|:--|:--|
+| Doers | Connect your own device |
+| Suppliers | Extend the network | 
+| Influencers, innovators | Communities / meetups |
+
+This is how they are incorporated into the story:
+
+![](assets/cta.png)
+
+Dr. Robert Cialdini's Principles of Persuasion are proven factors of influence. The list consists of:
+
+1. **Reciprocity** <br>
+People are obliged to give something back in exchange for receiving something.
+2. **Scarcity** <br>
+People want more of those things they can have less of.
+3. **Authority** <br>
+People follow the lead of credible, knowledgeable experts.
+4. **Consistency** <br>
+People like to be consistent with the things they have previously said or done.
+5. **Liking** <br>
+People prefer to say yes to those that they like.
+6. **Consensus** (Social Proof) <br>
+Especially when they are uncertain, people will look to the actions and behaviors of others to determine their own.
+
+In the context of our call to actions it's not possible to implement every one of theses principles, but the following are implemented.
+
+- **Authority** <br>
+"Join 54.743 member"
+- **Liking** <br>
+Areas of similarity that you share with the users result in higher conversion, TTN's vision is there to resonate with the users on this.
+- **Consensus** (Social Proof) <br>
+Industry leaders who already participated in certain ways help persuade users. *"Last year Jurjen, a technical entrepreneur, noticed his city didn't have a community yet. He wondered how beneficial it would be, but after setting one up he saw a burst in LoRa adoption, knowledge sharing, and meetups. Every city could benefit from this. Start or join a community"*.
 
 ## Conclusion
+Lots of concept directions were explored during this project and it wasn't always smooth sailing, but on-the-fly learning and adapting from first time mistakes has eventually kept this project afloat. 
+
+To come back to question that started it all:
+
+> How can an interactive and **storytelling** **data driven** experience **convince** early adopter and early majority Internet of Things developers who are interested yet unfamiliar with LoRaWAN, of the **credibility**, **impact**, and **underlying technology** of the network so they are **eager to participate**?
+
+The end result tells the true story of The Things Network and how they came to be. Contrast creates contour and by continually switching back and forth between problem and solution, or what is and what could be, we let the audience feel as if events are constantly unfolding. 
+
+Further more, we created a bit more transparency in The Things Network's data, which normally only lives in their backend, by supporting certain parts of the story with relevant and insightful data.
+
+The star moment is the contrasting reveal of a world covered by community powered gateways compared to their previous single-city proof of concept. We let the users know that this abundant connectivity phenomenon is in fact very real.
+
+Truly inspired users are in it for themselves, because they believe in what the organisation believes. In the end that's the very thing that's being conveyed by the story, the fact that The Things Networks mission, why they do it — starts with them. You are the network. 
+
+### Recommendations
+
+#### Time & location controls for the data visualisations
+The obtained data allows for location based insights opposed to only global, which might be more personal to a user if it's their country's data. Time could also be controlled by the user. Although both require significantly more complex data pre-processing, it could be worth it in the end.  
+
+#### Let the user control the story
+Right now the story is linear, you can't change the story to your liking. An improvement could be explore multiple routes while maintaining the same messages we want to convey.
+
+#### Make the actual resolution visually feel like one
+The visual style is rather dark themed and doesn't change along the way. The introduction of The Things Network could change the entire style to a more lighter feeling. This could help in making it feel like a real resolution and a clear difference between what is and what could be.
+
