@@ -1,6 +1,6 @@
 # Design rationale
 
-> **Project:** The Things Network <br>  **Stakeholders:** CLEVER°FRANKE , The Things Network <br> **By:** Merlijn Vos<br> **Student ID:** 500706469 <br> **Date:** 28 October 2018 <br> **Coach:** Marije Ten Brink<br>
+> **Project:** The Things Network <br>  **Stakeholders:** CLEVER°FRANKE , The Things Network <br> **By:** Merlijn Vos <br> **Student ID:** 500706469 <br> **Date:** 28 October 2018 <br> **Coach:** Marije Ten Brink<br>
 
 This graduation project is about using **The Things Network's** story and data to help their target audience understand that they are building a global, crowdsourced, open, free and decentralized _Internet of Things_ network.
 
@@ -273,3 +273,11 @@ Right now the story is linear, you can't change the story to your liking. An imp
 #### Make the actual resolution visually feel like one
 The visual style is rather dark themed and doesn't change along the way. The introduction of The Things Network could change the entire style to a more lighter feeling. This could help in making it feel like a real resolution and a clear difference between what is and what could be.
 
+## Sources
+Duarte, N. (2010). Resonate, present visual stories that transform audiences. New Jersey, Hoboken: John Wiley & Sons Inc.
+
+N.A. (2018, September 19). Diffusion of innovations. Retrieved September 23, 2018 from https://en.wikipedia.org/wiki/Diffusion_of_innovations
+
+Sinek, S. (2009, September). How great leaders inspire action [Video]. Retrieved October 2, 2018 from https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action
+
+Wayne, W. (2018, August 29). Diffusion of Innovation Theory. Retrieved September 24, 2018, from http://sphweb.bumc.bu.edu/otlt/MPH-Modules/SB/BehavioralChangeTheories/BehavioralChangeTheories4.html

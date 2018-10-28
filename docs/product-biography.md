@@ -1,4 +1,5 @@
 # Product biography
+> **Project:** The Things Network <br>  **Stakeholders:** CLEVER°FRANKE , The Things Network <br> **By:** Merlijn Vos <br> **Student ID:** 500706469 <br> **Date:** 28 October 2018 <br> **Coach:** Marije Ten Brink<br>
 
 - [Designbrief](#designbrief)
   - [The Things Network](#the-things-network)
@@ -1087,7 +1088,7 @@ First version of the design can be found [here](./attachments/design-0.1.pdf).
 Now that the first version of the design is finished, it is time to present it to The Things Network. The design presentation can be found [here](./attachments/design-presentation.pdf).
 
 #### API
-This was also the moment to further discuss the feasibility of using their API in the front-end, as mentioned before in the [data workshop](#workshop). I  made a small [API specification](./api.md) to make things more concrete. This acted as a guideline when I sat down with the tech-lead on the API. Unfurtunately it became clear that it's for the better to do manual exports of the data and manually update the front-end. This is because their API is subdue to heavy change as they go from V2 to V3. The good news is that as I know what structure and format of the data is required for the front-end, they offered to change the API at a later stage to match that.
+This was also the moment to further discuss the feasibility of using their API in the front-end, as mentioned before in the [data workshop](#workshop). I  made a small [API specification](./attachments/api) to make things more concrete. This acted as a guideline when I sat down with the tech-lead on the API. Unfurtunately it became clear that it's for the better to do manual exports of the data and manually update the front-end. This is because their API is subdue to heavy change as they go from V2 to V3. The good news is that as I know what structure and format of the data is required for the front-end, they offered to change the API at a later stage to match that.
 
 #### Time ranges
 The [data analysis](#analysis) showed two years worth of aggregated data is stored, but what time range is relevant to show? The full two year? One year? One day? After a small discussion, TTN finds that the last month and last three months are the most interesting to visualise.
