@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-import modularScale from '../helpers/modular-scale'
+import modularScale from '../modular-scale'
 
 const typography = css`
   @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,700');
@@ -10,7 +10,6 @@ const typography = css`
       font-size: calc(1.125em + 0.05vw);
     }
   }
-
   body {
     font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, Helvetica, Arial, sans-serif;
@@ -18,7 +17,6 @@ const typography = css`
     font-variant: common-ligatures lining-nums contextual;
     line-height: 1.6;
   }
-
   h1,
   h2,
   h3,
@@ -30,19 +28,18 @@ const typography = css`
     margin-bottom: 0.75em;
     font-weight: 500;
   }
-
   h1 {
+    font-size: ${modularScale(5)};
+  }
+  h2 {
+    font-size: ${modularScale(4)};
+  }
+  h3 {
     font-size: ${modularScale(3)};
   }
-
-  h2 {
+  h4 {
     font-size: ${modularScale(2)};
   }
-
-  h3 {
-    font-size: ${modularScale(1)};
-  }
-
   a {
     text-decoration-skip: ink;
   }
