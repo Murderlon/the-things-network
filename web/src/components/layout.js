@@ -1,7 +1,8 @@
+/* eslint-disable max-len */
 import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 import base from '../styles/global/base'
 import typography from '../styles/global/typography'
@@ -9,6 +10,15 @@ import typography from '../styles/global/typography'
 const GlobalStyle = createGlobalStyle`
   ${base};
   ${typography};
+`
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+
+  @media screen and (min-width: 40rem) {
+    grid-template-columns: repeat(12, 1fr);
+  }
 `
 
 const Layout = ({ children }) => (
@@ -23,7 +33,7 @@ const Layout = ({ children }) => (
       }
     `}
     render={data => (
-      <>
+      <Grid>
         <Helmet
           title={data.site.siteMetadata.title}
           meta={[
@@ -35,7 +45,7 @@ const Layout = ({ children }) => (
         </Helmet>
         <GlobalStyle />
         {children}
-      </>
+      </Grid>
     )}
   />
 )

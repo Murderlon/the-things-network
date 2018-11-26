@@ -36,6 +36,7 @@ const typography = css`
   }
   h3 {
     font-size: ${modularScale(3)};
+    font-weight: normal;
   }
   h4 {
     font-size: ${modularScale(2)};
