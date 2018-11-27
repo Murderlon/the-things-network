@@ -54,7 +54,9 @@ const IndexPage = () => (
     </Header>
     <TableOfContents />
     <section>
-      <h2><Zero/> Introduction</h2>
+      <h2>
+        <Zero /> Introduction
+      </h2>
       <h3>
         Internet of Things is transforming the everyday physical objects that surround us into an
         ecosystem of information that will enrich our lives.{' '}

@@ -11,8 +11,8 @@ const base = css`
     background-position: center top;
     background-size: 100%;
 
-    @media screen and (min-width: 40rem) {
-      background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDE0NDAgMTIwIj4gIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZENkRCNSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLXdpZHRoPSIxLjQiIGQ9Ik0wIDg2TDE0NDAgODcuNU0yNDAgODZMMjQwIDIwOC40MDYzMzJNMTIwIDg2TDEyMCAyMDguNDA2MzMyTTM2MCA4NkwzNjAgMjA4LjQwNjMzMk00ODAgODZMNDgwIDIwOC40MDYzMzJNNjAwIDg2TDYwMCAyMDguNDA2MzMyTTcyMCA4Nkw3MjAgMjA4LjQwNjMzMk04NDAgODZMODQwIDIwOC40MDYzMzJNOTYwIDg2TDk2MCAyMDguNDA2MzMyTTEwODAgODZMMTA4MCAyMDguNDA2MzMyTTEyMDAgODZMMTIwMCAyMDguNDA2MzMyTTEzMjAgODZMMTMyMCAyMDguNDA2MzMyIiBvcGFjaXR5PSIuMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAtODYpIi8+PC9zdmc+);
+    @media screen and (min-width: 45rem) {
+      background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDE0NDAgMTIwIj4gIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZENkRCNSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLXdpZHRoPSIuOSIgZD0iTTAgODZMMTQ0MCA4Ny41TTI0MCA4NkwyNDAgMjA4LjQwNjMzMk0xMjAgODZMMTIwIDIwOC40MDYzMzJNMzYwIDg2TDM2MCAyMDguNDA2MzMyTTQ4MCA4Nkw0ODAgMjA4LjQwNjMzMk02MDAgODZMNjAwIDIwOC40MDYzMzJNNzIwIDg2TDcyMCAyMDguNDA2MzMyTTg0MCA4Nkw4NDAgMjA4LjQwNjMzMk05NjAgODZMOTYwIDIwOC40MDYzMzJNMTA4MCA4NkwxMDgwIDIwOC40MDYzMzJNMTIwMCA4NkwxMjAwIDIwOC40MDYzMzJNMTMyMCA4NkwxMzIwIDIwOC40MDYzMzIiIG9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIC04NikiLz48L3N2Zz4=);
     }
   }
   *,
@@ -24,10 +24,7 @@ const base = css`
     margin: 0;
     color: white;
   }
-  /**
- Add the correct display in browsers 
- that don't support HTML5 elements by default.
- */
+
   article,
   aside,
   footer,
@@ -41,8 +38,9 @@ const base = css`
   }
   section {
     grid-column: 1 / 7;
+    margin: ${variables.spacing.huge} 0;
 
-    @media screen and (min-width: 40rem) {
+    @media screen and (min-width: 45rem) {
       grid-column: 1 / 13;
     }
   }
@@ -75,6 +73,10 @@ const base = css`
     background: none;
     border: 0;
     color: inherit;
+  }
+  a:focus,
+  button:focus {
+    outline: 2px dotted ${variables.green};
   }
 `
 

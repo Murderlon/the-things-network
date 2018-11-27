@@ -1,13 +1,14 @@
-/* eslint-disable max-len */
 import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import styled, { createGlobalStyle } from 'styled-components'
 
+import fonts from '../styles/global/fonts'
 import base from '../styles/global/base'
 import typography from '../styles/global/typography'
 
 const GlobalStyle = createGlobalStyle`
+  ${fonts};
   ${base};
   ${typography};
 `
@@ -16,7 +17,7 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 
-  @media screen and (min-width: 40rem) {
+  @media screen and (min-width: 45rem) {
     grid-template-columns: repeat(12, 1fr);
   }
 `
