@@ -1,36 +1,41 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import variables from '../styles/variables'
-
 import Layout from '../components/layout'
 import TableOfContents from '../components/TableOfContents'
 import modularScale from '../styles/modular-scale'
+import Section from '../components/Section'
+
+import variables from '../styles/variables'
+import TheThingsNetwork from '../assets/ttn.svg'
+import Zero from '../assets/zero.svg'
 
 const Header = styled.header`
-  grid-column-start: 2;
-  grid-column-end: 6;
+  margin: ${variables.spacing.huge} 0;
+  grid-column: 2 / 6;
+  align-items: flex-end;
 
   h1 {
-    color: ${variables.backgroundBlue};
-    text-shadow: -2px 0 ${variables.green}, 0 2px ${variables.green},
-      2px 0 ${variables.green}, 0 -2px ${variables.green};
+    font-size: 1em;
   }
 
-  @media screen and (min-width: 40rem) {
-    grid-column-start: 2;
-    grid-column-end: 12;
+  svg {
+    display: inline-block;
+    width: 100%;
+    height: inherit;
+  }
+
+  @media screen and (min-width: 45rem) {
+    grid-column: 2 / 12;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
 
     h1 {
-      grid-column-start: 1;
-      grid-column-end: 7;
-      font-size: ${`calc(${modularScale(5)} + 5vw)`};
+      grid-column: 1 / 7;
     }
     p {
-      grid-column-start: 8;
-      grid-column-end: 11;
+      margin: 0;
+      grid-column: 8 / 11;
       font-size: ${modularScale(2)};
     }
   }
@@ -39,22 +44,23 @@ const Header = styled.header`
 const IndexPage = () => (
   <Layout>
     <Header>
-      <h1>The Things Network</h1>
+      <h1>
+        <TheThingsNetwork />
+      </h1>
       <p>
-        The story of a free and open Internet of Things network, powered by a
-        new technology, and created by the people.
+        The story of a free and open Internet of Things network, powered by a new technology, and
+        created by the people.
       </p>
     </Header>
+    <TableOfContents />
     <section>
-      <TableOfContents />
-    </section>
-    <section>
-      <h2>0 Introduction</h2>
+      <h2><Zero/> Introduction</h2>
       <h3>
-        Internet of Things is transforming the everyday physical objects that
-        surround us into an ecosystem of information that will enrich our lives.{' '}
+        Internet of Things is transforming the everyday physical objects that surround us into an
+        ecosystem of information that will enrich our lives.{' '}
       </h3>
     </section>
+    <Section />
   </Layout>
 )
 
