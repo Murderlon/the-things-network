@@ -1,18 +1,16 @@
 import { css } from 'styled-components'
-
 import modularScale from '../modular-scale'
+import variables from '../variables'
 
 const typography = css`
-  @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,700');
-  @import url('//cloud.typenetwork.com/projects/2762/fontface.css/');
-  @media screen and (min-width: 110em) {
+  @media screen and (min-width: 70em) {
     html {
-      font-size: calc(1.125em + 0.05vw);
+      font-size: calc(1.125em + 0.1vw);
     }
   }
   body {
-    font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-      Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+      Arial, sans-serif;
     font-weight: 400;
     font-variant: common-ligatures lining-nums contextual;
     line-height: 1.6;
@@ -23,16 +21,25 @@ const typography = css`
   h4,
   h5,
   h6 {
-    line-height: 1.2;
+    line-height: 1.4;
     margin-top: 0;
     margin-bottom: 0.75em;
-    font-weight: 500;
+    font-weight: 400;
+    font-family: ${variables.monoTypo};
   }
   h1 {
     font-size: ${modularScale(5)};
+    font-weight: 500;
   }
   h2 {
     font-size: ${modularScale(4)};
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin: ${variables.spacing.small};
+      color: ${variables.highlightBlue};
+    }
   }
   h3 {
     font-size: ${modularScale(3)};
