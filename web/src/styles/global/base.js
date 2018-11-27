@@ -78,6 +78,9 @@ const base = css`
   button:focus {
     outline: 2px dotted ${variables.green};
   }
+  .highlight {
+    color: ${variables.highlightBlue};
+  }
 `
 
 export default base

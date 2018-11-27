@@ -24,29 +24,24 @@ const typography = css`
     line-height: 1.4;
     margin-top: 0;
     margin-bottom: 0.75em;
-    font-weight: 400;
     font-family: ${variables.monoTypo};
   }
   h1 {
     font-size: ${modularScale(5)};
-    font-weight: 500;
   }
   h2 {
-    font-size: ${modularScale(4)};
-    display: flex;
-    align-items: center;
+    font-size: ${modularScale(3)};
 
-    svg {
-      margin: ${variables.spacing.small};
+    span {
       color: ${variables.highlightBlue};
     }
   }
   h3 {
-    font-size: ${modularScale(3)};
+    font-size: ${modularScale(2)};
     font-weight: normal;
   }
   h4 {
-    font-size: ${modularScale(2)};
+    font-size: ${modularScale(1)};
   }
   a {
     text-decoration-skip: ink;

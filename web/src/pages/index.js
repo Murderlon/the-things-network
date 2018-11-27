@@ -4,11 +4,9 @@ import styled from 'styled-components'
 import Layout from '../components/layout'
 import TableOfContents from '../components/TableOfContents'
 import modularScale from '../styles/modular-scale'
-import Section from '../components/Section'
 
 import variables from '../styles/variables'
 import TheThingsNetwork from '../assets/ttn.svg'
-import Zero from '../assets/zero.svg'
 
 const Header = styled.header`
   margin: ${variables.spacing.huge} 0;
@@ -40,6 +38,55 @@ const Header = styled.header`
     }
   }
 `
+const Section = styled.section`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+
+  .full-width {
+    margin: 0 ${variables.spacing.medium};
+    grid-column: 1 / 7;
+  }
+
+  .align-right {
+    grid-column: 1 / 7;
+
+    div {
+      background: ${variables.backgroundBlue};
+    }
+    div:first-child {
+      height: 50vw;
+      background: ${variables.sectionBlue};
+    }
+  }
+
+  @media screen and (min-width: 45rem) {
+    grid-template-columns: repeat(12, 1fr);
+
+    .full-width {
+      margin: 0;
+      grid-column: 2 / 12;
+    }
+    .align-right {
+      grid-column: 2 / 13;
+      display: grid;
+      grid-template-columns: repeat(11, 1fr);
+
+      div {
+        grid-column: 7 / 13;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p {
+          width: 25vw;
+        }
+      }
+      div:first-child {
+        grid-column: 1 / 7;
+      }
+    }
+  }
+`
 
 const IndexPage = () => (
   <Layout>
@@ -53,16 +100,30 @@ const IndexPage = () => (
       </p>
     </Header>
     <TableOfContents />
-    <section>
-      <h2>
-        <Zero /> Introduction
-      </h2>
-      <h3>
-        Internet of Things is transforming the everyday physical objects that surround us into an
-        ecosystem of information that will enrich our lives.{' '}
-      </h3>
-    </section>
-    <Section />
+    <Section>
+      <div className="full-width">
+        <h2 id="introduction">
+          <span>0</span> Introduction
+        </h2>
+        <h3>
+          Internet of Things is transforming the everyday physical objects that surround us into an
+          ecosystem of information that will enrich our lives.{' '}
+        </h3>
+      </div>
+      <div className="align-right">
+        <div />
+        <div>
+          <p>
+            From refrigerators to parking spaces to houses, the{' '}
+            <span className="highlight">
+              Internet of Things is bringing more and more things into the digital fold every day
+            </span>
+            , which will likely make the Internet of Things a multi-trillion dollar industry in the
+            near future.
+          </p>
+        </div>
+      </div>
+    </Section>
   </Layout>
 )
 

@@ -12,7 +12,7 @@ import Four from '../assets/four.svg'
 
 const Section = styled.section`
   @media screen and (min-width: 45rem) {
-    grid-column: 2 / 12;
+    grid-column: 2 / 8;
   }
 `
 
@@ -27,19 +27,19 @@ const List = styled.ol`
   a {
     display: flex;
     align-items: center;
-    
+
     svg {
       color: ${variables.highlightBlue};
     }
 
-    &:hover svg, 
+    &:hover svg,
     &:focus svg {
       color: ${variables.green};
     }
   }
 
   svg {
-    width: 0.8em;
+    width: 0.7em;
     margin: ${variables.spacing.small};
   }
 `
@@ -55,7 +55,6 @@ const TableOfContents = () => {
         </li>
         <li>
           <a href="#protocols">
-            {' '}
             <One />
             Protocols
           </a>
