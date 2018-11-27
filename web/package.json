@@ -30,7 +30,8 @@
     "singleQuote": true,
     "bracketSpacing": true,
     "semi": false,
-    "trailingComma": "none"
+    "trailingComma": "none",
+    "printWidth": 100
   },
   "dependencies": {
     "gatsby": "^2.0.19",
