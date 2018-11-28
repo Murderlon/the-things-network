@@ -1,4 +1,5 @@
 data-processing/*.csv
+.idea
 
 # Logs
 logs
