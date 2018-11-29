@@ -19,16 +19,15 @@ module.exports = {
 
     // options to emulate prettier setup
     semi: ['error', 'never'],
-    'max-len': ['error', { code: 100 }],
+    'max-len': ['error', { code: 80 }],
     'template-curly-spacing': ['error', 'never'],
     'arrow-parens': ['error', 'as-needed'],
 
-    // standard.js
     'space-before-function-paren': [
       'error',
       {
-        named: 'always',
-        anonymous: 'always',
+        named: 'never',
+        anonymous: 'never',
         asyncArrow: 'always'
       }
     ],

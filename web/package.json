@@ -31,7 +31,7 @@
     "bracketSpacing": true,
     "semi": false,
     "trailingComma": "none",
-    "printWidth": 100
+    "printWidth": 80
   },
   "dependencies": {
     "d3-array": "^2.0.2",

@@ -32,12 +32,14 @@ const ParentGroup = styled.g`
 `
 
 class LineChart extends Component {
-  render () {
+  render() {
     let data = this.props.data
     let margin = { top: 65, right: 65, bottom: 65, left: 65 }
     let width = this.props.width - margin.left - margin.right
     let height = this.props.height - margin.top - margin.bottom
-    let currentYear = data.findIndex(({ year }) => year === new Date().getFullYear())
+    let currentYear = data.findIndex(
+      ({ year }) => year === new Date().getFullYear()
+    )
 
     let x = scaleLinear()
       .domain(extent(data.map(({ year }) => year)))
@@ -56,7 +58,11 @@ class LineChart extends Component {
       <ParentGroup transform={`translate(${margin.left}, ${margin.top})`}>
         <g className="x axis" transform={`translate(0, ${height})`}>
           {x.ticks(10, '').map(tick => (
-            <g key={tick} className="tick" transform={`translate(${x(tick)}, 0)`}>
+            <g
+              key={tick}
+              className="tick"
+              transform={`translate(${x(tick)}, 0)`}
+            >
               <line stroke="currentColor" y2={-width} />
               <text fill="currentColor" y="30">
                 {tick}
@@ -66,7 +72,12 @@ class LineChart extends Component {
         </g>
         <g className="y axis">
           {y.ticks().map(tick => (
-            <g key={tick} className="tick" transform={`translate(0, ${y(tick)})`} text-anchor="end">
+            <g
+              key={tick}
+              className="tick"
+              transform={`translate(0, ${y(tick)})`}
+              text-anchor="end"
+            >
               <line stroke="currentColor" x2={height} />
               <text fill="currentColor" x="-15">
                 {format('.2s')(tick).replace(/G/, 'B')}
@@ -74,8 +85,14 @@ class LineChart extends Component {
             </g>
           ))}
         </g>
-        <path className="line present" d={lineGenerator(data.slice(0, currentYear + 1))} />
-        <path className="line future" d={lineGenerator(data.slice(currentYear))} />
+        <path
+          className="line present"
+          d={lineGenerator(data.slice(0, currentYear + 1))}
+        />
+        <path
+          className="line future"
+          d={lineGenerator(data.slice(currentYear))}
+        />
       </ParentGroup>
     )
   }

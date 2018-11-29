@@ -17,14 +17,14 @@ export default class ResponsiveChart extends Component {
     height: 0
   }
 
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize)
 
     // Call once to set the correct dimensions
     this.handleWindowResize()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowResize)
   }
 
@@ -34,7 +34,7 @@ export default class ResponsiveChart extends Component {
     this.setState({ width, height })
   })
 
-  render () {
+  render() {
     return (
       <Root ref={this.root}>
         <SVG width={this.state.width} height={this.state.height}>

@@ -93,7 +93,7 @@ const Section = styled.section`
 `
 
 class index extends Component {
-  render () {
+  render() {
     return (
       <Layout>
         <Header>
@@ -101,8 +101,8 @@ class index extends Component {
             <TheThingsNetwork />
           </h1>
           <p>
-            The story of a free and open Internet of Things network, powered by a new technology,
-            and created by the people.
+            The story of a free and open Internet of Things network, powered by
+            a new technology, and created by the people.
           </p>
         </Header>
         <TableOfContents />
@@ -112,25 +112,30 @@ class index extends Component {
               <span>0</span> Introduction
             </h2>
             <h3>
-              Internet of Things is transforming the everyday physical objects that surround us into
-              an ecosystem of information that will enrich our lives.{' '}
+              Internet of Things is transforming the everyday physical objects
+              that surround us into an ecosystem of information that will enrich
+              our lives.{' '}
             </h3>
           </div>
           <div className="align-right ">
             <ResponsiveChart>
               {({ width, height }) => (
-                <LineChart width={width} height={height} data={this.props.data.dataJson.years} />
+                <LineChart
+                  width={width}
+                  height={height}
+                  data={this.props.data.dataJson.years}
+                />
               )}
             </ResponsiveChart>
             <div>
               <p>
                 From refrigerators to parking spaces to houses, the{' '}
                 <span className="highlight">
-                  Internet of Things is bringing more and more things into the digital fold every
-                  day
+                  Internet of Things is bringing more and more things into the
+                  digital fold every day
                 </span>
-                , which will likely make the Internet of Things a multi-trillion dollar industry in
-                the near future.
+                , which will likely make the Internet of Things a multi-trillion
+                dollar industry in the near future.
               </p>
             </div>
           </div>
