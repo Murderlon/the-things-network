@@ -1,19 +1,8 @@
-import React from 'react'
-import Helmet from 'react-helmet'
-import { StaticQuery, graphql } from 'gatsby'
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { css } from 'styled-components'
 
-import fonts from '../styles/global/fonts'
-import base from '../styles/global/base'
-import typography from '../styles/global/typography'
+import vars from '../styles/variables'
 
-const GlobalStyle = createGlobalStyle`
-  ${fonts};
-  ${base};
-  ${typography};
-`
-
-const Grid = styled.div`
+let ParentGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 
@@ -22,33 +11,51 @@ const Grid = styled.div`
   }
 `
 
-const Layout = ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query SiteTitleQuery {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `}
-    render={data => (
-      <Grid>
-        <Helmet
-          title={data.site.siteMetadata.title}
-          meta={[
-            { name: 'description', content: 'Sample' },
-            { name: 'keywords', content: 'sample, something' }
-          ]}
-        >
-          <html lang="en" />
-        </Helmet>
-        <GlobalStyle />
-        {children}
-      </Grid>
-    )}
-  />
-)
+let SubGrid = styled.div`
+  grid-column: 1 / 7;
+  ${({ fullWidth }) => (fullWidth ? one : two)}
+`
 
-export default Layout
+let one = css`
+  margin: 0 ${vars.spacing.medium};
+
+  @media screen and (min-width: 60rem) {
+    margin: 0;
+    grid-column: 2 / 12;
+  }
+`
+
+let two = css`
+  .context {
+    background: ${vars.backgroundBlue};
+  }
+
+  div:not(.context) {
+    height: 100vw;
+    background: ${vars.sectionBlue};
+  }
+
+  @media screen and (min-width: 60rem) {
+    grid-column: 2 / 13;
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+
+    .context {
+      grid-column: 7 / 13;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        width: 25vw;
+      }
+    }
+
+    div:not(.context) {
+      height: 50vw;
+      grid-column: 1 / 7;
+    }
+  }
+`
+
+export default { ParentGrid, SubGrid }
