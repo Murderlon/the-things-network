@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
 import Introduction from '../chapters/Introduction'
@@ -19,27 +19,23 @@ let GlobalStyle = createGlobalStyle`
   ${typography};
 `
 
-class index extends Component {
-  render() {
-    return (
-      <>
-        <GlobalStyle />
-        <Layout.ParentGrid>
-          <Header>
-            <h1>
-              <TheThingsNetwork />
-            </h1>
-            <p>
-              The story of a free and open Internet of Things network, powered
-              by a new technology, and created by the people.
-            </p>
-          </Header>
-          <TableOfContents />
-          <Introduction />
-        </Layout.ParentGrid>
-      </>
-    )
-  }
-}
+const index = () => (
+  <>
+    <GlobalStyle />
+    <Layout.ParentGrid>
+      <Header>
+        <h1>
+          <TheThingsNetwork />
+        </h1>
+        <p>
+          The story of a free and open Internet of Things network, powered by a
+          new technology, and created by the people.
+        </p>
+      </Header>
+      <TableOfContents />
+      <Introduction />
+    </Layout.ParentGrid>
+  </>
+)
 
 export default index
