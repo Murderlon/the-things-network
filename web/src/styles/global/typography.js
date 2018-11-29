@@ -13,7 +13,7 @@ const typography = css`
       Arial, sans-serif;
     font-weight: 400;
     font-variant: common-ligatures lining-nums contextual;
-    line-height: 1.6;
+    line-height: 1.4;
   }
   h1,
   h2,
@@ -21,7 +21,6 @@ const typography = css`
   h4,
   h5,
   h6 {
-    line-height: 1.4;
     margin-top: 0;
     margin-bottom: 0.75em;
     font-family: ${variables.monoTypo};
