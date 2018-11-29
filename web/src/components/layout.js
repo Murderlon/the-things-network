@@ -27,12 +27,12 @@ let one = css`
 
 let two = css`
   .context {
-    background: ${vars.backgroundBlue};
+    background: ${vars.secondaryBlue};
   }
 
   div:not(.context) {
     height: 100vw;
-    background: ${vars.sectionBlue};
+    background: ${vars.primaryBlue};
   }
 
   @media screen and (min-width: 60rem) {

@@ -4,8 +4,8 @@ const variables = {
   green: '#78FEE0',
   red: '#FB6F9E',
   purple: '#6d6db5',
-  sectionBlue: '#292B44',
-  backgroundBlue: '#1F2033',
+  primaryBlue: '#292B44',
+  secondaryBlue: '#1F2033',
   highlightBlue: '#7BA7FD',
   spacing: {
     xxsmall: modularScale(-8),

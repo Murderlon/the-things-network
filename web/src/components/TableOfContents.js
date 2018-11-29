@@ -20,7 +20,7 @@ const List = styled.ol`
   font-family: ${variables.monoTypo};
   font-size: ${modularScale(2)};
   list-style: none;
-  background: ${variables.backgroundBlue};
+  background: ${variables.secondaryBlue};
   margin: 0;
   padding: 0;
 

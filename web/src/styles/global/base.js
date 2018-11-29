@@ -5,7 +5,7 @@ import variables from '../variables'
 const base = css`
   html {
     box-sizing: border-box;
-    background: ${variables.backgroundBlue};
+    background: ${variables.secondaryBlue};
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNzUiIGhlaWdodD0iNjMiIHZpZXdCb3g9IjAgMCAzNzUgNjMiPiAgPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNkQ2REI1IiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIiBzdHJva2Utd2lkdGg9Ii43IiBkPSJNMCA1LjU1MTExNTEyZS0xN0wzNzQuOTk5Nzk3LjM5MDYyNDc4OE02Mi41IDBMNjIuNSA2Mi41TTEyNSAwTDEyNSA2Mi41TTE4Ny41IDBMMTg3LjUgNjIuNU0yNTAgMEwyNTAgNjIuNU0zMTIuNSAwTDMxMi41IDYyLjUiIG9wYWNpdHk9Ii4zIi8+PC9zdmc+);
     background-repeat: no-repeat repeat;
     background-position: center top;
