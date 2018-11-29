@@ -11,7 +11,7 @@ const base = css`
     background-position: center top;
     background-size: 100%;
 
-    @media screen and (min-width: 45rem) {
+    @media screen and (min-width: 60rem) {
       background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDE0NDAgMTIwIj4gIDxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzZENkRCNSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLXdpZHRoPSIuOSIgZD0iTTAgODZMMTQ0MCA4Ny41TTI0MCA4NkwyNDAgMjA4LjQwNjMzMk0xMjAgODZMMTIwIDIwOC40MDYzMzJNMzYwIDg2TDM2MCAyMDguNDA2MzMyTTQ4MCA4Nkw0ODAgMjA4LjQwNjMzMk02MDAgODZMNjAwIDIwOC40MDYzMzJNNzIwIDg2TDcyMCAyMDguNDA2MzMyTTg0MCA4Nkw4NDAgMjA4LjQwNjMzMk05NjAgODZMOTYwIDIwOC40MDYzMzJNMTA4MCA4NkwxMDgwIDIwOC40MDYzMzJNMTIwMCA4NkwxMjAwIDIwOC40MDYzMzJNMTMyMCA4NkwxMzIwIDIwOC40MDYzMzIiIG9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIC04NikiLz48L3N2Zz4=);
     }
   }
@@ -40,7 +40,7 @@ const base = css`
     grid-column: 1 / 7;
     margin: ${variables.spacing.huge} 0;
 
-    @media screen and (min-width: 45rem) {
+    @media screen and (min-width: 60rem) {
       grid-column: 1 / 13;
     }
   }

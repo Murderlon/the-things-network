@@ -17,7 +17,7 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 
-  @media screen and (min-width: 45rem) {
+  @media screen and (min-width: 60rem) {
     grid-template-columns: repeat(12, 1fr);
   }
 `

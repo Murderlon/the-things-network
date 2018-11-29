@@ -26,7 +26,7 @@ const Header = styled.header`
     height: inherit;
   }
 
-  @media screen and (min-width: 45rem) {
+  @media screen and (min-width: 60rem) {
     grid-column: 2 / 12;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
@@ -62,7 +62,7 @@ const Section = styled.section`
     }
   }
 
-  @media screen and (min-width: 45rem) {
+  @media screen and (min-width: 60rem) {
     grid-template-columns: repeat(12, 1fr);
 
     .full-width {

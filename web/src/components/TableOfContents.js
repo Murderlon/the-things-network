@@ -11,7 +11,7 @@ import Three from '../assets/three.svg'
 import Four from '../assets/four.svg'
 
 const Section = styled.section`
-  @media screen and (min-width: 45rem) {
+  @media screen and (min-width: 60rem) {
     grid-column: 2 / 8;
   }
 `
