@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { createGlobalStyle } from 'styled-components'
-import { graphql } from 'gatsby'
 
 import Introduction from '../chapters/Introduction'
 
@@ -36,22 +35,11 @@ class index extends Component {
             </p>
           </Header>
           <TableOfContents />
-          <Introduction data={this.props.data.dataJson.years} />
+          <Introduction />
         </Layout.ParentGrid>
       </>
     )
   }
 }
-
-export const query = graphql`
-  query {
-    dataJson {
-      years {
-        year
-        value
-      }
-    }
-  }
-`
 
 export default index
