@@ -5,6 +5,7 @@ import { graphql } from 'gatsby'
 import Layout from '../components/layout'
 import TableOfContents from '../components/TableOfContents'
 import LineChart from '../components/LineChart'
+import ResponsiveChart from '../components/ResponsiveChart'
 
 import modularScale from '../styles/modular-scale'
 import vars from '../styles/variables'
@@ -56,7 +57,7 @@ const Section = styled.section`
       background: ${vars.backgroundBlue};
     }
     div:first-child {
-      height: 50vw;
+      height: 100vw;
       background: ${vars.sectionBlue};
     }
   }
@@ -84,6 +85,7 @@ const Section = styled.section`
         }
       }
       div:first-child {
+        height: 50vw;
         grid-column: 1 / 7;
       }
     }
@@ -114,14 +116,12 @@ class index extends Component {
               an ecosystem of information that will enrich our lives.{' '}
             </h3>
           </div>
-          <div className="align-right">
-            <div>
-              <LineChart
-                parentWidth={700}
-                parentHeight={700}
-                data={this.props.data.dataJson.years}
-              />
-            </div>
+          <div className="align-right ">
+            <ResponsiveChart>
+              {({ width, height }) => (
+                <LineChart width={width} height={height} data={this.props.data.dataJson.years} />
+              )}
+            </ResponsiveChart>
             <div>
               <p>
                 From refrigerators to parking spaces to houses, the{' '}
