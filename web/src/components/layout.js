@@ -2,12 +2,29 @@ import styled, { css } from 'styled-components'
 
 import vars from '../styles/variables'
 
+let RootGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+
+  @media screen and (min-width: 60rem) {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  @media screen and (min-width: 120rem) {
+    grid-template-columns: repeat(18, 1fr);
+  }
+`
+
 let ParentGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 
   @media screen and (min-width: 60rem) {
     grid-template-columns: repeat(12, 1fr);
+  }
+
+  @media screen and (min-width: 120rem) {
+    grid-column: 4 / 16;
   }
 `
 
@@ -22,6 +39,10 @@ let one = css`
   @media screen and (min-width: 60rem) {
     margin: 0;
     grid-column: 2 / 12;
+  }
+
+  @media screen and (min-width: 120rem) {
+    grid-column: 1 / 13;
   }
 `
 
@@ -56,6 +77,27 @@ let two = css`
       grid-column: 1 / 7;
     }
   }
+
+  @media screen and (min-width: 120rem) {
+    grid-column: 1 / 13;
+    grid-template-columns: repeat(12, 1fr);
+
+    .context {
+      grid-column: 7 / 14;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        width: 16.66vw;
+      }
+    }
+
+    div:not(.context) {
+      height: 33.33vw;
+      grid-column: 1 / 7;
+    }
+  }
 `
 
-export default { ParentGrid, SubGrid }
+export default { RootGrid, ParentGrid, SubGrid }

@@ -1,16 +1,17 @@
+/* eslint-disable max-len */
 import { css } from 'styled-components'
 import modularScale from '../modular-scale'
 import variables from '../variables'
 
 let typography = css`
-  @media screen and (min-width: 70em) {
+  @media screen and (min-width: 80rem) {
     html {
       font-size: calc(1.125em + 0.1vw);
     }
   }
   body {
-    font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-      Arial, sans-serif;
+    font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Helvetica, Arial, sans-serif;
     font-weight: 400;
     font-variant: common-ligatures lining-nums contextual;
     line-height: 1.4;

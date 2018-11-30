@@ -14,6 +14,10 @@ let Section = styled.section`
   @media screen and (min-width: 60rem) {
     grid-column: 2 / 8;
   }
+
+  @media screen and (min-width: 120rem) {
+    grid-column: 4 / 10;
+  }
 `
 
 let List = styled.ol`

@@ -22,7 +22,7 @@ let GlobalStyle = createGlobalStyle`
 let index = () => (
   <>
     <GlobalStyle />
-    <Layout.ParentGrid>
+    <Layout.RootGrid>
       <Header>
         <h1>
           <TheThingsNetwork />
@@ -34,7 +34,7 @@ let index = () => (
       </Header>
       <TableOfContents />
       <Introduction />
-    </Layout.ParentGrid>
+    </Layout.RootGrid>
   </>
 )
 

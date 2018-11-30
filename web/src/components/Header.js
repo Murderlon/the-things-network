@@ -32,4 +32,19 @@ export default styled.header`
       font-size: ${modularScale(2)};
     }
   }
+
+  @media screen and (min-width: 120rem) {
+    grid-column: 4 / 16;
+    grid-template-columns: repeat(12, 1fr);
+
+    h1 {
+      grid-column: 1 / 7;
+    }
+
+    p {
+      margin: 0;
+      grid-column: 10 / 13;
+      font-size: ${modularScale(2)};
+    }
+  }
 `
