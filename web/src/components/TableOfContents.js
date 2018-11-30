@@ -10,13 +10,13 @@ import Two from '../assets/two.svg'
 import Three from '../assets/three.svg'
 import Four from '../assets/four.svg'
 
-const Section = styled.section`
+let Section = styled.section`
   @media screen and (min-width: 60rem) {
     grid-column: 2 / 8;
   }
 `
 
-const List = styled.ol`
+let List = styled.ol`
   font-family: ${variables.monoTypo};
   font-size: ${modularScale(2)};
   list-style: none;
@@ -44,7 +44,7 @@ const List = styled.ol`
   }
 `
 
-const TableOfContents = () => {
+let TableOfContents = () => {
   return (
     <Section>
       <List>

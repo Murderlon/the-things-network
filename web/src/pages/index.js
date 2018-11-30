@@ -19,7 +19,7 @@ let GlobalStyle = createGlobalStyle`
   ${typography};
 `
 
-const index = () => (
+let index = () => (
   <>
     <GlobalStyle />
     <Layout.ParentGrid>

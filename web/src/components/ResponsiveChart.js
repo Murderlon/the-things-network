@@ -2,9 +2,9 @@ import React, { Component, createRef } from 'react'
 import styled from 'styled-components'
 import schedule from 'raf-schd'
 
-const Root = styled('div')``
+let Root = styled('div')``
 
-const SVG = styled('svg')`
+let SVG = styled('svg')`
   width: auto;
   height: auto;
 `
@@ -29,7 +29,7 @@ export default class ResponsiveChart extends Component {
   }
 
   handleWindowResize = schedule(() => {
-    const { width, height } = this.root.current.getBoundingClientRect()
+    let { width, height } = this.root.current.getBoundingClientRect()
 
     this.setState({ width, height })
   })

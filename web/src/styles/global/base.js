@@ -2,7 +2,7 @@
 import { css } from 'styled-components'
 import variables from '../variables'
 
-const base = css`
+let base = css`
   html {
     box-sizing: border-box;
     background: ${variables.secondaryBlue};

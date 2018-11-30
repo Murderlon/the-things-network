@@ -2,7 +2,7 @@ import { css } from 'styled-components'
 import modularScale from '../modular-scale'
 import variables from '../variables'
 
-const typography = css`
+let typography = css`
   @media screen and (min-width: 70em) {
     html {
       font-size: calc(1.125em + 0.1vw);

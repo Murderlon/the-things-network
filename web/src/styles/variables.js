@@ -1,6 +1,6 @@
 import modularScale from '../styles/modular-scale'
 
-const variables = {
+let variables = {
   green: '#78FEE0',
   red: '#FB6F9E',
   purple: '#6d6db5',
