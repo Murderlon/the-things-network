@@ -46,11 +46,13 @@
     "gatsby-plugin-styled-components": "^3.0.3",
     "gatsby-source-filesystem": "^2.0.9",
     "gatsby-transformer-json": "^2.1.5",
+    "intersection-observer": "^0.5.1",
     "polished": "^2.3.0",
     "raf-schd": "^4.0.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-helmet": "^5.2.0",
+    "scrollama": "^1.4.4",
     "styled-components": "^4.1.1"
   },
   "devDependencies": {
