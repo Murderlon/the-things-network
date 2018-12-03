@@ -2,13 +2,17 @@ import styled, { css } from 'styled-components'
 
 import vars from '../styles/variables'
 
-let RootGrid = styled.div`
+let basicGrid = css`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 
   @media screen and (min-width: 60rem) {
     grid-template-columns: repeat(12, 1fr);
   }
+`
+
+let RootGrid = styled.div`
+  ${basicGrid};
 
   @media screen and (min-width: 120rem) {
     grid-template-columns: repeat(18, 1fr);
@@ -16,12 +20,7 @@ let RootGrid = styled.div`
 `
 
 let ParentGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-
-  @media screen and (min-width: 60rem) {
-    grid-template-columns: repeat(12, 1fr);
-  }
+  ${basicGrid};
 
   @media screen and (min-width: 120rem) {
     grid-column: 4 / 16;
@@ -54,6 +53,11 @@ let two = css`
   div:not(.context) {
     height: 100vw;
     background: ${vars.primaryBlue};
+  }
+
+  p {
+    margin: 0;
+    padding: ${`${vars.spacing.xxlarge} ${vars.spacing.medium}`};
   }
 
   @media screen and (min-width: 60rem) {
