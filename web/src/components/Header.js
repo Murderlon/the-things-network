@@ -1,12 +1,21 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import modularScale from '../styles/modular-scale'
 
 import vars from '../styles/variables'
 
+let bounce = keyframes`
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(8px);
+  }
+`
+
 export default styled.header`
-  margin: ${vars.spacing.huge} 0;
+  height: 100vh;
   grid-column: 2 / 6;
-  align-items: flex-end;
+  align-items: center;
 
   h1 {
     font-size: 1em;
@@ -16,6 +25,18 @@ export default styled.header`
     display: inline-block;
     width: 100%;
     height: inherit;
+
+      path {
+        animation: ${bounce} 0.5s infinite alternate;
+        animation-timing-fuction: ${vars.timingFunction};
+      }
+      path:nth-of-type(2) {
+        animation-delay: 50ms;
+      }
+      path:nth-of-type(3) {
+        animation-delay: 100ms;
+      }
+    }
   }
 
   @media screen and (min-width: 60rem) {
@@ -25,6 +46,9 @@ export default styled.header`
 
     h1 {
       grid-column: 1 / 7;
+      div {
+        width: 100%;
+    }
     }
     p {
       margin: 0;

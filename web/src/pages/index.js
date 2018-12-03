@@ -11,7 +11,7 @@ import fonts from '../styles/global/fonts'
 import base from '../styles/global/base'
 import typography from '../styles/global/typography'
 
-import TheThingsNetwork from '../assets/ttn.svg'
+import TheThingsNetwork from '../assets/ttn-stacked.svg'
 
 let GlobalStyle = createGlobalStyle`
   ${fonts};
