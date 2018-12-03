@@ -22,7 +22,7 @@ let Section = styled.section`
 
 let List = styled.ol`
   font-family: ${variables.monoTypo};
-  font-size: ${modularScale(2)};
+  font-size: ${modularScale(1)};
   list-style: none;
   background: ${variables.secondaryBlue};
   margin: 0;
@@ -45,6 +45,10 @@ let List = styled.ol`
   svg {
     width: 0.7em;
     margin: ${variables.spacing.small};
+  }
+
+  @media screen and (min-width: 60rem) {
+    font-size: ${modularScale(2)};
   }
 `
 

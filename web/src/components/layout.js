@@ -48,16 +48,12 @@ let one = css`
 let two = css`
   .context {
     background: ${vars.secondaryBlue};
+    padding: ${`${vars.spacing.xxlarge} ${vars.spacing.medium}`};
   }
 
-  div:not(.context) {
+  > div:not(.context) {
     height: 100vw;
     background: ${vars.primaryBlue};
-  }
-
-  p {
-    margin: 0;
-    padding: ${`${vars.spacing.xxlarge} ${vars.spacing.medium}`};
   }
 
   @media screen and (min-width: 60rem) {
@@ -69,16 +65,20 @@ let two = css`
       grid-column: 7 / 13;
       display: flex;
       justify-content: center;
+      flex-direction: column;
       align-items: center;
+      padding: 0;
 
       p {
         width: 25vw;
+        padding: 0;
       }
     }
 
-    div:not(.context) {
+    > div:not(.context) {
       height: 50vw;
       grid-column: 1 / 7;
+      position: sticky;
     }
   }
 
@@ -97,7 +97,7 @@ let two = css`
       }
     }
 
-    div:not(.context) {
+    > div:not(.context) {
       height: 33.33vw;
       grid-column: 1 / 7;
     }

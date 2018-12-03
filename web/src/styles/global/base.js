@@ -42,7 +42,7 @@ let base = css`
   }
   section {
     grid-column: 1 / 7;
-    margin: ${variables.spacing.huge} 0;
+    margin: ${variables.spacing.xxlarge} 0;
 
     @media screen and (min-width: 60rem) {
       grid-column: 1 / 13;

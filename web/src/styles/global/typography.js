@@ -25,26 +25,38 @@ let typography = css`
     margin-top: 0;
     margin-bottom: 0.75em;
     font-family: ${variables.monoTypo};
+    font-weight: normal;
   }
   h1 {
     font-size: ${modularScale(5)};
   }
   h2 {
-    font-size: ${modularScale(3)};
+    font-size: ${modularScale(2)};
+    font-weight: 500;
 
     span {
       color: ${variables.highlightBlue};
     }
   }
   h3 {
-    font-size: ${modularScale(2)};
-    font-weight: normal;
+    font-size: ${modularScale(1)};
   }
   h4 {
-    font-size: ${modularScale(1)};
+    font-size: ${modularScale(0)};
   }
   a {
     text-decoration-skip: ink;
+  }
+  @media screen and (min-width: 60rem) {
+    h2 {
+      font-size: ${modularScale(3)};
+    }
+    h3 {
+      font-size: ${modularScale(2)};
+    }
+    h4 {
+      font-size: ${modularScale(1)};
+    }
   }
 `
 

@@ -15,10 +15,17 @@ let bounce = keyframes`
 export default styled.header`
   height: 100vh;
   grid-column: 2 / 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 
   h1 {
     font-size: 1em;
+  }
+
+  p {
+    font-size: ${modularScale(1)};
   }
 
   svg {
@@ -28,7 +35,7 @@ export default styled.header`
 
       path {
         animation: ${bounce} 0.5s infinite alternate;
-        animation-timing-fuction: ${vars.timingFunction};
+        transition-timing-function: ${vars.timingFunction};
       }
       path:nth-of-type(2) {
         animation-delay: 50ms;
@@ -46,14 +53,14 @@ export default styled.header`
 
     h1 {
       grid-column: 1 / 7;
+      
       div {
         width: 100%;
-    }
+      }
     }
     p {
       margin: 0;
       grid-column: 8 / 11;
-      font-size: ${modularScale(2)};
     }
   }
 
