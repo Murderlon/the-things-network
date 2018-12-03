@@ -2,6 +2,7 @@ import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
 import Introduction from '../chapters/Introduction'
+import Protocols from '../chapters/Protocols'
 
 import Header from '../components/Header'
 import Layout from '../components/Layout'
@@ -34,6 +35,7 @@ let index = () => (
       </Header>
       <TableOfContents />
       <Introduction />
+      <Protocols />
     </Layout.RootGrid>
   </>
 )

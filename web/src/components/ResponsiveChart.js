@@ -2,8 +2,6 @@ import React, { Component, createRef } from 'react'
 import styled from 'styled-components'
 import schedule from 'raf-schd'
 
-let Root = styled('div')``
-
 let SVG = styled('svg')`
   width: auto;
   height: auto;
@@ -36,11 +34,11 @@ export default class ResponsiveChart extends Component {
 
   render() {
     return (
-      <Root ref={this.root}>
+      <div className="scroll__graphic sticky" ref={this.root}>
         <SVG width={this.state.width} height={this.state.height}>
           {this.props.children(this.state)}
         </SVG>
-      </Root>
+      </div>
     )
   }
 }
