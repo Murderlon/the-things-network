@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import modularScale from '../styles/modular-scale'
 
 let variables = {
