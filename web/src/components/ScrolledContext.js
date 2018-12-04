@@ -31,36 +31,32 @@ let Div = styled.div`
   }
 `
 
-let ScrolledContext = ({ content, index }) => {
-  return (
-    <Div className="context scroll__text">
-      <div className="step" data-step={index + 1}>
-        <h4>{content.protocol}</h4>
-        <p>{content.description}</p>
-        <p className="range">
-          <span /> {content.rangeAsText} meters range
-        </p>
-        <h5>Pros</h5>
-        <ul>
-          {content.pros.map(p => (
-            <li>{p}</li>
-          ))}
-        </ul>
-        <h5>Cons</h5>
-        <ul>
-          {content.cons.map(c => (
-            <li>{c}</li>
-          ))}
-        </ul>
-        <h5>Example use cases</h5>
-        <ul>
-          {content.useCases.map(u => (
-            <li>{u}</li>
-          ))}
-        </ul>
-      </div>
-    </Div>
-  )
-}
+let ScrolledContext = ({ content, index }) => (
+  <Div className="step" data-step={index + 1}>
+    <h4>{content.protocol}</h4>
+    <p>{content.description}</p>
+    <p className="range">
+      <span /> {content.rangeAsText} meters range
+    </p>
+    <h5>Pros</h5>
+    <ul>
+      {content.pros.map(p => (
+        <li key={p}>{p}</li>
+      ))}
+    </ul>
+    <h5>Cons</h5>
+    <ul>
+      {content.cons.map(c => (
+        <li key={c}>{c}</li>
+      ))}
+    </ul>
+    <h5>Example use cases</h5>
+    <ul>
+      {content.useCases.map(u => (
+        <li key={u}>{u}</li>
+      ))}
+    </ul>
+  </Div>
+)
 
 export default ScrolledContext
