@@ -6,7 +6,7 @@ import variables from '../variables'
 let typography = css`
   @media screen and (min-width: 80rem) {
     html {
-      font-size: calc(1.125em + 0.1vw);
+      font-size: calc(1.125em + 0vw);
     }
   }
   body {
@@ -15,6 +15,7 @@ let typography = css`
     font-weight: 400;
     font-variant: common-ligatures lining-nums contextual;
     line-height: 1.4;
+    text-rendering: geometricPrecision;
   }
   h1,
   h2,
