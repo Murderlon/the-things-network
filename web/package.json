@@ -52,10 +52,14 @@
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-helmet": "^5.2.0",
+    "react-spring": "^6.1.10",
     "scrollama": "^1.4.4",
-    "styled-components": "^4.1.1"
+    "stickyfilljs": "^2.1.0",
+    "styled-components": "^4.1.1",
+    "typeface-fira-sans": "^0.0.54"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.0",
     "babel-eslint": "^10.0.1",
     "babel-plugin-styled-components": "^1.9.0",
     "eslint": "^5.9.0",
@@ -67,6 +71,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^1.2.0",
     "precise-commits": "^1.0.2",
-    "prettier": "^1.15.2"
+    "prettier": "^1.15.2",
+    "prop-types": "^15.6.2"
   }
 }

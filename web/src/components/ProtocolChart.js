@@ -2,6 +2,7 @@ import React, { Component, createRef } from 'react'
 import styled from 'styled-components'
 import { scaleLinear, scaleSqrt } from 'd3-scale'
 import { extent } from 'd3-array'
+import { Spring } from 'react-spring'
 
 import variables from '../styles/variables'
 
@@ -27,8 +28,11 @@ let ParentGroup = styled.g`
     stroke-opacity: 0.4;
   }
 
-  .tick text {
+  text {
     font-family: ${variables.monoTypo};
+  }
+
+  .tick text {
     font-size: 0.8rem;
     color: ${variables.highlightBlue};
 
@@ -104,16 +108,16 @@ class LineChart extends Component {
               textAnchor="end"
             >
               <line stroke="currentColor" x2={height} />
-              <text fill="currentColor" x="-15">
-                <tspan x="-15" y="0">
+              <text fill="currentColor" x="-10">
+                <tspan x="-10" y="0">
                   {yLabels[i]}
                 </tspan>
                 {i === 2 && (
                   <>
-                    <tspan x="-15" y="20">
+                    <tspan x="-10" y="20">
                       power
                     </tspan>
-                    <tspan x="-15" y="40">
+                    <tspan x="-10" y="40">
                       usage
                     </tspan>
                   </>
@@ -122,15 +126,44 @@ class LineChart extends Component {
             </g>
           ))}
         </g>
-        {data.map(({ protocol, cost, powerUsage, range }) => (
-          <circle
-            key={protocol}
-            cx={x(cost)}
-            cy={y(powerUsage)}
-            r={r(range)}
-            fill={variables.green}
-          />
-        ))}
+        {data.map(({ protocol, cost, powerUsage, range }, i) =>
+          this.props.currentStep >= i ? (
+            <g
+              key={protocol}
+              fillOpacity={this.props.currentStep > i ? 0.3 : 1}
+            >
+              <Spring from={{ r: 0 }} to={{ r: r(range) }}>
+                {props => (
+                  <circle
+                    {...props}
+                    cx={x(cost)}
+                    cy={y(powerUsage)}
+                    fill={variables.green}
+                  />
+                )}
+              </Spring>
+              {i <= 1 ? (
+                <text
+                  fill="white"
+                  transform={`translate(${x(cost) + r(range) + 10}, ${y(
+                    powerUsage
+                  ) + 8})`}
+                >
+                  {protocol}
+                </text>
+              ) : (
+                <text
+                  fill={variables.secondaryBlue}
+                  transform={`translate(${x(cost) - r(range) / 3}, ${y(
+                    powerUsage
+                  ) + 8})`}
+                >
+                  {protocol}
+                </text>
+              )}
+            </g>
+          ) : null
+        )}
       </ParentGroup>
     )
   }
