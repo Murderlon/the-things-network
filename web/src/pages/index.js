@@ -1,5 +1,6 @@
 import React from 'react'
 import { createGlobalStyle } from 'styled-components'
+import Helmet from 'react-helmet'
 
 import Introduction from '../chapters/Introduction'
 import Protocols from '../chapters/Protocols'
@@ -7,6 +8,7 @@ import Protocols from '../chapters/Protocols'
 import Header from '../components/Header'
 import Layout from '../components/Layout'
 import TableOfContents from '../components/TableOfContents'
+import Quote from '../components/Quote'
 
 import fonts from '../styles/global/fonts'
 import base from '../styles/global/base'
@@ -22,6 +24,10 @@ let GlobalStyle = createGlobalStyle`
 
 let index = () => (
   <>
+    <Helmet>
+      {/* eslint-disable-next-line max-len */}
+      <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver|gated" />
+    </Helmet>
     <GlobalStyle />
     <Layout.RootGrid>
       <Header>
@@ -36,6 +42,7 @@ let index = () => (
       <TableOfContents />
       <Introduction />
       <Protocols />
+      <Quote />
     </Layout.RootGrid>
   </>
 )
