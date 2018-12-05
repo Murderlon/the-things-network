@@ -14,6 +14,15 @@ let ContentWrapper = styled(Layout.SubGrid)`
   }
 `
 
+let Gateway = ({ x, y, name }) => (
+  <g>
+    <circle cx={x} cy={y} r="6" />
+    <text x={x} y={y} dx={-14} dy={5}>
+      {name}
+    </text>
+  </g>
+)
+
 let TheThingsNetwork = () => (
   <Layout.ParentGrid as="section">
     <ContentWrapper fullWidth>
@@ -23,7 +32,23 @@ let TheThingsNetwork = () => (
       <ResponsiveChart>
         {dimensions => (
           <MapBaseGroup {...dimensions} extent={PoCLocations}>
-            {generators => <TileLayer {...dimensions} {...generators} />}
+            {generators => (
+              <>
+                <TileLayer {...dimensions} {...generators} />
+                {PoCLocations.features.map(({ properties, geometry }) => {
+                  let [x, y] = generators.projection(geometry.coordinates)
+
+                  return (
+                    <Gateway
+                      key={properties.name}
+                      x={x}
+                      y={y}
+                      name={properties.name}
+                    />
+                  )
+                })}
+              </>
+            )}
           </MapBaseGroup>
         )}
       </ResponsiveChart>
