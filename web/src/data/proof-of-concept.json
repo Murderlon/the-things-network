@@ -1,0 +1,137 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Port of Amsterdam",
+        "id": "eui-0ba0000000000001"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.8211017, 52.407024]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "The Smiths",
+        "id": "slotermeer12_ttn"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.823151, 52.379528]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Trakkies",
+        "id": "ttndrenthe4"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.840945, 52.35353]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "KPMG",
+        "id": "eui-0000024b080e0be4"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.85854, 52.31743]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Non Red",
+        "id": "eui-b827ebfffe35c94f"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.8807592, 52.32961]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "We Share Solar",
+        "id": "ttn-icr3ate2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.9539785, 52.322044]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Peerby",
+        "id": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.933665, 52.355161]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Glimworm Beacons",
+        "id": "zb45"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.937193, 52.366962]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Boven Debalie",
+        "id": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.878136, 52.364126]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rockstart",
+        "id": "eui-0000024b0806021d"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.874708, 52.39551]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Waag society",
+        "id": "eui-b827ebfffe5155a7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.9083323, 52.375774]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": null,
+        "id": "eui-1dee1a526d1f93ac"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.9084883, 52.39659]
+      }
+    }
+  ]
+}

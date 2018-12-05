@@ -4,6 +4,7 @@ import Helmet from 'react-helmet'
 
 import Introduction from '../chapters/Introduction'
 import Protocols from '../chapters/Protocols'
+import TheThingsNetwork from '../chapters/TheThingsNetwork'
 
 import Header from '../components/Header'
 import Layout from '../components/Layout'
@@ -14,7 +15,7 @@ import fonts from '../styles/global/fonts'
 import base from '../styles/global/base'
 import typography from '../styles/global/typography'
 
-import TheThingsNetwork from '../assets/ttn-stacked.svg'
+import Logo from '../assets/ttn-stacked.svg'
 
 let GlobalStyle = createGlobalStyle`
   ${fonts};
@@ -32,7 +33,7 @@ let index = () => (
     <Layout.RootGrid>
       <Header>
         <h1>
-          <TheThingsNetwork />
+          <Logo />
         </h1>
         <p>
           The story of a free and open Internet of Things network, powered by a
@@ -43,6 +44,7 @@ let index = () => (
       <Introduction />
       <Protocols />
       <Quote />
+      <TheThingsNetwork />
     </Layout.RootGrid>
   </>
 )
