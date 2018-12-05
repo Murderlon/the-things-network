@@ -9,9 +9,9 @@ let Section = styled.section`
   text-align: center;
   position: relative;
   padding: ${variables.spacing.huge} 0;
+  margin: ${variables.spacing.enormous} 0;
 
   @media screen and (min-width: 60rem) {
-    margin: 0;
     grid-column: 2 / 12;
   }
 
@@ -37,7 +37,10 @@ let Section = styled.section`
   p {
     font-size: ${modularScale(2)};
     font-style: italic;
+    max-width: 40rem;
+    margin: ${variables.spacing.medium} auto;
   }
+
   cite {
     color: ${variables.green};
     position: relative;
