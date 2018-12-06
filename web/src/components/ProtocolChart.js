@@ -53,7 +53,7 @@ class LineChart extends Component {
   onMouseMove = () => {}
 
   render() {
-    let data = this.props.data
+    let { currentStep, data } = this.props
     let margin = { top: 60, right: 60, bottom: 60, left: 60 }
     let width = this.props.width - margin.left - margin.right
     let height = this.props.height - margin.top - margin.bottom
@@ -126,44 +126,36 @@ class LineChart extends Component {
             </g>
           ))}
         </g>
-        {data.map(({ protocol, cost, powerUsage, range }, i) =>
-          this.props.currentStep >= i ? (
-            <g
-              key={protocol}
-              fillOpacity={this.props.currentStep > i ? 0.3 : 1}
+        {data.map(({ protocol, cost, powerUsage, range }, i) => (
+          <g
+            key={protocol}
+            fillOpacity={currentStep > i ? 0.3 : 1}
+            transform={`translate(${x(cost)}, ${y(powerUsage)})`}
+          >
+            <Spring
+              from={{ r: currentStep >= i ? 0 : r(range) }}
+              to={{ r: currentStep >= i ? r(range) : 0 }}
             >
-              <Spring from={{ r: 0 }} to={{ r: r(range) }}>
-                {props => (
-                  <circle
-                    {...props}
-                    cx={x(cost)}
-                    cy={y(powerUsage)}
-                    fill={variables.green}
-                  />
-                )}
-              </Spring>
-              {i <= 1 ? (
+              {props => <circle {...props} fill={variables.green} />}
+            </Spring>
+            <Spring
+              from={{ opacity: currentStep >= i ? 0 : 1 }}
+              to={{ opacity: currentStep >= i ? 1 : 0 }}
+            >
+              {props => (
                 <text
-                  fill="white"
-                  transform={`translate(${x(cost) + r(range) + 10}, ${y(
-                    powerUsage
-                  ) + 8})`}
-                >
-                  {protocol}
-                </text>
-              ) : (
-                <text
-                  fill={variables.secondaryBlue}
-                  transform={`translate(${x(cost) - r(range) / 3}, ${y(
-                    powerUsage
-                  ) + 8})`}
+                  textAnchor={i <= 1 ? 'start' : 'middle'}
+                  dx={i <= 1 ? r(range) + 10 : null}
+                  dy={5}
+                  fill={i <= 1 ? 'white' : variables.secondaryBlue}
+                  style={props}
                 >
                   {protocol}
                 </text>
               )}
-            </g>
-          ) : null
-        )}
+            </Spring>
+          </g>
+        ))}
       </ParentGroup>
     )
   }
