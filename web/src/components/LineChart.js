@@ -7,7 +7,17 @@ import { format } from 'd3-format'
 
 import variables from '../styles/variables'
 
-const ParentGroup = styled.g`
+let ParentGroup = styled.g`
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+  .label {
+    font-family: ${variables.monoTypo};
+    font-size: 1rem;
+    fill: ${variables.purple};
+  }
+
   .line {
     fill: none;
     stroke: ${variables.red};
@@ -29,54 +39,83 @@ const ParentGroup = styled.g`
     color: ${variables.purple};
     stroke-opacity: 0.4;
   }
+
+  .focus {
+  }
 `
 
 class LineChart extends Component {
+  state = {
+    tracker: { year: 2018, value: 23140000000 }
+  }
+
   render() {
     let data = this.props.data
-    let margin = { top: 65, right: 65, bottom: 65, left: 65 }
+    let margin = { top: 60, right: 60, bottom: 60, left: 60 }
     let width = this.props.width - margin.left - margin.right
     let height = this.props.height - margin.top - margin.bottom
     let currentYear = data.findIndex(
       ({ year }) => year === new Date().getFullYear()
     )
 
-    let x = scaleLinear()
+    this.x = scaleLinear()
       .domain(extent(data.map(({ year }) => year)))
       .range([0, width])
 
-    let y = scaleLinear()
+    this.y = scaleLinear()
       .domain([0, 100000000000])
       .range([height, 0])
 
     let lineGenerator = line()
-      .x(({ year }) => x(year))
-      .y(({ value }) => y(value))
+      .x(({ year }) => this.x(year))
+      .y(({ value }) => this.y(value))
       .curve(curveCardinal)
 
     return (
       <ParentGroup transform={`translate(${margin.left}, ${margin.top})`}>
-        <g className="x axis" transform={`translate(0, ${height})`}>
-          {x.ticks(10, '').map(tick => (
+        <text
+          transform={`translate(${width / 2}, ${-margin.top / 3})`}
+          textAnchor="middle"
+          className="label"
+        >
+          IoT global market (billions)
+        </text>
+        <g
+          className="focus"
+          transform={`translate(${this.x(this.state.tracker.year)}, ${this.y(
+            this.state.tracker.value
+          )})`}
+        >
+          <circle fill={variables.red} r={7.5} />
+          <text x={15} y={5} fill={variables.red}>
+            {format('.2s')(this.state.tracker.value).replace(/G/, 'B')}
+          </text>
+        </g>
+        <g
+          className="x axis"
+          transform={`translate(0, ${height})`}
+          textAnchor="end"
+        >
+          {this.x.ticks(10, '').map((tick, i) => (
             <g
               key={tick}
               className="tick"
-              transform={`translate(${x(tick)}, 0)`}
+              transform={`translate(${this.x(tick)}, 0)`}
             >
               <line stroke="currentColor" y2={-width} />
               <text fill="currentColor" y="30">
-                {tick}
+                {i === 0 ? tick : `'${tick - 2000}`}
               </text>
             </g>
           ))}
         </g>
         <g className="y axis">
-          {y.ticks().map(tick => (
+          {this.y.ticks().map(tick => (
             <g
               key={tick}
               className="tick"
-              transform={`translate(0, ${y(tick)})`}
-              text-anchor="end"
+              transform={`translate(0, ${this.y(tick)})`}
+              textAnchor="end"
             >
               <line stroke="currentColor" x2={height} />
               <text fill="currentColor" x="-15">
@@ -92,6 +131,19 @@ class LineChart extends Component {
         <path
           className="line future"
           d={lineGenerator(data.slice(currentYear))}
+        />
+        <rect
+          width={width}
+          height={height}
+          className="overlay"
+          onMouseMove={({ pageX }) => {
+            let year = Math.round(this.x.invert(pageX) - 3)
+            let value = data.find(d => d.year === year).value
+
+            this.setState({
+              tracker: { year, value }
+            })
+          }}
         />
       </ParentGroup>
     )
