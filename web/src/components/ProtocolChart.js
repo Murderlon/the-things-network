@@ -81,7 +81,7 @@ class LineChart extends Component {
           textAnchor="middle"
           className="label"
         >
-          Technology range and power usage vs. cost
+          Range and power usage vs. recurring costs
         </text>
         <g className="x axis" transform={`translate(0, ${height})`}>
           {x.ticks(3).map((tick, i) => (
