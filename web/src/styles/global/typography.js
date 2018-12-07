@@ -12,7 +12,7 @@ let typography = css`
   body {
     font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, Helvetica, Arial, sans-serif;
-    font-weight: 400;
+    font-weight: 300;
     font-variant: common-ligatures lining-nums contextual;
     line-height: 1.4;
     text-rendering: geometricPrecision;
