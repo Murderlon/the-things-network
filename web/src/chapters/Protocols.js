@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 import scrollama from 'scrollama'
 import { select, selectAll } from 'd3-selection'
@@ -8,7 +9,6 @@ import ResponsiveChart from '../components/ResponsiveChart'
 import ProtocolChart from '../components/ProtocolChart'
 import ScrolledContext from '../components/ScrolledContext'
 
-import data from '../data/protocols.json'
 import variables from '../styles/variables'
 
 let Skurt = styled(Layout.SubGrid)`
@@ -89,31 +89,57 @@ class Protocols extends Component {
 
   render() {
     return (
-      <Layout.ParentGrid as="section" id="scroll">
-        <Layout.SubGrid fullWidth>
-          <h2 id="protocols">
-            <span>1</span> Protocols
-          </h2>
-          <h3>Internet of Things is powered by its connectivity protocols.</h3>
-        </Layout.SubGrid>
-        <Skurt>
-          <ResponsiveChart>
-            {({ width, height }) => (
-              <ProtocolChart
-                width={width}
-                height={height}
-                data={data.protocols}
-                currentStep={this.state.currentStep}
-              />
-            )}
-          </ResponsiveChart>
-          <div className="context scroll__text">
-            {data.protocols.map((p, i) => (
-              <ScrolledContext key={p.protocol} content={p} index={i} />
-            ))}
-          </div>
-        </Skurt>
-      </Layout.ParentGrid>
+      <StaticQuery
+        query={graphql`
+          query {
+            protocolsJson {
+              protocols {
+                protocol
+                description
+                powerUsage
+                cost
+                range
+                rangeAsText
+                pros
+                cons
+                useCases
+              }
+            }
+          }
+        `}
+        render={data => {
+          let { protocols } = data.protocolsJson
+          return (
+            <Layout.ParentGrid as="section" id="scroll">
+              <Layout.SubGrid fullWidth>
+                <h2 id="protocols">
+                  <span>1</span> Protocols
+                </h2>
+                <h3>
+                  Internet of Things is powered by its connectivity protocols.
+                </h3>
+              </Layout.SubGrid>
+              <Skurt>
+                <ResponsiveChart>
+                  {({ width, height }) => (
+                    <ProtocolChart
+                      width={width}
+                      height={height}
+                      data={protocols}
+                      currentStep={this.state.currentStep}
+                    />
+                  )}
+                </ResponsiveChart>
+                <div className="context scroll__text">
+                  {protocols.map((p, i) => (
+                    <ScrolledContext key={p.protocol} content={p} index={i} />
+                  ))}
+                </div>
+              </Skurt>
+            </Layout.ParentGrid>
+          )
+        }}
+      />
     )
   }
 }

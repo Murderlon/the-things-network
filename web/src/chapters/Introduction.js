@@ -9,7 +9,7 @@ let Introduction = () => (
   <StaticQuery
     query={graphql`
       query {
-        dataJson {
+        ioTJson {
           years {
             year
             value
@@ -17,7 +17,7 @@ let Introduction = () => (
         }
       }
     `}
-    render={({ dataJson }) => (
+    render={({ ioTJson }) => (
       <Layout.ParentGrid as="section">
         <Layout.SubGrid fullWidth>
           <h2 id="introduction">
@@ -32,7 +32,7 @@ let Introduction = () => (
         <Layout.SubGrid>
           <ResponsiveChart>
             {({ width, height }) => (
-              <LineChart width={width} height={height} data={dataJson.years} />
+              <LineChart width={width} height={height} data={ioTJson.years} />
             )}
           </ResponsiveChart>
           <div className="context">

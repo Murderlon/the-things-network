@@ -1,3 +1,5 @@
+let path = require('path')
+
 module.exports = {
   siteMetadata: {
     title: 'The Things Network'
@@ -6,12 +8,12 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     'gatsby-plugin-react-svg',
-    `gatsby-transformer-json`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `./src/data`
+        path: path.join(__dirname, 'src/data')
       }
-    }
+    },
+    `gatsby-transformer-json`
   ]
 }

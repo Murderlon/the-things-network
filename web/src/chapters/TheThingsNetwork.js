@@ -1,4 +1,5 @@
 import React from 'react'
+import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 
 import Layout from '../components/Layout'
@@ -6,11 +7,9 @@ import ResponsiveChart from '../components/ResponsiveChart'
 import MapBaseGroup from '../components/MapBaseGroup'
 import TileLayer from '../components/TileLayer'
 
-import PoCLocations from '../data/proof-of-concept.json'
-
 let ContentWrapper = styled(Layout.SubGrid)`
   > div {
-    height: 80vh;
+    height: 70vh;
   }
 `
 
@@ -24,36 +23,61 @@ let Gateway = ({ x, y, name }) => (
 )
 
 let TheThingsNetwork = () => (
-  <Layout.ParentGrid as="section">
-    <ContentWrapper fullWidth>
-      <h2>
-        <span>2</span> The Things Network
-      </h2>
-      <ResponsiveChart>
-        {dimensions => (
-          <MapBaseGroup {...dimensions} extent={PoCLocations}>
-            {generators => (
-              <>
-                <TileLayer {...dimensions} {...generators} />
-                {PoCLocations.features.map(({ properties, geometry }) => {
-                  let [x, y] = generators.projection(geometry.coordinates)
+  <StaticQuery
+    query={graphql`
+      query {
+        poCJson {
+          type
+          features {
+            type
+            properties {
+              id
+              name
+            }
+            geometry {
+              type
+              coordinates
+            }
+          }
+        }
+      }
+    `}
+    render={data => {
+      let { features } = data.poCJson
+      return (
+        <Layout.ParentGrid as="section">
+          <ContentWrapper fullWidth>
+            <h2>
+              <span>2</span> The Things Network
+            </h2>
+            <ResponsiveChart>
+              {dimensions => (
+                <MapBaseGroup {...dimensions} extent={data.poCJson}>
+                  {generators => (
+                    <>
+                      <TileLayer {...dimensions} {...generators} />
+                      {features.map(({ properties, geometry }) => {
+                        let [x, y] = generators.projection(geometry.coordinates)
 
-                  return (
-                    <Gateway
-                      key={properties.name}
-                      x={x}
-                      y={y}
-                      name={properties.name}
-                    />
-                  )
-                })}
-              </>
-            )}
-          </MapBaseGroup>
-        )}
-      </ResponsiveChart>
-    </ContentWrapper>
-  </Layout.ParentGrid>
+                        return (
+                          <Gateway
+                            key={properties.name}
+                            x={x}
+                            y={y}
+                            name={properties.name}
+                          />
+                        )
+                      })}
+                    </>
+                  )}
+                </MapBaseGroup>
+              )}
+            </ResponsiveChart>
+          </ContentWrapper>
+        </Layout.ParentGrid>
+      )
+    }}
+  />
 )
 
 export default TheThingsNetwork
