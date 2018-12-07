@@ -64,7 +64,7 @@ export default styled.header`
     }
   }
 
-  @media screen and (min-width: 120rem) {
+  @media screen and (min-width: 100rem) {
     grid-column: 4 / 16;
     grid-template-columns: repeat(12, 1fr);
 
