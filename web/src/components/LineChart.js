@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
+import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 import { scaleLinear } from 'd3-scale'
 import { line, curveCardinal } from 'd3-shape'
-import { extent } from 'd3-array'
+import { extent, bisector } from 'd3-array'
 import { format } from 'd3-format'
+import debounce from 'lodash.debounce'
 
 import variables from '../styles/variables'
 
@@ -44,9 +46,51 @@ let ParentGroup = styled.g`
   }
 `
 
+export default props => (
+  <StaticQuery
+    query={graphql`
+      query {
+        ioTJson {
+          years {
+            year
+            value
+          }
+        }
+      }
+    `}
+    render={({ ioTJson }) => {
+      let presentIndex = ioTJson.years.findIndex(
+        ({ year }) => year === new Date().getFullYear()
+      )
+      return (
+        <LineChart
+          data={ioTJson.years}
+          presentIndex={presentIndex}
+          {...props}
+        />
+      )
+    }}
+  />
+)
+
 class LineChart extends Component {
   state = {
-    tracker: { year: 2018, value: 23140000000 }
+    tracker: this.props.data[this.props.presentIndex]
+  }
+
+  onMouseMove = e => {
+    let year = Math.round(this.x.invert(e.pageX) - 3) // - 7 ??
+
+    if (this.state.tracker.year !== year) {
+      let data = this.props.data
+      let bisectYear = bisector(d => d.year).left
+      let yearIndex = bisectYear(data, year)
+      let value = data[yearIndex].value
+
+      this.setState({
+        tracker: { year, value }
+      })
+    }
   }
 
   render() {
@@ -54,9 +98,6 @@ class LineChart extends Component {
     let margin = { top: 60, right: 60, bottom: 60, left: 60 }
     let width = this.props.width - margin.left - margin.right
     let height = this.props.height - margin.top - margin.bottom
-    let currentYear = data.findIndex(
-      ({ year }) => year === new Date().getFullYear()
-    )
 
     this.x = scaleLinear()
       .domain(extent(data.map(({ year }) => year)))
@@ -80,17 +121,6 @@ class LineChart extends Component {
         >
           IoT global market (billions)
         </text>
-        <g
-          className="focus"
-          transform={`translate(${this.x(this.state.tracker.year)}, ${this.y(
-            this.state.tracker.value
-          )})`}
-        >
-          <circle fill={variables.red} r={7.5} />
-          <text x={15} y={5} fill={variables.red}>
-            {format('.2s')(this.state.tracker.value).replace(/G/, 'B')}
-          </text>
-        </g>
         <g
           className="x axis"
           transform={`translate(0, ${height})`}
@@ -126,28 +156,46 @@ class LineChart extends Component {
         </g>
         <path
           className="line present"
-          d={lineGenerator(data.slice(0, currentYear + 1))}
+          d={lineGenerator(data.slice(0, this.props.presentIndex + 1))}
         />
         <path
           className="line future"
-          d={lineGenerator(data.slice(currentYear))}
+          d={lineGenerator(data.slice(this.props.presentIndex))}
         />
         <rect
           width={width}
           height={height}
           className="overlay"
-          onMouseMove={({ pageX }) => {
-            let year = Math.round(this.x.invert(pageX) - 3)
-            let value = data.find(d => d.year === year).value
-
-            this.setState({
-              tracker: { year, value }
-            })
-          }}
+          onMouseMove={this.onMouseMove}
         />
+        <g
+          className="focus"
+          height={height}
+          transform={`translate(${this.x(this.state.tracker.year)}, 0)`}
+        >
+          <rect
+            height={height}
+            width={15}
+            fill={variables.secondaryBlue}
+            fillOpacity="0.5"
+            x={-7}
+          />
+          <g transform={`translate(0, ${this.y(this.state.tracker.value)})`}>
+            <rect
+              fill={variables.secondaryBlue}
+              fillOpacity="0.5"
+              width={35}
+              x={8}
+              y={-10}
+              height={20}
+            />
+            <circle fill={variables.red} r={7.5} />
+            <text x={15} y={5} fill={variables.red}>
+              {format('.2s')(this.state.tracker.value).replace(/G/, 'B')}
+            </text>
+          </g>
+        </g>
       </ParentGroup>
     )
   }
 }
-
-export default LineChart
