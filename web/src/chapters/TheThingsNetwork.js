@@ -10,23 +10,30 @@ import ResponsiveChart from '../components/ResponsiveChart'
 import MapBaseGroup from '../components/MapBaseGroup'
 import TileLayer from '../components/TileLayer'
 import AnimatedPath from '../components/AnimatedPath'
+import OrthographicWorld from '../components/OrthographicWorld'
 
 import variables from '../styles/variables'
 
-let ContentWrapper = styled(Layout.SubGrid)`
-  position: relative;
+let ContentWrapper = styled(Layout.ParentGrid)`
+  background: ${variables.secondaryBlue};
+
+  > div {
+    position: relative;
+  }
 
   .mapGraphic {
     position: sticky;
     z-index: 0;
-    min-height: 60vw;
+    > div {
+      height: 60vh;
+    }
   }
   .mapScrollText {
     position: relative;
-    z-index: 1;
   }
 
   .step {
+    z-index: 1;
     p {
       margin: 0 auto;
       max-width: 30em;
@@ -82,7 +89,7 @@ export default class TheThingsNetwork extends Component {
   handleResize = () => {
     let stepHeight = Math.floor(window.innerHeight)
     let graphicHeight = Math.floor(window.innerHeight / 2)
-    let graphicMarginTop = Math.floor(graphicHeight / 2)
+    let graphicMarginTop = Math.floor(graphicHeight / 3)
 
     this.step.style('height', stepHeight + 'px')
     this.graphic.style('top', graphicMarginTop + 'px')
@@ -127,40 +134,43 @@ export default class TheThingsNetwork extends Component {
           let angle = (2500 / circumference) * 360
 
           return (
-            <Layout.ParentGrid as="section" id="mapScroll">
-              <ContentWrapper fullWidth>
-                <h2>
-                  <span>2</span> The Things Network
-                </h2>
-                <ResponsiveChart classProp="mapGraphic">
-                  {dimensions => (
-                    <MapBaseGroup {...dimensions} extent={data.poCJson}>
-                      {generators => (
-                        <>
-                          <TileLayer {...dimensions} {...generators} />
-                          {features.map(({ properties, geometry }) => {
-                            let [x, y] = generators.projection(
-                              geometry.coordinates
-                            )
-                            let circle = geoCircle()
-                              .center(geometry.coordinates)
-                              .radius(this.state.currentStep > 0 ? angle : '')
+            <ContentWrapper as="section" id="mapScroll">
+              <Layout.SubGrid fullWidth>
+                <div className="mapGraphic">
+                  <h2>
+                    <span>2</span> The Things Network
+                  </h2>
+                  <ResponsiveChart>
+                    {dimensions => (
+                      <MapBaseGroup {...dimensions} extent={data.poCJson}>
+                        {generators => (
+                          <>
+                            <TileLayer {...dimensions} {...generators} />
+                            {features.map(({ properties, geometry }) => {
+                              let { currentStep } = this.state
+                              let [x, y] = generators.projection(
+                                geometry.coordinates
+                              )
+                              let radius = geoCircle()
+                                .center(geometry.coordinates)
+                                .radius(currentStep > 0 ? angle : 0)
 
-                            return (
-                              <Gateway
-                                key={properties.name}
-                                x={x}
-                                y={y}
-                                name={properties.name}
-                                path={generators.path(circle())}
-                              />
-                            )
-                          })}
-                        </>
-                      )}
-                    </MapBaseGroup>
-                  )}
-                </ResponsiveChart>
+                              return (
+                                <Gateway
+                                  key={properties.name}
+                                  x={x}
+                                  y={y}
+                                  name={properties.name}
+                                  path={generators.path(radius())}
+                                />
+                              )
+                            })}
+                          </>
+                        )}
+                      </MapBaseGroup>
+                    )}
+                  </ResponsiveChart>
+                </div>
                 <div className="mapScrollText">
                   <div className="step" data-step={0}>
                     <p>
@@ -190,9 +200,12 @@ export default class TheThingsNetwork extends Component {
                       <span className="highlight">and they did.</span>
                     </p>
                   </div>
+                  <div className="step" data-step={3}>
+                    <OrthographicWorld />
+                  </div>
                 </div>
-              </ContentWrapper>
-            </Layout.ParentGrid>
+              </Layout.SubGrid>
+            </ContentWrapper>
           )
         }}
       />
