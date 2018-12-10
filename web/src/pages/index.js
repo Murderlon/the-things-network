@@ -27,7 +27,7 @@ let index = () => (
   <>
     <Helmet>
       {/* eslint-disable-next-line max-len */}
-      <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver|gated" />
+      <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,Intl.~locale.en,Array.prototype.find,Array.prototype.findIndex,Array.prototype.includes,IntersectionObserver,Object.values,Number.parseFloat" />
     </Helmet>
     <GlobalStyle />
     <Layout.RootGrid>
