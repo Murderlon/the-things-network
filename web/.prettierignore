@@ -1,0 +1,5 @@
+*/*.svg
+*/*.json
+
+package.json
+yarn.lock
