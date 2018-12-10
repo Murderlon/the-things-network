@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { scaleLinear, scaleSqrt } from 'd3-scale'
 import { extent } from 'd3-array'
@@ -15,17 +15,6 @@ let ParentGroup = styled.g`
     font-family: ${variables.monoTypo};
     font-size: 1rem;
     fill: ${variables.purple};
-  }
-
-  .line {
-    fill: none;
-    stroke: ${variables.red};
-    stroke-width: 5;
-  }
-
-  .future {
-    stroke-dasharray: 10;
-    stroke-opacity: 0.4;
   }
 
   text {
@@ -48,10 +37,6 @@ let ParentGroup = styled.g`
 `
 
 class LineChart extends Component {
-  overlayRef = createRef()
-
-  onMouseMove = () => {}
-
   render() {
     let { currentStep, data } = this.props
     let margin = { top: 60, right: 60, bottom: 60, left: 60 }
