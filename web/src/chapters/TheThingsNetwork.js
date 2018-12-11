@@ -4,6 +4,7 @@ import scrollama from 'scrollama'
 import { StaticQuery, graphql } from 'gatsby'
 import { geoCircle } from 'd3-geo'
 import { select, selectAll } from 'd3-selection'
+import { Spring } from 'react-spring'
 
 import Layout from '../components/Layout'
 import ResponsiveChart from '../components/ResponsiveChart'
@@ -129,6 +130,7 @@ export default class TheThingsNetwork extends Component {
           }
         `}
         render={data => {
+          let { currentStep } = this.state
           let { features } = data.poCJson
           let circumference = 6371000 * Math.PI * 2
           let angle = (2500 / circumference) * 360
@@ -140,36 +142,47 @@ export default class TheThingsNetwork extends Component {
                   <h2>
                     <span>2</span> The Things Network
                   </h2>
-                  <ResponsiveChart>
-                    {dimensions => (
-                      <MapBaseGroup {...dimensions} extent={data.poCJson}>
-                        {generators => (
-                          <>
-                            <TileLayer {...dimensions} {...generators} />
-                            {features.map(({ properties, geometry }) => {
-                              let { currentStep } = this.state
-                              let [x, y] = generators.projection(
-                                geometry.coordinates
-                              )
-                              let radius = geoCircle()
-                                .center(geometry.coordinates)
-                                .radius(currentStep > 0 ? angle : 0)
+                  <Spring
+                    delay={500}
+                    from={{ opacity: currentStep < 3 ? 0 : 1 }}
+                    to={{ opacity: currentStep < 3 ? 1 : 0 }}
+                  >
+                    {props => (
+                      <ResponsiveChart style={props}>
+                        {dimensions => (
+                          <MapBaseGroup {...dimensions} extent={data.poCJson}>
+                            {generators => (
+                              <>
+                                <TileLayer {...dimensions} {...generators} />
+                                {features.map(({ properties, geometry }) => {
+                                  let [x, y] = generators.projection(
+                                    geometry.coordinates
+                                  )
+                                  let radius = geoCircle()
+                                    .center(geometry.coordinates)
+                                    .radius(
+                                      currentStep > 0 && currentStep < 3
+                                        ? angle
+                                        : 0
+                                    )
 
-                              return (
-                                <Gateway
-                                  key={properties.name}
-                                  x={x}
-                                  y={y}
-                                  name={properties.name}
-                                  path={generators.path(radius())}
-                                />
-                              )
-                            })}
-                          </>
+                                  return (
+                                    <Gateway
+                                      key={properties.name}
+                                      x={x}
+                                      y={y}
+                                      name={properties.name}
+                                      path={generators.path(radius())}
+                                    />
+                                  )
+                                })}
+                              </>
+                            )}
+                          </MapBaseGroup>
                         )}
-                      </MapBaseGroup>
+                      </ResponsiveChart>
                     )}
-                  </ResponsiveChart>
+                  </Spring>
                 </div>
                 <div className="mapScrollText">
                   <div className="step" data-step={0}>

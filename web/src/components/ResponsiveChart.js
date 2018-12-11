@@ -34,7 +34,11 @@ export default class ResponsiveChart extends Component {
 
   render() {
     return (
-      <div className={`${this.props.classProp} sticky`} ref={this.root}>
+      <div
+        className={`${this.props.classProp} sticky`}
+        ref={this.root}
+        style={this.props.style}
+      >
         <SVG width={this.state.width} height={this.state.height}>
           {this.props.children(this.state)}
         </SVG>
