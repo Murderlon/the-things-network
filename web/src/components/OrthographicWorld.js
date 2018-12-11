@@ -7,8 +7,14 @@ import { drag } from 'd3-drag'
 import { geoOrthographic, geoPath } from 'd3-geo'
 import { select, mouse } from 'd3-selection'
 import world from 'world-atlas/world/110m.json'
+import schedule from 'raf-schd'
 
 import variables from '../styles/variables'
+
+let Root = styled.div`
+  width: 100%;
+  height: 60vh;
+`
 
 let Canvas = styled.canvas`
   display: block;
@@ -40,12 +46,36 @@ export default props => (
 
 class OrthographicWorld extends Component {
   canvasRef = createRef()
+  rootRef = createRef()
+  state = {
+    width: 0,
+    height: 0
+  }
 
   componentDidMount() {
+    this.setupCanvas()
+
+    window.addEventListener('resize', this.handleWindowResize)
+    // Call once to set the correct dimensions
+    this.handleWindowResize()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize)
+  }
+
+  handleWindowResize = schedule(() => {
+    let { width, height } = this.rootRef.current.getBoundingClientRect()
+
+    this.setState({ width, height })
+    this.setupCanvas()
+  })
+
+  setupCanvas = () => {
     let land = topoJSON.feature(world, world.objects.land)
     let sphere = { type: 'Sphere' }
-    let width = 700
-    let height = 700
+    let width = this.state.width
+    let height = this.state.height
     let projection = geoOrthographic()
       .fitExtent([[1, 1], [width - 1, height - 1]], sphere)
       .translate([width / 2, height / 2])
@@ -78,32 +108,41 @@ class OrthographicWorld extends Component {
       context.fill()
     }
 
-    function dragging(projection) {
-      let v0, q0, r0
-
-      function dragstarted() {
-        v0 = versor.cartesian(projection.invert(mouse(this)))
-        q0 = versor((r0 = projection.rotate()))
-      }
-
-      function dragged() {
-        const v1 = versor.cartesian(projection.rotate(r0).invert(mouse(this)))
-        const q1 = versor.multiply(q0, versor.delta(v0, v1))
-        projection.rotate(versor.rotation(q1))
-      }
-
-      return drag()
-        .on('start', dragstarted)
-        .on('drag', dragged)
-    }
-
     select(context.canvas)
-      .call(dragging(projection).on('drag.render', render))
+      .call(this.dragging(projection).on('drag.render', render))
       .call(render)
       .node()
   }
 
+  dragging = projection => {
+    let v0, q0, r0
+
+    function dragstarted() {
+      v0 = versor.cartesian(projection.invert(mouse(this)))
+      q0 = versor((r0 = projection.rotate()))
+    }
+
+    function dragged() {
+      const v1 = versor.cartesian(projection.rotate(r0).invert(mouse(this)))
+      const q1 = versor.multiply(q0, versor.delta(v0, v1))
+      projection.rotate(versor.rotation(q1))
+    }
+
+    return drag()
+      .on('start', dragstarted)
+      .on('drag', dragged)
+  }
+
   render() {
-    return <Canvas width={700} height={700} ref={this.canvasRef} />
+    return (
+      <Root ref={this.rootRef}>
+        <Canvas
+          width={this.state.width}
+          height={this.state.height}
+          ref={this.canvasRef}
+          style={this.props.style}
+        />
+      </Root>
+    )
   }
 }

@@ -4,19 +4,20 @@ import scrollama from 'scrollama'
 import { StaticQuery, graphql } from 'gatsby'
 import { geoCircle } from 'd3-geo'
 import { select, selectAll } from 'd3-selection'
-import { Spring } from 'react-spring'
+import interpolatePath from 'd3-interpolate-path/src/interpolatePath'
+import { animated, Spring, Trail } from 'react-spring'
 
 import Layout from '../components/Layout'
 import ResponsiveChart from '../components/ResponsiveChart'
 import MapBaseGroup from '../components/MapBaseGroup'
 import TileLayer from '../components/TileLayer'
-import AnimatedPath from '../components/AnimatedPath'
 import OrthographicWorld from '../components/OrthographicWorld'
 
 import variables from '../styles/variables'
+import modularScale from '../styles/modular-scale'
 
 let ContentWrapper = styled(Layout.ParentGrid)`
-  background: ${variables.secondaryBlue};
+  /* background: ${variables.secondaryBlue}; */
 
   > div {
     position: relative;
@@ -25,10 +26,9 @@ let ContentWrapper = styled(Layout.ParentGrid)`
   .mapGraphic {
     position: sticky;
     z-index: 0;
-    > div {
-      height: 60vh;
-    }
+    height: 70vh;
   }
+
   .mapScrollText {
     position: relative;
   }
@@ -40,19 +40,11 @@ let ContentWrapper = styled(Layout.ParentGrid)`
       max-width: 30em;
       background: ${variables.secondaryBlue};
       padding: ${variables.spacing.medium};
+      font-size: ${modularScale(1)}
     }
   }
 `
-let Gateway = ({ x, y, name, path }) => (
-  <g>
-    <circle cx={x} cy={y} r="6" fill={variables.green} />
-    <AnimatedPath
-      path={path}
-      fill={variables.green}
-      style={{ fillOpacity: 0.3 }}
-    />
-  </g>
-)
+
 export default class TheThingsNetwork extends Component {
   state = {
     currentStep: 0
@@ -108,6 +100,7 @@ export default class TheThingsNetwork extends Component {
       Stickyfill.add(this)
     })
   }
+
   render() {
     return (
       <StaticQuery
@@ -138,52 +131,73 @@ export default class TheThingsNetwork extends Component {
           return (
             <ContentWrapper as="section" id="mapScroll">
               <Layout.SubGrid fullWidth>
-                <div className="mapGraphic">
-                  <h2>
-                    <span>2</span> The Things Network
-                  </h2>
-                  <Spring
-                    delay={500}
-                    from={{ opacity: currentStep < 3 ? 0 : 1 }}
-                    to={{ opacity: currentStep < 3 ? 1 : 0 }}
-                  >
-                    {props => (
-                      <ResponsiveChart style={props}>
-                        {dimensions => (
-                          <MapBaseGroup {...dimensions} extent={data.poCJson}>
-                            {generators => (
-                              <>
-                                <TileLayer {...dimensions} {...generators} />
-                                {features.map(({ properties, geometry }) => {
+                <h2>
+                  <span>2</span> The Things Network
+                </h2>
+                <Spring
+                  from={{ opacity: currentStep < 3 ? 0 : 1 }}
+                  to={{ opacity: currentStep < 3 ? 1 : 0 }}
+                >
+                  {props => (
+                    <ResponsiveChart classProp="mapGraphic" style={props}>
+                      {dimensions => (
+                        <MapBaseGroup {...dimensions} extent={data.poCJson}>
+                          {generators => (
+                            <>
+                              <TileLayer {...dimensions} {...generators} />
+                              <Trail
+                                items={features}
+                                keys={({ properties }) => properties.name}
+                                native
+                                from={{
+                                  t: currentStep > 0 && currentStep < 3 ? 0 : 1
+                                }}
+                                to={{
+                                  t: currentStep > 0 && currentStep < 3 ? 1 : 0
+                                }}
+                              >
+                                {item => ({ t }) => {
                                   let [x, y] = generators.projection(
-                                    geometry.coordinates
+                                    item.geometry.coordinates
                                   )
                                   let radius = geoCircle()
-                                    .center(geometry.coordinates)
-                                    .radius(
-                                      currentStep > 0 && currentStep < 3
-                                        ? angle
-                                        : 0
-                                    )
+                                    .center(item.geometry.coordinates)
+                                    .radius(angle)
+
+                                  let inactive = geoCircle()
+                                    .center(item.geometry.coordinates)
+                                    .radius(0)
+
+                                  let interpolator = interpolatePath(
+                                    generators.path(inactive()),
+                                    generators.path(radius())
+                                  )
 
                                   return (
-                                    <Gateway
-                                      key={properties.name}
-                                      x={x}
-                                      y={y}
-                                      name={properties.name}
-                                      path={generators.path(radius())}
-                                    />
+                                    <g>
+                                      <animated.path
+                                        d={t.interpolate(interpolator)}
+                                        fill={variables.green}
+                                        fillOpacity={0.3}
+                                      />
+                                      <circle
+                                        cx={x}
+                                        cy={y}
+                                        r="6"
+                                        fill={variables.green}
+                                      />
+                                    </g>
                                   )
-                                })}
-                              </>
-                            )}
-                          </MapBaseGroup>
-                        )}
-                      </ResponsiveChart>
-                    )}
-                  </Spring>
-                </div>
+                                }}
+                              </Trail>
+                              )}
+                            </>
+                          )}
+                        </MapBaseGroup>
+                      )}
+                    </ResponsiveChart>
+                  )}
+                </Spring>
                 <div className="mapScrollText">
                   <div className="step" data-step={0}>
                     <p>
@@ -214,7 +228,22 @@ export default class TheThingsNetwork extends Component {
                     </p>
                   </div>
                   <div className="step" data-step={3}>
-                    <OrthographicWorld />
+                    <Spring
+                      immediate={currentStep < 3}
+                      delay={800}
+                      from={
+                        currentStep < 3
+                          ? { opacity: 1, transform: 'scale(0)' }
+                          : { opacity: 0, transform: 'scale(1)' }
+                      }
+                      to={
+                        currentStep < 3
+                          ? { opacity: 0, transform: 'scale(3)' }
+                          : { opacity: 1, transform: 'scale(1)' }
+                      }
+                    >
+                      {props => <OrthographicWorld style={props} />}
+                    </Spring>
                   </div>
                 </div>
               </Layout.SubGrid>
