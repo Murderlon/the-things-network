@@ -8,16 +8,42 @@ import { geoOrthographic, geoPath } from 'd3-geo'
 import { select, mouse } from 'd3-selection'
 import world from 'world-atlas/world/110m.json'
 import schedule from 'raf-schd'
+import { rgba } from 'polished'
+
+import TTNLogo from '../assets/ttn-logo.svg'
 
 import variables from '../styles/variables'
 
 let Root = styled.div`
   width: 100%;
   height: 60vh;
+  position: relative;
+  display: block;
+`
+
+let LogoWrapper = styled.div`
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 15rem;
+  height: 15rem;
+  display: flex;
+  align-items: center;
+  background: ${rgba(variables.secondaryBlue, 0.3)};
+  border-radius: 50%;
+  padding: ${variables.spacing.medium};
+
+  svg {
+    width: 100%;
+  }
 `
 
 let Canvas = styled.canvas`
-  display: block;
+  display: inline-block;
   margin: 0 auto;
   cursor: move;
 `
@@ -142,6 +168,9 @@ class OrthographicWorld extends Component {
           ref={this.canvasRef}
           style={this.props.style}
         />
+        <LogoWrapper style={this.props.style}>
+          <TTNLogo />
+        </LogoWrapper>
       </Root>
     )
   }
