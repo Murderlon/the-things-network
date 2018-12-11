@@ -135,6 +135,7 @@ export default class TheThingsNetwork extends Component {
                   <span>2</span> The Things Network
                 </h2>
                 <Spring
+                  delay={1000}
                   from={{ opacity: currentStep < 3 ? 0 : 1 }}
                   to={{ opacity: currentStep < 3 ? 1 : 0 }}
                 >
@@ -229,16 +230,16 @@ export default class TheThingsNetwork extends Component {
                   </div>
                   <div className="step" data-step={3}>
                     <Spring
+                      delay={1500}
                       immediate={currentStep < 3}
-                      delay={800}
                       from={
                         currentStep < 3
-                          ? { opacity: 1, transform: 'scale(0)' }
-                          : { opacity: 0, transform: 'scale(1)' }
+                          ? { opacity: 1, transform: 'scale(1)' }
+                          : { opacity: 0, transform: 'scale(1.1)' }
                       }
                       to={
                         currentStep < 3
-                          ? { opacity: 0, transform: 'scale(3)' }
+                          ? { opacity: 0, transform: 'scale(1.1)' }
                           : { opacity: 1, transform: 'scale(1)' }
                       }
                     >
