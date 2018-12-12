@@ -243,7 +243,12 @@ export default class TheThingsNetwork extends Component {
                           : { opacity: 1, transform: 'scale(1)' }
                       }
                     >
-                      {props => <OrthographicWorld style={props} />}
+                      {props => (
+                        <OrthographicWorld
+                          isVisible={props.opacity === 1}
+                          style={props}
+                        />
+                      )}
                     </Spring>
                   </div>
                 </div>

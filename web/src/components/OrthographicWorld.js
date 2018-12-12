@@ -8,7 +8,6 @@ import { geoOrthographic, geoPath } from 'd3-geo'
 import { select, mouse } from 'd3-selection'
 import world from 'world-atlas/world/110m.json'
 import schedule from 'raf-schd'
-import { rgba } from 'polished'
 
 import TTNLogo from '../assets/ttn-logo.svg'
 
@@ -33,9 +32,6 @@ let LogoWrapper = styled.div`
   height: 15rem;
   display: flex;
   align-items: center;
-  background: ${rgba(variables.secondaryBlue, 0.3)};
-  border-radius: 50%;
-  padding: ${variables.spacing.medium};
 
   svg {
     width: 100%;
@@ -64,14 +60,13 @@ export default props => (
         }
       }
     `}
-    render={({ gatewaysJson }) => (
-      <OrthographicWorld gateways={gatewaysJson} {...props} />
-    )}
+    render={({ gatewaysJson }) => {
+      return <OrthographicWorld gateways={gatewaysJson} {...props} />
+    }}
   />
 )
 
 class OrthographicWorld extends Component {
-  start = Date.now()
   projection = geoOrthographic()
   sphere = { type: 'Sphere' }
   land = topoJSON.feature(world, world.objects.land)
@@ -88,8 +83,16 @@ class OrthographicWorld extends Component {
     window.addEventListener('resize', this.handleResize)
   }
 
+  componentDidUpdate() {
+    if (this.props.isVisible) {
+      this.start = Date.now()
+      this.rotate()
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize)
+    clearTimeout(this.rotateTimeout)
   }
 
   handleResize = schedule(() => {
@@ -110,10 +113,6 @@ class OrthographicWorld extends Component {
       .call(this.dragging().on('drag.render', this.renderCanvas))
       .call(this.renderCanvas)
       .node()
-
-    if (this.props.isVisible) {
-      this.rotate()
-    }
   }
 
   renderCanvas = () => {
@@ -151,9 +150,11 @@ class OrthographicWorld extends Component {
   }
 
   rotate = () => {
-    this.projection.rotate([-1e-2 * (Date.now() - this.start), -15])
+    console.log('rotate')
+    this.rotateTimeout = setTimeout(schedule(() => this.rotate()))
+    this.projection.rotate([-1e-2 * (Date.now() - this.start), 0])
     this.renderCanvas()
-    setTimeout(schedule(() => this.rotate()))
+    !this.props.isVisible && clearTimeout(this.rotateTimeout)
   }
 
   dragging = () => {
