@@ -71,6 +71,10 @@ export default props => (
 )
 
 class OrthographicWorld extends Component {
+  start = Date.now()
+  projection = geoOrthographic()
+  sphere = { type: 'Sphere' }
+  land = topoJSON.feature(world, world.objects.land)
   canvasRef = createRef()
   rootRef = createRef()
   state = {
@@ -79,68 +83,81 @@ class OrthographicWorld extends Component {
   }
 
   componentDidMount() {
-    this.setupCanvas()
+    this.handleResize()
 
-    window.addEventListener('resize', this.handleWindowResize)
-    // Call once to set the correct dimensions
-    this.handleWindowResize()
+    window.addEventListener('resize', this.handleResize)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize)
+    window.removeEventListener('resize', this.handleResize)
   }
 
-  handleWindowResize = schedule(() => {
+  handleResize = schedule(() => {
     let { width, height } = this.rootRef.current.getBoundingClientRect()
-
-    this.setState({ width, height })
-    this.setupCanvas()
+    this.setState({ width, height }, this.setupCanvas)
   })
 
   setupCanvas = () => {
-    let land = topoJSON.feature(world, world.objects.land)
-    let sphere = { type: 'Sphere' }
-    let width = this.state.width
-    let height = this.state.height
-    let projection = geoOrthographic()
-      .fitExtent([[1, 1], [width - 1, height - 1]], sphere)
+    let { width, height } = this.state
+    this.projection
+      .fitExtent([[1, 1], [width - 1, height - 1]], this.sphere)
       .translate([width / 2, height / 2])
       .precision(1)
-    let canvas = this.canvasRef.current
-    let gateways = this.props.gateways
-    let context = canvas.getContext('2d')
-    let path = geoPath(projection, context)
 
-    function render() {
-      context.clearRect(0, 0, width, height)
-
-      context.beginPath()
-      path(sphere)
-      context.fillStyle = '#1F2033'
-      context.fill()
-
-      context.beginPath()
-      path(land)
-      context.fillStyle = '#292B44'
-      context.fill()
-
-      context.beginPath()
-      path(sphere)
-      context.stroke()
-
-      context.beginPath()
-      path(gateways)
-      context.fillStyle = variables.green
-      context.fill()
-    }
+    let context = this.canvasRef.current.getContext('2d')
 
     select(context.canvas)
-      .call(this.dragging(projection).on('drag.render', render))
-      .call(render)
+      .call(this.dragging().on('drag.render', this.renderCanvas))
+      .call(this.renderCanvas)
       .node()
+
+    if (this.props.isVisible) {
+      this.rotate()
+    }
   }
 
-  dragging = projection => {
+  renderCanvas = () => {
+    let { width, height } = this.state
+    let { gateways } = this.props
+    let context = this.canvasRef.current.getContext('2d')
+
+    this.projection
+      .fitExtent([[1, 1], [width - 1, height - 1]], this.sphere)
+      .translate([width / 2, height / 2])
+      .precision(1)
+
+    let path = geoPath(this.projection, context)
+
+    context.clearRect(0, 0, width, height)
+
+    context.beginPath()
+    path(this.sphere)
+    context.fillStyle = '#1F2033'
+    context.fill()
+
+    context.beginPath()
+    path(this.land)
+    context.fillStyle = '#292B44'
+    context.fill()
+
+    context.beginPath()
+    path(this.sphere)
+    context.stroke()
+
+    context.beginPath()
+    path(gateways)
+    context.fillStyle = variables.green
+    context.fill()
+  }
+
+  rotate = () => {
+    this.projection.rotate([-1e-2 * (Date.now() - this.start), -15])
+    this.renderCanvas()
+    setTimeout(schedule(() => this.rotate()))
+  }
+
+  dragging = () => {
+    let { projection } = this
     let v0, q0, r0
 
     function dragstarted() {
