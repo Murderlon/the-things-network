@@ -5,7 +5,6 @@ import { scaleLinear } from 'd3-scale'
 import { line, curveCardinal } from 'd3-shape'
 import { extent, bisector } from 'd3-array'
 import { format } from 'd3-format'
-import debounce from 'lodash.debounce'
 
 import variables from '../styles/variables'
 
@@ -41,9 +40,6 @@ let ParentGroup = styled.g`
     color: ${variables.purple};
     stroke-opacity: 0.4;
   }
-
-  .focus {
-  }
 `
 
 export default props => (
@@ -62,11 +58,18 @@ export default props => (
       let presentIndex = ioTJson.years.findIndex(
         ({ year }) => year === new Date().getFullYear()
       )
+      let data = ioTJson.years
+      let margin = { top: 60, right: 60, bottom: 60, left: 60 }
+      let width = props.width - margin.left - margin.right
+      let height = props.height - margin.top - margin.bottom
+
       return (
         <LineChart
-          data={ioTJson.years}
+          data={data}
           presentIndex={presentIndex}
-          {...props}
+          width={width}
+          height={height}
+          margin={margin}
         />
       )
     }}
@@ -79,7 +82,10 @@ class LineChart extends Component {
   }
 
   onMouseMove = e => {
-    let year = Math.round(this.x.invert(e.pageX) - 3) // - 7 ??
+    let x = scaleLinear()
+      .domain(extent(this.props.data.map(({ year }) => year)))
+      .range([0, this.props.width])
+    let year = Math.round(x.invert(e.pageX) - 3)
 
     if (this.state.tracker.year !== year) {
       let data = this.props.data
@@ -94,22 +100,19 @@ class LineChart extends Component {
   }
 
   render() {
-    let data = this.props.data
-    let margin = { top: 60, right: 60, bottom: 60, left: 60 }
-    let width = this.props.width - margin.left - margin.right
-    let height = this.props.height - margin.top - margin.bottom
+    let { data, width, height, margin } = this.props
 
-    this.x = scaleLinear()
+    let x = scaleLinear()
       .domain(extent(data.map(({ year }) => year)))
       .range([0, width])
 
-    this.y = scaleLinear()
+    let y = scaleLinear()
       .domain([0, 100000000000])
       .range([height, 0])
 
     let lineGenerator = line()
-      .x(({ year }) => this.x(year))
-      .y(({ value }) => this.y(value))
+      .x(({ year }) => x(year))
+      .y(({ value }) => y(value))
       .curve(curveCardinal)
 
     return (
@@ -126,11 +129,11 @@ class LineChart extends Component {
           transform={`translate(0, ${height})`}
           textAnchor="end"
         >
-          {this.x.ticks(10, '').map((tick, i) => (
+          {x.ticks(10, '').map((tick, i) => (
             <g
               key={tick}
               className="tick"
-              transform={`translate(${this.x(tick)}, 0)`}
+              transform={`translate(${x(tick)}, 0)`}
             >
               <line stroke="currentColor" y2={-width} />
               <text fill="currentColor" y="30">
@@ -140,11 +143,11 @@ class LineChart extends Component {
           ))}
         </g>
         <g className="y axis">
-          {this.y.ticks().map(tick => (
+          {y.ticks().map(tick => (
             <g
               key={tick}
               className="tick"
-              transform={`translate(0, ${this.y(tick)})`}
+              transform={`translate(0, ${y(tick)})`}
               textAnchor="end"
             >
               <line stroke="currentColor" x2={height} />
@@ -167,11 +170,12 @@ class LineChart extends Component {
           height={height}
           className="overlay"
           onMouseMove={this.onMouseMove}
+          onTouchMove={this.onMouseMove}
         />
         <g
           className="focus"
           height={height}
-          transform={`translate(${this.x(this.state.tracker.year)}, 0)`}
+          transform={`translate(${x(this.state.tracker.year)}, 0)`}
         >
           <rect
             height={height}
@@ -180,7 +184,7 @@ class LineChart extends Component {
             fillOpacity="0.5"
             x={-7}
           />
-          <g transform={`translate(0, ${this.y(this.state.tracker.value)})`}>
+          <g transform={`translate(0, ${y(this.state.tracker.value)})`}>
             <rect
               fill={variables.secondaryBlue}
               fillOpacity="0.5"
