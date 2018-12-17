@@ -150,7 +150,6 @@ class OrthographicWorld extends Component {
   }
 
   rotate = () => {
-    console.log('rotate')
     this.rotateTimeout = setTimeout(schedule(() => this.rotate()))
     this.projection.rotate([-1e-2 * (Date.now() - this.start), 0])
     this.renderCanvas()
