@@ -30,6 +30,7 @@ let ParentGrid = styled.div`
 let SubGrid = styled.div`
   grid-column: 1 / 7;
   ${({ fullWidth }) => (fullWidth ? one : two)}
+  ${({ alignLeft }) => (alignLeft ? left : right)}
 `
 
 let one = css`
@@ -62,7 +63,6 @@ let two = css`
     grid-template-columns: repeat(11, 1fr);
 
     .context {
-      grid-column: 7 / 13;
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -78,7 +78,6 @@ let two = css`
 
     > div:not(.context) {
       height: 50vw;
-      grid-column: 1 / 7;
       position: sticky;
     }
   }
@@ -88,7 +87,6 @@ let two = css`
     grid-template-columns: repeat(12, 1fr);
 
     .context {
-      grid-column: 7 / 14;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -101,6 +99,49 @@ let two = css`
 
     > div:not(.context) {
       height: 33.33vw;
+    }
+  }
+`
+
+let left = css`
+  @media screen and (min-width: 60rem) {
+    .context {
+      grid-column: 1 / 6;
+    }
+
+    > div:not(.context) {
+      grid-column: 6 / 13;
+    }
+  }
+
+  @media screen and (min-width: 100rem) {
+    .context {
+      grid-column: 1 / 6;
+    }
+
+    > div:not(.context) {
+      grid-column: 6 / 14;
+    }
+  }
+`
+
+let right = css`
+  @media screen and (min-width: 60rem) {
+    .context {
+      grid-column: 7 / 13;
+    }
+
+    > div:not(.context) {
+      grid-column: 1 / 7;
+    }
+  }
+
+  @media screen and (min-width: 100rem) {
+    .context {
+      grid-column: 7 / 14;
+    }
+
+    > div:not(.context) {
       grid-column: 1 / 7;
     }
   }

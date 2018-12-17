@@ -10,6 +10,7 @@ import variables from '../styles/variables'
 import { Heading } from '../styles/base-components'
 
 import devices from '../data/devices.json'
+import modularScale from '../styles/modular-scale'
 
 let H2 = styled(Heading)`
   &::after {
@@ -17,11 +18,24 @@ let H2 = styled(Heading)`
   }
 `
 
-let H3 = styled(Heading)`
+let Deviceheading = styled(Heading)`
   &::after {
     content: '.01';
     left: -4rem;
   }
+`
+
+let GatewayHeading = styled(Heading)`
+  &::after {
+    content: '.02';
+    left: -4rem;
+  }
+`
+
+let Label = styled.p`
+  text-align: center;
+  font-family: ${variables.monoTypo};
+  color: ${variables.green};
 `
 
 let Form = styled.form`
@@ -30,8 +44,14 @@ let Form = styled.form`
 `
 
 let Table = styled.table`
-  margin-top: ${variables.spacing.xxlarge};
+  margin-top: ${variables.spacing.large};
   border-spacing: 0 0.5em;
+
+  thead th {
+    font-family: ${variables.monoTypo};
+    font-weight: normal;
+    font-size: ${modularScale(1)};
+  }
   tr {
     padding: ${variables.spacing.small} 0;
   }
@@ -49,6 +69,10 @@ let Table = styled.table`
 `
 
 let AlteredLayout = styled(Layout.SubGrid)`
+  .context {
+    justify-content: flex-start;
+  }
+
   .context,
   > div:not(.context) {
     height: auto;
@@ -57,6 +81,20 @@ let AlteredLayout = styled(Layout.SubGrid)`
 `
 
 class HowItWorks extends Component {
+  deviceOptions = [
+    {
+      label: 'The Things Uno',
+      name: 'devices',
+      value: 'theThingsUno',
+      backgroundSrc: theThingsUnoImage
+    },
+    {
+      label: 'SODAQ ONE',
+      name: 'devices',
+      value: 'sodaqOne',
+      backgroundSrc: sodaqOneImage
+    }
+  ]
   state = { selectedDevice: 'theThingsUno' }
 
   selectedDeviceChange = ({ target }) => {
@@ -70,42 +108,12 @@ class HowItWorks extends Component {
       <Layout.ParentGrid as="section">
         <Layout.SubGrid fullWidth>
           <H2>How it works</H2>
-          <H3 as="h3">
+          <Deviceheading as="h3">
             Registered devices to your TTN account intermittently send encrypted
             data over LoRaWAN.
-          </H3>
+          </Deviceheading>
         </Layout.SubGrid>
-        <AlteredLayout>
-          <div>
-            <Form>
-              <RadioGroup
-                onChange={this.selectedDeviceChange}
-                selectedOption={this.state.selectedDevice}
-                options={[
-                  {
-                    label: 'The Things Uno',
-                    name: 'devices',
-                    value: 'theThingsUno',
-                    backgroundSrc: theThingsUnoImage
-                  },
-                  {
-                    label: 'SODAQ ONE',
-                    name: 'devices',
-                    value: 'sodaqOne',
-                    backgroundSrc: sodaqOneImage
-                  }
-                ]}
-              />
-            </Form>
-            <Table>
-              {devices[this.state.selectedDevice].map(arr => (
-                <tr>
-                  <td>{arr[0]}</td>
-                  <td>{arr[1]}</td>
-                </tr>
-              ))}
-            </Table>
-          </div>
+        <AlteredLayout alignLeft>
           <div className="context">
             <p>
               <span className="highlight">
@@ -134,6 +142,52 @@ class HowItWorks extends Component {
               </li>
             </ol>
           </div>
+          <div>
+            <Label>Click a device:</Label>
+            <Form>
+              <RadioGroup
+                onChange={this.selectedDeviceChange}
+                selectedOption={this.state.selectedDevice}
+                options={this.deviceOptions}
+              />
+            </Form>
+            <Table>
+              <thead>
+                <tr>
+                  <th colSpan="2">
+                    {
+                      this.deviceOptions.find(
+                        o => o.value === this.state.selectedDevice
+                      ).label
+                    }
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {devices[this.state.selectedDevice].map(arr => (
+                  <tr key={arr[0]}>
+                    <td>{arr[0]}</td>
+                    <td>{arr[1]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </AlteredLayout>
+        <Layout.SubGrid fullWidth>
+          <GatewayHeading as="h3">
+            Registered devices to your TTN account intermittently send encrypted
+            data over LoRaWAN.
+          </GatewayHeading>
+        </Layout.SubGrid>
+        <AlteredLayout alignLeft>
+          <div className="context">
+            <p>
+              Developers are using The Things Network’s tools and open network
+              to build all kinds of value driving applications.
+            </p>
+          </div>
+          <div />
         </AlteredLayout>
       </Layout.ParentGrid>
     )
