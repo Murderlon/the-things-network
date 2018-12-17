@@ -74,7 +74,8 @@ class OrthographicWorld extends Component {
   rootRef = createRef()
   state = {
     width: 0,
-    height: 0
+    height: 0,
+    isDragging: false
   }
 
   componentDidMount() {
@@ -84,15 +85,21 @@ class OrthographicWorld extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.isVisible) {
+    if (
+      this.props.isVisible &&
+      !this.state.isDragging &&
+      !this.rotateInterval
+    ) {
       this.start = Date.now()
-      this.rotate()
+      this.rotateInterval = setInterval(schedule(() => this.rotate()))
+    } else {
+      clearInterval(this.rotateInterval)
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize)
-    clearTimeout(this.rotateTimeout)
+    clearInterval(this.rotateInterval)
   }
 
   handleResize = schedule(() => {
@@ -150,17 +157,17 @@ class OrthographicWorld extends Component {
   }
 
   rotate = () => {
-    this.rotateTimeout = setTimeout(schedule(() => this.rotate()))
     this.projection.rotate([-1e-2 * (Date.now() - this.start), 0])
     this.renderCanvas()
-    !this.props.isVisible && clearTimeout(this.rotateTimeout)
   }
 
   dragging = () => {
     let { projection } = this
     let v0, q0, r0
+    let self = this
 
     function dragstarted() {
+      self.setState({ isDragging: true })
       v0 = versor.cartesian(projection.invert(mouse(this)))
       q0 = versor((r0 = projection.rotate()))
     }
