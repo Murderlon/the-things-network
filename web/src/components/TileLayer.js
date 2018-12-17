@@ -56,8 +56,8 @@ class TileLayer extends PureComponent {
             x={`${d.x * this.tilesize}`}
             y={`${d.y * this.tilesize}`}
             key={tileUrlBuilder(baseUrl, d.z, d.x, d.y)}
-            width={this.tilesize + 1} // Make sure the tiles connect through a little hack
-            height={this.tilesize + 1} // Make sure the tiles connect through a little hack
+            width={this.tilesize + 1}
+            height={this.tilesize + 1}
             xlinkHref={tileUrlBuilder(baseUrl, d.z, d.x, d.y)}
           />
         ))}
