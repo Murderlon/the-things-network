@@ -12,7 +12,7 @@ let typography = css`
   body {
     font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, Helvetica, Arial, sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     font-variant: common-ligatures lining-nums contextual;
     line-height: 1.4;
     text-rendering: geometricPrecision;
@@ -34,10 +34,6 @@ let typography = css`
   h2 {
     font-size: ${modularScale(2)};
     font-weight: 500;
-
-    span {
-      color: ${variables.highlightBlue};
-    }
   }
   h3 {
     font-size: ${modularScale(1)};
@@ -48,6 +44,7 @@ let typography = css`
   a {
     text-decoration-skip: ink;
   }
+
   @media screen and (min-width: 60rem) {
     h2 {
       font-size: ${modularScale(3)};

@@ -1,15 +1,21 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import Layout from '../components/Layout'
 import LineChart from '../components/LineChart'
 import ResponsiveChart from '../components/ResponsiveChart'
+import { Heading } from '../styles/base-components'
+
+let H2 = styled(Heading)`
+  &::after {
+    content: '0';
+  }
+`
 
 let Introduction = () => (
   <Layout.ParentGrid as="section">
     <Layout.SubGrid fullWidth>
-      <h2 id="introduction">
-        <span>0</span> Introduction
-      </h2>
+      <H2 id="introduction">Introduction</H2>
       <h3>
         Internet of Things is transforming the everyday physical objects that
         surround us into an ecosystem of information that will enrich our lives.{' '}

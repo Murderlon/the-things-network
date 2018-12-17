@@ -10,6 +10,13 @@ import ProtocolChart from '../components/ProtocolChart'
 import ScrolledContext from '../components/ScrolledContext'
 
 import variables from '../styles/variables'
+import { Heading } from '../styles/base-components'
+
+let H2 = styled(Heading)`
+  &::after {
+    content: '1';
+  }
+`
 
 let Skurt = styled(Layout.SubGrid)`
   position: relative;
@@ -112,9 +119,7 @@ class Protocols extends Component {
           return (
             <Layout.ParentGrid as="section" id="scroll">
               <Layout.SubGrid fullWidth>
-                <h2 id="protocols">
-                  <span>1</span> Protocols
-                </h2>
+                <H2 id="protocols">Protocols</H2>
                 <h3>
                   Internet of Things is powered by its connectivity protocols.
                 </h3>

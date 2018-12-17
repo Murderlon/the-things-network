@@ -15,6 +15,13 @@ import OrthographicWorld from '../components/OrthographicWorld'
 
 import variables from '../styles/variables'
 import modularScale from '../styles/modular-scale'
+import { Heading } from '../styles/base-components'
+
+let H2 = styled(Heading)`
+  &::after {
+    content: '0';
+  }
+`
 
 let ContentWrapper = styled(Layout.ParentGrid)`
   /* background: ${variables.secondaryBlue}; */
@@ -40,7 +47,7 @@ let ContentWrapper = styled(Layout.ParentGrid)`
       max-width: 30em;
       background: ${variables.secondaryBlue};
       padding: ${variables.spacing.medium};
-      font-size: ${modularScale(1)}
+      font-size: ${modularScale(1)};
     }
   }
 `
@@ -69,7 +76,7 @@ export default class TheThingsNetwork extends Component {
         offset: 0.7
       })
       .onStepEnter(this.handleStepEnter)
-    // setup resize event
+
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
   }
@@ -131,9 +138,7 @@ export default class TheThingsNetwork extends Component {
           return (
             <ContentWrapper as="section" id="mapScroll">
               <Layout.SubGrid fullWidth>
-                <h2>
-                  <span>2</span> The Things Network
-                </h2>
+                <H2>The Things Network</H2>
                 <Spring
                   delay={1000}
                   from={{ opacity: currentStep < 3 ? 0 : 1 }}

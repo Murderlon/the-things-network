@@ -67,9 +67,10 @@ let two = css`
       justify-content: center;
       flex-direction: column;
       align-items: center;
-      padding: 0;
+      padding: ${vars.spacing.xlarge} 0;
 
-      p {
+      p,
+      ol {
         width: 25vw;
         padding: 0;
       }
@@ -92,7 +93,8 @@ let two = css`
       justify-content: center;
       align-items: center;
 
-      p {
+      p,
+      ol {
         width: 16.66vw;
       }
     }

@@ -5,6 +5,7 @@ import Helmet from 'react-helmet'
 import Introduction from '../chapters/Introduction'
 import Protocols from '../chapters/Protocols'
 import TheThingsNetwork from '../chapters/TheThingsNetwork'
+import HowItWorks from '../chapters/HowItWorks'
 
 import Header from '../components/Header'
 import Layout from '../components/Layout'
@@ -45,6 +46,7 @@ let index = () => (
       <Protocols />
       <Quote />
       <TheThingsNetwork />
+      <HowItWorks />
     </Layout.RootGrid>
   </>
 )
