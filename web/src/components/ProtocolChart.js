@@ -121,7 +121,11 @@ class LineChart extends Component {
               from={{ r: currentStep >= i ? 0 : r(range) }}
               to={{ r: currentStep >= i ? r(range) : 0 }}
             >
-              {props => <circle {...props} fill={variables.green} />}
+              {props =>
+                props.r > 0 ? (
+                  <circle {...props} fill={variables.green} />
+                ) : null
+              }
             </Spring>
             <Spring
               from={{ opacity: currentStep >= i ? 0 : 1 }}

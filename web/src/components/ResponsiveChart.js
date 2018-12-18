@@ -27,9 +27,11 @@ export default class ResponsiveChart extends Component {
   }
 
   handleWindowResize = schedule(() => {
-    let { width, height } = this.root.current.getBoundingClientRect()
+    if (this.root.current) {
+      let { width, height } = this.root.current.getBoundingClientRect()
 
-    this.setState({ width, height })
+      this.setState({ width, height })
+    }
   })
 
   render() {

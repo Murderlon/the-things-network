@@ -166,8 +166,8 @@ class LineChart extends Component {
           d={lineGenerator(data.slice(this.props.presentIndex))}
         />
         <rect
-          width={width}
-          height={height}
+          width={width > 0 ? width : null}
+          height={height > 0 ? height : null}
           className="overlay"
           onMouseMove={this.onMouseMove}
           onTouchMove={this.onMouseMove}
@@ -178,7 +178,7 @@ class LineChart extends Component {
           transform={`translate(${x(this.state.tracker.year)}, 0)`}
         >
           <rect
-            height={height}
+            height={height > 0 ? height : null}
             width={15}
             fill={variables.secondaryBlue}
             fillOpacity="0.5"
