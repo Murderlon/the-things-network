@@ -1,84 +1,71 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import { StaticQuery, graphql } from 'gatsby'
 
-import Layout from '../components/Layout'
-import RadioGroup from '../components/RadioGroup'
+import Layout from 'components/Layout'
+import RadioGroup from 'components/RadioGroup'
 
-import theThingsUnoImage from '../assets/the-things-uno.jpg'
-import sodaqOneImage from '../assets/sodaq-one.png'
-import variables from '../styles/variables'
-import { Heading } from '../styles/base-components'
+import theThingsUnoImage from 'assets/the-things-uno.jpg'
+import sodaqOneImage from 'assets/sodaq-one.png'
+import devices from 'data/devices.json'
 
-import devices from '../data/devices.json'
-import modularScale from '../styles/modular-scale'
+import {
+  H2,
+  Deviceheading,
+  AlteredLayout,
+  Label,
+  Form,
+  Table,
+  GatewayHeading,
+  Div
+} from './HowItWorks.style'
 
-let H2 = styled(Heading)`
-  &::after {
-    content: '3';
+export const query = graphql`
+  fragment ContentFragment on MarkdownRemark {
+    frontmatter {
+      title
+      label
+      name
+      value
+      backgroundSrc
+    }
+    html
   }
 `
 
-let Deviceheading = styled(Heading)`
-  &::after {
-    content: '.01';
-    left: -4rem;
-  }
-`
-
-let GatewayHeading = styled(Heading)`
-  &::after {
-    content: '.02';
-    left: -4rem;
-  }
-`
-
-let Label = styled.p`
-  text-align: center;
-  font-family: ${variables.monoTypo};
-  color: ${variables.green};
-`
-
-let Form = styled.form`
-  display: flex;
-  justify-content: center;
-`
-
-let Table = styled.table`
-  margin-top: ${variables.spacing.large};
-  border-spacing: 0 0.5em;
-
-  thead th {
-    font-family: ${variables.monoTypo};
-    font-weight: normal;
-    font-size: ${modularScale(1)};
-  }
-  tr {
-    padding: ${variables.spacing.small} 0;
-  }
-
-  td:first-of-type {
-    color: ${variables.purple};
-    text-align: right;
-    padding-right: ${variables.spacing.small};
-    width: 40%;
-  }
-
-  td {
-    vertical-align: top;
-  }
-`
-
-let AlteredLayout = styled(Layout.SubGrid)`
-  .context {
-    justify-content: flex-start;
-  }
-
-  .context,
-  > div:not(.context) {
-    height: auto;
-    padding: ${`${variables.spacing.xxlarge} ${variables.spacing.medium}`};
-  }
-`
+export default props => (
+  <StaticQuery
+    query={graphql`
+      query {
+        parkingSensor: markdownRemark(
+          frontmatter: { value: { eq: "parkingSensor" } }
+        ) {
+          ...ContentFragment
+        }
+        cowTracking: markdownRemark(
+          frontmatter: { value: { eq: "cowTracking" } }
+        ) {
+          ...ContentFragment
+        }
+        weatherStation: markdownRemark(
+          frontmatter: { value: { eq: "weatherStation" } }
+        ) {
+          ...ContentFragment
+        }
+      }
+    `}
+    render={content => {
+      return (
+        <HowItWorks
+          content={content}
+          useCaseOptions={Object.values(content).map(
+            ({ frontmatter }) => frontmatter
+          )}
+          {...props}
+        />
+      )
+    }}
+  />
+)
 
 class HowItWorks extends Component {
   deviceOptions = [
@@ -95,11 +82,20 @@ class HowItWorks extends Component {
       backgroundSrc: sodaqOneImage
     }
   ]
-  state = { selectedDevice: 'theThingsUno' }
+  state = {
+    selectedDevice: 'theThingsUno',
+    selectedUseCase: this.props.useCaseOptions[0].value
+  }
 
   selectedDeviceChange = ({ target }) => {
     if (this.state.selectedDevice !== target.value) {
       this.setState({ selectedDevice: target.value })
+    }
+  }
+
+  selectedUseCaseChange = ({ target }) => {
+    if (this.state.selectedStory !== target.value) {
+      this.setState({ selectedUseCase: target.value })
     }
   }
 
@@ -154,17 +150,11 @@ class HowItWorks extends Component {
             <Table>
               <thead>
                 <tr>
-                  <th colSpan="2">
-                    {
-                      this.deviceOptions.find(
-                        o => o.value === this.state.selectedDevice
-                      ).label
-                    }
-                  </th>
+                  <th colSpan="2">{devices[this.state.selectedDevice].name}</th>
                 </tr>
               </thead>
               <tbody>
-                {devices[this.state.selectedDevice].map(arr => (
+                {devices[this.state.selectedDevice].table.map(arr => (
                   <tr key={arr[0]}>
                     <td>{arr[0]}</td>
                     <td>{arr[1]}</td>
@@ -174,12 +164,6 @@ class HowItWorks extends Component {
             </Table>
           </div>
         </AlteredLayout>
-        <Layout.SubGrid fullWidth>
-          <GatewayHeading as="h3">
-            Registered devices to your TTN account intermittently send encrypted
-            data over LoRaWAN.
-          </GatewayHeading>
-        </Layout.SubGrid>
         <AlteredLayout alignLeft>
           <div className="context">
             <p>
@@ -187,10 +171,29 @@ class HowItWorks extends Component {
               to build all kinds of value driving applications.
             </p>
           </div>
-          <div />
+          <div>
+            <Label>Click a use case:</Label>
+            <Form>
+              <RadioGroup
+                onChange={this.selectedUseCaseChange}
+                selectedOption={this.state.selectedUseCase}
+                options={this.props.useCaseOptions}
+              />
+            </Form>
+            <Div
+              dangerouslySetInnerHTML={{
+                __html: this.props.content[this.state.selectedUseCase].html
+              }}
+            />
+          </div>
         </AlteredLayout>
+        <Layout.SubGrid fullWidth>
+          <GatewayHeading as="h3">
+            Registered devices to your TTN account intermittently send encrypted
+            data over LoRaWAN.
+          </GatewayHeading>
+        </Layout.SubGrid>
       </Layout.ParentGrid>
     )
   }
 }
-export default HowItWorks

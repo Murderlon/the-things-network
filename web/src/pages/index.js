@@ -5,7 +5,7 @@ import Helmet from 'react-helmet'
 import Introduction from '../chapters/Introduction'
 import Protocols from '../chapters/Protocols'
 import TheThingsNetwork from '../chapters/TheThingsNetwork'
-import HowItWorks from '../chapters/HowItWorks'
+import HowItWorks from '../chapters/HowItWorks/HowItWorks'
 
 import Header from '../components/Header'
 import Layout from '../components/Layout'
