@@ -35,9 +35,6 @@ const Radio = styled('input')`
   &:hover:not(:checked) + label {
     opacity: 0.5;
   }
-
-  &:active:not(:checked) + label {
-  }
 `
 
 /** An fieldset with multiple radio buttons with a callback to change state */

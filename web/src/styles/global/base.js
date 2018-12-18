@@ -24,6 +24,7 @@ let base = css`
   *::after {
     box-sizing: inherit;
   }
+
   body {
     margin: 0;
     color: white;
