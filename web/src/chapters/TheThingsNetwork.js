@@ -24,7 +24,9 @@ let H2 = styled(Heading)`
 `
 
 let ContentWrapper = styled(Layout.ParentGrid)`
-  /* background: ${variables.secondaryBlue}; */
+  @media screen and (min-width: 100rem) {
+    grid-column: 1 / 19;
+  }
 
   > div {
     position: relative;
@@ -32,8 +34,11 @@ let ContentWrapper = styled(Layout.ParentGrid)`
 
   .mapGraphic {
     position: sticky;
-    z-index: 0;
-    height: 70vh;
+    height: 100vh;
+  }
+  .chart {
+    height: 100vh;
+    z-index: -1;
   }
 
   .mapScrollText {
@@ -41,7 +46,8 @@ let ContentWrapper = styled(Layout.ParentGrid)`
   }
 
   .step {
-    z-index: 1;
+    z-index: 0;
+
     p {
       margin: 0 auto;
       max-width: 30em;
@@ -50,6 +56,23 @@ let ContentWrapper = styled(Layout.ParentGrid)`
       font-size: ${modularScale(1)};
     }
   }
+`
+
+let LayoutWrapper = styled.div`
+  width: 100%;
+  grid-column: 1 / 7;
+
+  @media screen and (min-width: 60rem) {
+    grid-column: 1 / 13;
+  }
+
+  @media screen and (min-width: 100rem) {
+    grid-column: 1 / 18;
+  }
+`
+
+let MapGraphic = styled.div`
+  position: relative;
 `
 
 export default class TheThingsNetwork extends Component {
@@ -88,11 +111,9 @@ export default class TheThingsNetwork extends Component {
 
   handleResize = () => {
     let stepHeight = Math.floor(window.innerHeight)
-    let graphicHeight = Math.floor(window.innerHeight / 2)
-    let graphicMarginTop = Math.floor(graphicHeight / 3)
 
     this.step.style('height', stepHeight + 'px')
-    this.graphic.style('top', graphicMarginTop + 'px')
+    this.graphic.style('top', 0 + 'px')
     this.scroller.resize()
   }
 
@@ -137,73 +158,97 @@ export default class TheThingsNetwork extends Component {
 
           return (
             <ContentWrapper as="section" id="mapScroll">
-              <Layout.SubGrid fullWidth>
+              <LayoutWrapper>
                 <H2>The Things Network</H2>
-                <Spring
-                  delay={1000}
-                  from={{ opacity: currentStep < 3 ? 0 : 1 }}
-                  to={{ opacity: currentStep < 3 ? 1 : 0 }}
-                >
-                  {props => (
-                    <ResponsiveChart classProp="mapGraphic" style={props}>
-                      {dimensions => (
-                        <MapBaseGroup {...dimensions} extent={data.poCJson}>
-                          {generators => (
-                            <>
-                              <TileLayer {...dimensions} {...generators} />
-                              <Trail
-                                items={features}
-                                keys={({ properties }) => properties.name}
-                                native
-                                from={{
-                                  t: currentStep > 0 && currentStep < 3 ? 0 : 1
-                                }}
-                                to={{
-                                  t: currentStep > 0 && currentStep < 3 ? 1 : 0
-                                }}
-                              >
-                                {item => ({ t }) => {
-                                  let [x, y] = generators.projection(
-                                    item.geometry.coordinates
-                                  )
-                                  let radius = geoCircle()
-                                    .center(item.geometry.coordinates)
-                                    .radius(angle)
+                <MapGraphic className="mapGraphic">
+                  <Spring
+                    delay={1000}
+                    from={{ opacity: currentStep < 3 ? 0 : 1 }}
+                    to={{ opacity: currentStep < 3 ? 1 : 0 }}
+                  >
+                    {props => (
+                      <ResponsiveChart classProp="chart" style={props}>
+                        {dimensions => (
+                          <MapBaseGroup {...dimensions} extent={data.poCJson}>
+                            {generators => (
+                              <>
+                                <TileLayer {...dimensions} {...generators} />
+                                <Trail
+                                  items={features}
+                                  keys={({ properties }) => properties.name}
+                                  native
+                                  from={{
+                                    t:
+                                      currentStep > 0 && currentStep < 3 ? 0 : 1
+                                  }}
+                                  to={{
+                                    t:
+                                      currentStep > 0 && currentStep < 3 ? 1 : 0
+                                  }}
+                                >
+                                  {item => ({ t }) => {
+                                    let [x, y] = generators.projection(
+                                      item.geometry.coordinates
+                                    )
+                                    let radius = geoCircle()
+                                      .center(item.geometry.coordinates)
+                                      .radius(angle)
 
-                                  let inactive = geoCircle()
-                                    .center(item.geometry.coordinates)
-                                    .radius(0)
+                                    let inactive = geoCircle()
+                                      .center(item.geometry.coordinates)
+                                      .radius(0)
 
-                                  let interpolator = interpolatePath(
-                                    generators.path(inactive()),
-                                    generators.path(radius())
-                                  )
+                                    let interpolator = interpolatePath(
+                                      generators.path(inactive()),
+                                      generators.path(radius())
+                                    )
 
-                                  return (
-                                    <g>
-                                      <animated.path
-                                        d={t.interpolate(interpolator)}
-                                        fill={variables.green}
-                                        fillOpacity={0.3}
-                                      />
-                                      <circle
-                                        cx={x}
-                                        cy={y}
-                                        r="6"
-                                        fill={variables.green}
-                                      />
-                                    </g>
-                                  )
-                                }}
-                              </Trail>
-                              )}
-                            </>
-                          )}
-                        </MapBaseGroup>
-                      )}
-                    </ResponsiveChart>
-                  )}
-                </Spring>
+                                    return (
+                                      <g>
+                                        <animated.path
+                                          d={t.interpolate(interpolator)}
+                                          fill={variables.green}
+                                          fillOpacity={0.3}
+                                        />
+                                        <circle
+                                          cx={x}
+                                          cy={y}
+                                          r="6"
+                                          fill={variables.green}
+                                        />
+                                      </g>
+                                    )
+                                  }}
+                                </Trail>
+                                )}
+                              </>
+                            )}
+                          </MapBaseGroup>
+                        )}
+                      </ResponsiveChart>
+                    )}
+                  </Spring>
+                  <Spring
+                    delay={1500}
+                    from={
+                      currentStep < 3
+                        ? { opacity: 1, transform: 'scale(1)' }
+                        : { opacity: 0, transform: 'scale(1.1)' }
+                    }
+                    to={
+                      currentStep < 3
+                        ? { opacity: 0, transform: 'scale(1.1)' }
+                        : { opacity: 1, transform: 'scale(1)' }
+                    }
+                  >
+                    {props => (
+                      <OrthographicWorld
+                        isVisible={props.opacity === 1}
+                        style={props}
+                      />
+                    )}
+                  </Spring>
+                </MapGraphic>
                 <div className="mapScrollText">
                   <div className="step" data-step={0}>
                     <p>
@@ -233,31 +278,9 @@ export default class TheThingsNetwork extends Component {
                       <span className="highlight">and they did.</span>
                     </p>
                   </div>
-                  <div className="step" data-step={3}>
-                    <Spring
-                      delay={1500}
-                      immediate={currentStep < 3}
-                      from={
-                        currentStep < 3
-                          ? { opacity: 1, transform: 'scale(1)' }
-                          : { opacity: 0, transform: 'scale(1.1)' }
-                      }
-                      to={
-                        currentStep < 3
-                          ? { opacity: 0, transform: 'scale(1.1)' }
-                          : { opacity: 1, transform: 'scale(1)' }
-                      }
-                    >
-                      {props => (
-                        <OrthographicWorld
-                          isVisible={props.opacity === 1}
-                          style={props}
-                        />
-                      )}
-                    </Spring>
-                  </div>
+                  <div className="step" data-step={3} />
                 </div>
-              </Layout.SubGrid>
+              </LayoutWrapper>
             </ContentWrapper>
           )
         }}

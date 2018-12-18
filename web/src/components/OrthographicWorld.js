@@ -14,10 +14,12 @@ import TTNLogo from '../assets/ttn-logo.svg'
 import variables from '../styles/variables'
 
 let Root = styled.div`
-  width: 100%;
-  height: 60vh;
-  position: relative;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
   display: block;
+  top: 0;
+  z-index: 1;
 `
 
 let LogoWrapper = styled.div`
@@ -103,14 +105,16 @@ class OrthographicWorld extends Component {
   }
 
   handleResize = schedule(() => {
-    let { width, height } = this.rootRef.current.getBoundingClientRect()
-    this.setState({ width, height }, this.setupCanvas)
+    if (this.rootRef.current) {
+      let { width, height } = this.rootRef.current.getBoundingClientRect()
+      this.setState({ width, height }, this.setupCanvas)
+    }
   })
 
   setupCanvas = () => {
     let { width, height } = this.state
     this.projection
-      .fitExtent([[1, 1], [width - 1, height - 1]], this.sphere)
+      .fitExtent([[1, 1], [width / 1.5, height / 1.5]], this.sphere)
       .translate([width / 2, height / 2])
       .precision(1)
 
@@ -128,7 +132,7 @@ class OrthographicWorld extends Component {
     let context = this.canvasRef.current.getContext('2d')
 
     this.projection
-      .fitExtent([[1, 1], [width - 1, height - 1]], this.sphere)
+      .fitExtent([[1, 1], [width / 1.5, height / 1.5]], this.sphere)
       .translate([width / 2, height / 2])
       .precision(1)
 
