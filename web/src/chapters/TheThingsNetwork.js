@@ -18,6 +18,16 @@ import modularScale from '../styles/modular-scale'
 import { Heading } from '../styles/base-components'
 
 let H2 = styled(Heading)`
+  grid-column: 1 / 7;
+
+  @media screen and (min-width: 60rem) {
+    grid-column: 2 / 11;
+  }
+
+  @media screen and (min-width: 100rem) {
+    grid-column: 3 / 12;
+  }
+
   &::after {
     content: '0';
   }
@@ -158,8 +168,8 @@ export default class TheThingsNetwork extends Component {
 
           return (
             <ContentWrapper as="section" id="mapScroll">
+              <H2>The Things Network</H2>
               <LayoutWrapper>
-                <H2>The Things Network</H2>
                 <MapGraphic className="mapGraphic">
                   <Spring
                     delay={1000}
@@ -230,6 +240,7 @@ export default class TheThingsNetwork extends Component {
                   </Spring>
                   <Spring
                     delay={1500}
+                    immediate={currentStep < 3}
                     from={
                       currentStep < 3
                         ? { opacity: 1, transform: 'scale(1)' }

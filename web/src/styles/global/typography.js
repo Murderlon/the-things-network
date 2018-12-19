@@ -14,7 +14,7 @@ let typography = css`
       Roboto, Helvetica, Arial, sans-serif;
     font-weight: 400;
     font-variant: common-ligatures lining-nums contextual;
-    line-height: 1.4;
+    line-height: 1.5;
     text-rendering: geometricPrecision;
   }
   h1,
