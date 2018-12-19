@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
 import { StaticQuery, graphql } from 'gatsby'
+import { scaleLinear, scaleTime } from 'd3-scale'
+import { line, curveCardinal } from 'd3-shape'
 
 import Layout from 'components/Layout'
+import ResponsiveChart from 'components/ResponsiveChart'
+import LineChart from 'components/LineChart'
 import RadioGroup from 'components/RadioGroup'
 
 import theThingsUnoImage from 'assets/the-things-uno.jpg'
 import sodaqOneImage from 'assets/sodaq-one.png'
+import gatewayImage from 'assets/the-things-gateway.jpg'
+
 import devices from 'data/devices.json'
+import mockdata from 'data/mockdata.json'
 
 import {
   H2,
@@ -16,10 +23,13 @@ import {
   Form,
   Table,
   GatewayHeading,
-  Div
+  GatewayImage,
+  Div,
+  LineFuture,
+  LinePresent
 } from './HowItWorks.style'
 
-export const query = graphql`
+export let query = graphql`
   fragment ContentFragment on MarkdownRemark {
     frontmatter {
       title
@@ -189,9 +199,127 @@ class HowItWorks extends Component {
         </AlteredLayout>
         <Layout.SubGrid fullWidth>
           <GatewayHeading as="h3">
-            Registered devices to your TTN account intermittently send encrypted
-            data over LoRaWAN.
+            Distributed and community driven gateways, powered by Ethernet/WiFi,
+            provide up to 10km of LoRaWAN coverage.
           </GatewayHeading>
+        </Layout.SubGrid>
+        <AlteredLayout alignLeft isStatic>
+          <div className="context">
+            <p>
+              <span className="highlight">
+                Our network is built by you — the people.
+              </span>{' '}
+              You can contribute by placing a gateway and expand our network.
+              The more gateways are placed, the larger the coverage.
+            </p>
+            <p>
+              The Things Gateway enables devices such as sensors and embedded
+              computers to connect to the internet. With an easy to connect
+              process, you are creating the most substantial aspect of your IoT
+              data network.{' '}
+              <span className="highlight">
+                Activate the gateway in just 5 minutes and create your own local
+                network. With the capacity to serve thousands of nodes, the
+                gateway is the main building block of your connected network.{' '}
+              </span>
+            </p>
+          </div>
+          <div>
+            <GatewayImage src={gatewayImage} alt="The Things Gateway" />
+            <Div>
+              <Table>
+                <thead>
+                  <tr>
+                    <th colSpan="2">
+                      <span>Example gateway:</span>
+                      <span>The Things Gateway</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Setup</td>
+                    <td>Your own LoRaWAN network in as little as 5 minutes</td>
+                  </tr>
+                  <tr>
+                    <td>Connection</td>
+                    <td>Connects easily to your WiFi or Ethernet </td>
+                  </tr>
+                  <tr>
+                    <td>Range</td>
+                    <td>Up to 10 km (6 miles) </td>
+                  </tr>
+                  <tr>
+                    <td>Integrations</td>
+                    <td>Easy cloud integration with popular IoT platforms</td>
+                  </tr>
+                  <tr>
+                    <td>Standards</td>
+                    <td>Open source hardware and software</td>
+                  </tr>
+                  <tr>
+                    <td>XBEE</td>
+                    <td>
+                      Slot for future connectivity protocols or homebrew add-ons
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Security</td>
+                    <td>
+                      HTTPS connection and embedded encryption in the LoRaWAN
+                      protocol
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Load</td>
+                    <td>Can serve thousands of nodes (depending on traffic)</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Div>
+          </div>
+        </AlteredLayout>
+        <Layout.SubGrid alignLeft>
+          <div className="context" />
+          <ResponsiveChart>
+            {dimensions => {
+              let margin = { top: 60, right: 60, bottom: 60, left: 60 }
+              let width = dimensions.width - margin.left - margin.right
+              let height = dimensions.height - margin.top - margin.bottom
+
+              let x = scaleTime()
+                .domain(mockdata.data.map(({ date }) => date))
+                .range([0, width])
+
+              let y = scaleLinear()
+                .domain([0, 30000000])
+                .range([height, 0])
+
+              let uplinksLineGenerator = line()
+                .x(({ date }) => x(date))
+                .y(({ uplinks }) => y(uplinks))
+                .curve(curveCardinal)
+
+              let downlinksLineGenerator = line()
+                .x(({ date }) => x(date))
+                .y(({ downlinks }) => y(downlinks))
+                .curve(curveCardinal)
+
+              return (
+                <LineChart
+                  width={width}
+                  height={height}
+                  margin={margin}
+                  x={x}
+                  y={y}
+                  title="IoT global market (billions)"
+                >
+                  <LinePresent d={uplinksLineGenerator(mockdata.data)} />
+                  <LineFuture d={downlinksLineGenerator(mockdata.data)} />
+                </LineChart>
+              )
+            }}
+          </ResponsiveChart>
         </Layout.SubGrid>
       </Layout.ParentGrid>
     )

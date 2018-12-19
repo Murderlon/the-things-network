@@ -1,43 +1,49 @@
 {
-  "sodaqOne": [
-    ["Microcontroller", "ATSAMD21G18, 32-Bit ARM Cortex M0+"],
-    ["Compatibility", "Arduino M0 Compatible"],
-    ["Size", "45 x 25 mm"],
-    ["Operating Voltage", "3.3V"],
-    [
-      "I/O Pins",
-      "14, All can be used for digital and 12 log with PWM, UART, SPI and TWI (I2C)"
-    ],
-    ["Analog Output Pin", "10-bit DAC"],
-    ["External Interrupts", "Available on all pins"],
-    ["DC Current per I/O pin", "7 mA"],
-    ["Flash Memory", "256 KB"],
-    ["SRAM", "32KB"],
-    ["EEPROM", "Up to 16KB by emulation"],
-    ["Clock Speed", "48 MHz"],
-    ["Debug", "Serial Wire Interface"],
-    ["Power", "5V USB power and/or 3.7 LiPo battery"],
-    ["Charging", "Solar charge controller, up to 500mA charge current"],
-    ["LED", "RGB LED"],
-    ["LoRa Microchip", "RN2483 / RN2903"],
-    ["GPS", "uBlox EVA 8M"],
-    ["Accelerometer", "LSM303AGR"],
-    ["USB", "MicroUSB Port"]
-  ],
-  "theThingsUno": [
-    ["Digital I/O channels", "20 "],
-    ["PWM channels", "7 "],
-    ["Analog input channels", "12 "],
-    ["DC current per I/O", "40 mA "],
-    ["DC current 3.3V pin", "50 mA "],
-    ["Flash memory", "32 KB (- reserved bootloader space) "],
-    ["SRAM (static RAM)", "2.5 KB "],
-    ["EEPROM", "1 KB "],
-    ["Clock Speed", "16 MHz "],
-    ["Operating Frequencies", "433 MHz en 868 MHz "],
-    ["Receiving sensitivity", "up to -148 dBm  "],
-    ["Transmitting power", "adjustable to +14 dBm "],
-    ["Modulation", "LoRaWAN"],
-    ["Range", "10km coverage at suburban, 5 km coverage at urban area "]
-  ]
+  "sodaqOne": {
+    "name": "SODAQ ONE",
+    "table": [
+      ["Microcontroller", "ATSAMD21G18, 32-Bit ARM Cortex M0+"],
+      ["Compatibility", "Arduino M0 Compatible"],
+      ["Size", "45 x 25 mm"],
+      ["Operating Voltage", "3.3V"],
+      [
+        "I/O Pins",
+        "14, All can be used for digital and 12 log with PWM, UART, SPI and TWI (I2C)"
+      ],
+      ["Analog Output Pin", "10-bit DAC"],
+      ["External Interrupts", "Available on all pins"],
+      ["DC Current per I/O pin", "7 mA"],
+      ["Flash Memory", "256 KB"],
+      ["SRAM", "32KB"],
+      ["EEPROM", "Up to 16KB by emulation"],
+      ["Clock Speed", "48 MHz"],
+      ["Debug", "Serial Wire Interface"],
+      ["Power", "5V USB power and/or 3.7 LiPo battery"],
+      ["Charging", "Solar charge controller, up to 500mA charge current"],
+      ["LED", "RGB LED"],
+      ["LoRa Microchip", "RN2483 / RN2903"],
+      ["GPS", "uBlox EVA 8M"],
+      ["Accelerometer", "LSM303AGR"],
+      ["USB", "MicroUSB Port"]
+    ]
+  },
+  "theThingsUno": {
+    "name": "The Things Uno",
+    "table": [
+      ["Digital I/O channels", "20 "],
+      ["PWM channels", "7 "],
+      ["Analog input channels", "12 "],
+      ["DC current per I/O", "40 mA "],
+      ["DC current 3.3V pin", "50 mA "],
+      ["Flash memory", "32 KB (- reserved bootloader space) "],
+      ["SRAM (static RAM)", "2.5 KB "],
+      ["EEPROM", "1 KB "],
+      ["Clock Speed", "16 MHz "],
+      ["Operating Frequencies", "433 MHz en 868 MHz "],
+      ["Receiving sensitivity", "up to -148 dBm  "],
+      ["Transmitting power", "adjustable to +14 dBm "],
+      ["Modulation", "LoRaWAN"],
+      ["Range", "10km coverage at suburban, 5 km coverage at urban area "]
+    ]
+  }
 }
