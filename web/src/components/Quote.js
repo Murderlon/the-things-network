@@ -53,7 +53,7 @@ let Section = styled.section`
   }
 `
 
-const Quote = () => (
+let Quote = () => (
   <Section>
     <div>
       <span>”</span>

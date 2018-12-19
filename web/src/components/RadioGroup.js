@@ -5,9 +5,9 @@ import { hideText } from 'polished'
 import randomHash from '../helpers/generateRandomHash'
 import variables from '../styles/variables'
 
-const Fieldset = styled('div')``
+let Fieldset = styled('div')``
 
-const Label = styled('label')`
+let Label = styled('label')`
   ${hideText()};
   display: inline-block;
   margin: 0 ${variables.spacing.medium};
@@ -20,7 +20,7 @@ const Label = styled('label')`
   border: 5px solid transparent;
 `
 
-const Radio = styled('input')`
+let Radio = styled('input')`
   position: absolute;
   clip: rect(0, 0, 0, 0);
 
@@ -42,11 +42,11 @@ class RadioGroup extends Component {
   randomId = randomHash()
 
   render() {
-    const { options, selectedOption, onChange } = this.props
+    let { options, selectedOption, onChange } = this.props
     return (
       <Fieldset onChange={onChange}>
         {options.map(({ label, name, value, backgroundSrc }) => {
-          const id = `${this.randomId}_${value}`
+          let id = `${this.randomId}_${value}`
           return (
             <Fragment key={value}>
               <Radio

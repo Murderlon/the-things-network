@@ -177,8 +177,8 @@ class OrthographicWorld extends Component {
     }
 
     function dragged() {
-      const v1 = versor.cartesian(projection.rotate(r0).invert(mouse(this)))
-      const q1 = versor.multiply(q0, versor.delta(v0, v1))
+      let v1 = versor.cartesian(projection.rotate(r0).invert(mouse(this)))
+      let q1 = versor.multiply(q0, versor.delta(v0, v1))
       projection.rotate(versor.rotation(q1))
     }
 

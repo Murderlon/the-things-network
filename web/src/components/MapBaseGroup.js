@@ -3,7 +3,7 @@ import { geoPath, geoMercator } from 'd3-geo'
 
 let padding = 20
 
-const MapBaseGroup = ({
+let MapBaseGroup = ({
   width,
   height,
   extent,
