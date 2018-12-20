@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { scaleLinear, scaleTime } from 'd3-scale'
 import { line, curveCardinal } from 'd3-shape'
 import { extent } from 'd3-array'
-import { timeYear } from 'd3-time'
 
 import Layout from '../components/Layout'
 import LineChart from '../components/LineChart'
@@ -46,7 +45,7 @@ let IoTGlobalMarketChart = () => (
     render={({ ioTJson }) => {
       let data = ioTJson.years
       let currentYear = ioTJson.years.findIndex(
-        ({ year }) => year === new Date().getFullYear()
+        ({ year }) => new Date(year).getFullYear() === new Date().getFullYear()
       )
 
       return (
@@ -57,17 +56,15 @@ let IoTGlobalMarketChart = () => (
             let height = dimensions.height - margin.top - margin.bottom
 
             let x = scaleTime()
-              .domain(data.map(({ year }) => new Date(year)))
+              .domain(extent(data.map(({ year }) => new Date(year))))
               .range([0, width])
 
-            x.ticks(timeYear, 1).map(tick => console.log(x(tick)))
-
             let y = scaleLinear()
-              .domain([0, 100000000000])
+              .domain([0, Math.pow(10, 11)]) // 100 billion
               .range([height, 0])
 
             let lineGenerator = line()
-              .x(({ year }) => x(year))
+              .x(({ year }) => x(new Date(year)))
               .y(({ value }) => y(value))
               .curve(curveCardinal)
 
@@ -85,6 +82,13 @@ let IoTGlobalMarketChart = () => (
                   d={lineGenerator(data.slice(0, currentYear + 1))}
                 />
                 <LineFuture d={lineGenerator(data.slice(currentYear))} />
+                <Tracker
+                  initialPosition={data[currentYear]}
+                  width={width}
+                  height={height}
+                  x={x}
+                  y={y}
+                />
               </LineChart>
             )
           }}

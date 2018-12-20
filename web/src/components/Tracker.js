@@ -52,7 +52,10 @@ export default class Tracker extends Component {
           width={width > 0 ? width : null}
           height={height > 0 ? height : null}
         />
-        <g height={height} transform={`translate(${x(position.year)}, 0)`}>
+        <g
+          height={height}
+          transform={`translate(${x(new Date(position.year))}, 0)`}
+        >
           <BackgroundRect
             height={height > 0 ? height : null}
             width={15}

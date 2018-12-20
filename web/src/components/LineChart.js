@@ -22,7 +22,20 @@ let TickLine = styled.line`
   stroke-opacity: 0.4;
 `
 
-export default ({ x, y, width, height, margin, title, children }) => (
+let getXTicks = (x, numberTicks) =>
+  numberTicks ? x.ticks(numberTicks) : x.ticks()
+
+export default ({
+  x,
+  y,
+  width,
+  height,
+  margin,
+  title,
+  f = '%Y',
+  numberTicks,
+  children
+}) => (
   <g transform={`translate(${margin.left}, ${margin.top})`}>
     <Title
       transform={`translate(${width / 2}, ${-margin.top / 3})`}
@@ -32,10 +45,10 @@ export default ({ x, y, width, height, margin, title, children }) => (
     </Title>
 
     <g transform={`translate(0, ${height})`} textAnchor="end">
-      {x.ticks().map(tick => (
+      {getXTicks(x, numberTicks).map(tick => (
         <g key={tick} transform={`translate(${x(tick)}, 0)`}>
           <TickLine y2={-width} />
-          <TickText y="30">{timeFormat('%Y')(tick)}</TickText>
+          <TickText y="30">{timeFormat(f)(new Date(tick))}</TickText>
         </g>
       ))}
     </g>

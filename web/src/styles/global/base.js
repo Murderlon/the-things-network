@@ -86,6 +86,12 @@ let base = css`
   .highlight {
     color: ${variables.highlightBlue};
   }
+  .green {
+    color: ${variables.green};
+  }
+  .red {
+    color: ${variables.red};
+  }
 `
 
 export default base

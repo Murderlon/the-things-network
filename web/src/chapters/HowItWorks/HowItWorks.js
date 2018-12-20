@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import { scaleLinear, scaleTime } from 'd3-scale'
 import { line, curveCardinal } from 'd3-shape'
+import { extent, min, max } from 'd3-array'
 
 import Layout from 'components/Layout'
 import ResponsiveChart from 'components/ResponsiveChart'
@@ -25,8 +26,8 @@ import {
   GatewayHeading,
   GatewayImage,
   Div,
-  LineFuture,
-  LinePresent
+  LineGreen,
+  LineRed
 } from './HowItWorks.style'
 
 export let query = graphql`
@@ -280,28 +281,41 @@ class HowItWorks extends Component {
           </div>
         </AlteredLayout>
         <Layout.SubGrid alignLeft>
-          <div className="context" />
+          <div className="context">
+            <p>
+              Devices send encrypted data to gateways over LoRaWAN, these are
+              called <span className="green">uplinks.</span>
+            </p>
+            <p>
+              Applications can respond or send data to a device, these are
+              called <span className="red">downlinks.</span>
+            </p>
+          </div>
           <ResponsiveChart>
             {dimensions => {
               let margin = { top: 60, right: 60, bottom: 60, left: 60 }
               let width = dimensions.width - margin.left - margin.right
               let height = dimensions.height - margin.top - margin.bottom
+              let { data } = mockdata
 
               let x = scaleTime()
-                .domain(mockdata.data.map(({ date }) => date))
+                .domain(extent(data.map(({ date }) => new Date(date))))
                 .range([0, width])
 
               let y = scaleLinear()
-                .domain([0, 30000000])
+                .domain([
+                  min(data.map(({ downlinks }) => downlinks)),
+                  max(data.map(({ uplinks }) => uplinks))
+                ])
                 .range([height, 0])
 
               let uplinksLineGenerator = line()
-                .x(({ date }) => x(date))
+                .x(({ date }) => x(new Date(date)))
                 .y(({ uplinks }) => y(uplinks))
                 .curve(curveCardinal)
 
               let downlinksLineGenerator = line()
-                .x(({ date }) => x(date))
+                .x(({ date }) => x(new Date(date)))
                 .y(({ downlinks }) => y(downlinks))
                 .curve(curveCardinal)
 
@@ -313,9 +327,11 @@ class HowItWorks extends Component {
                   x={x}
                   y={y}
                   title="IoT global market (billions)"
+                  f="%b"
+                  numberTicks={3}
                 >
-                  <LinePresent d={uplinksLineGenerator(mockdata.data)} />
-                  <LineFuture d={downlinksLineGenerator(mockdata.data)} />
+                  <LineGreen d={uplinksLineGenerator(data)} />
+                  <LineRed d={downlinksLineGenerator(data)} />
                 </LineChart>
               )
             }}

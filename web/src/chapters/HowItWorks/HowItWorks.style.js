@@ -108,13 +108,11 @@ export let GatewayImage = styled.img`
   object-fit: cover;
 `
 
-export let LinePresent = styled.path`
+export let LineGreen = styled.path`
   fill: none;
-  stroke: ${variables.red};
+  stroke: ${variables.green};
   stroke-width: 5;
 `
-
-export let LineFuture = styled(LinePresent)`
-  stroke-dasharray: 10;
-  stroke-opacity: 0.4;
+export let LineRed = styled(LineGreen)`
+  stroke: ${variables.red};
 `
