@@ -1,8 +1,10 @@
+/* eslint-disable camelcase */
 import React, { Component } from 'react'
 import { StaticQuery, graphql } from 'gatsby'
-import { scaleLinear, scaleTime } from 'd3-scale'
+import { scaleLinear, scaleTime, scaleBand } from 'd3-scale'
 import { line, curveCardinal } from 'd3-shape'
 import { extent, min, max } from 'd3-array'
+import flattenDeep from 'lodash.flattendeep'
 
 import Layout from 'components/Layout'
 import ResponsiveChart from 'components/ResponsiveChart'
@@ -15,6 +17,7 @@ import gatewayImage from 'assets/the-things-gateway.jpg'
 
 import devices from 'data/devices.json'
 import mockdata from 'data/mockdata.json'
+import bandwidth from 'data/bandwidth.json'
 
 import {
   H2,
@@ -27,7 +30,12 @@ import {
   GatewayImage,
   Div,
   LineGreen,
-  LineRed
+  LineRed,
+  TheThingsUno,
+  ContextHeading,
+  Title,
+  TickLine,
+  TickText
 } from './HowItWorks.style'
 
 export let query = graphql`
@@ -120,7 +128,7 @@ class HowItWorks extends Component {
             data over LoRaWAN.
           </Deviceheading>
         </Layout.SubGrid>
-        <AlteredLayout alignLeft>
+        <AlteredLayout alignLeft isStatic>
           <div className="context">
             <p>
               <span className="highlight">
@@ -150,20 +158,12 @@ class HowItWorks extends Component {
             </ol>
           </div>
           <div>
-            <Label>Click a device:</Label>
-            <Form>
-              <RadioGroup
-                onChange={this.selectedDeviceChange}
-                selectedOption={this.state.selectedDevice}
-                options={this.deviceOptions}
-              />
-            </Form>
+            <ContextHeading>
+              <span>Example device:</span>
+              <span>The Things Uno</span>
+            </ContextHeading>
+            <TheThingsUno />
             <Table>
-              <thead>
-                <tr>
-                  <th colSpan="2">{devices[this.state.selectedDevice].name}</th>
-                </tr>
-              </thead>
               <tbody>
                 {devices[this.state.selectedDevice].table.map(arr => (
                   <tr key={arr[0]}>
@@ -226,17 +226,13 @@ class HowItWorks extends Component {
             </p>
           </div>
           <div>
+            <ContextHeading>
+              <span>Example gateway:</span>
+              <span>The Things Gateway</span>
+            </ContextHeading>
             <GatewayImage src={gatewayImage} alt="The Things Gateway" />
             <Div>
               <Table>
-                <thead>
-                  <tr>
-                    <th colSpan="2">
-                      <span>Example gateway:</span>
-                      <span>The Things Gateway</span>
-                    </th>
-                  </tr>
-                </thead>
                 <tbody>
                   <tr>
                     <td>Setup</td>
@@ -326,13 +322,72 @@ class HowItWorks extends Component {
                   margin={margin}
                   x={x}
                   y={y}
-                  title="IoT global market (billions)"
+                  title="Amount of uplinks/downlinks from the past three months"
                   f="%b"
                   numberTicks={3}
                 >
                   <LineGreen d={uplinksLineGenerator(data)} />
                   <LineRed d={downlinksLineGenerator(data)} />
                 </LineChart>
+              )
+            }}
+          </ResponsiveChart>
+        </Layout.SubGrid>
+        <Layout.SubGrid alignLeft>
+          <div className="context" />
+          <ResponsiveChart>
+            {dimensions => {
+              let margin = { top: 60, right: 60, bottom: 60, left: 60 }
+              let width = dimensions.width - margin.left - margin.right
+              let height = dimensions.height - margin.top - margin.bottom
+              let { bandwidths } = bandwidth
+              let spreadingFactors = bandwidths.map(({ spreading_factors }) =>
+                spreading_factors.map(
+                  ({ spreading_factor }) => spreading_factor
+                )
+              )
+
+              let x = scaleBand()
+                .domain(flattenDeep(spreadingFactors).sort((a, b) => a - b))
+                .range([0, width])
+                .paddingInner(10)
+
+              let y = scaleBand()
+                .domain(bandwidths.map(({ mhz }) => mhz))
+                .range([height, 0])
+                .paddingInner(10)
+
+              return (
+                <g transform={`translate(${margin.left}, ${margin.top})`}>
+                  <Title
+                    transform={`translate(${width / 2}, ${-margin.top / 3})`}
+                    textAnchor="middle"
+                  >
+                    pull up skurt
+                  </Title>
+
+                  <g transform={`translate(0, ${height})`} textAnchor="start">
+                    {x.domain().map((tick, i) => (
+                      <g key={tick} transform={`translate(${x.step() * i}, 0)`}>
+                        <TickLine />
+                        <TickText y="30">{tick}</TickText>
+                      </g>
+                    ))}
+                  </g>
+
+                  <g>
+                    {y.domain().map((tick, i) => (
+                      <g
+                        key={tick}
+                        transform={`translate(0, ${Math.round(y.step() * i)})`}
+                        textAnchor="end"
+                      >
+                        <TickLine />
+                        <TickText x="-15">{tick}</TickText>
+                      </g>
+                    ))}
+                  </g>
+                </g>
               )
             }}
           </ResponsiveChart>

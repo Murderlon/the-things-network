@@ -53,6 +53,7 @@
     "gatsby-transformer-json": "^2.1.6",
     "gatsby-transformer-remark": "^2.1.17",
     "intersection-observer": "^0.5.1",
+    "lodash.flattendeep": "^4.4.0",
     "lodash.range": "^3.2.0",
     "polished": "^2.3.1",
     "raf-schd": "^4.0.0",

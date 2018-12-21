@@ -4,6 +4,8 @@ import variables from 'styles/variables'
 import { Heading } from 'styles/base-components'
 import modularScale from 'styles/modular-scale'
 
+import TheThingsUnoSVG from 'assets/the-things-uno.svg'
+
 export let H2 = styled(Heading)`
   &::after {
     content: '3';
@@ -39,21 +41,6 @@ export let Table = styled.table`
   margin-top: ${variables.spacing.large};
   border-spacing: 0 0.5em;
 
-  thead th {
-    height: 5em;
-
-    span {
-      font-family: ${variables.monoTypo};
-      font-weight: normal;
-      font-size: ${modularScale(1)};
-      display: block;
-    }
-    span:nth-of-type(1) {
-      font-size: ${modularScale(0)};
-      font-family: inherit;
-      color: ${variables.purple};
-    }
-  }
   tr {
     padding: ${variables.spacing.small} 0;
   }
@@ -62,7 +49,7 @@ export let Table = styled.table`
     color: ${variables.purple};
     text-align: right;
     padding-right: ${variables.spacing.small};
-    min-width: 35%;
+    min-width: 50%;
   }
 
   td {
@@ -115,4 +102,41 @@ export let LineGreen = styled.path`
 `
 export let LineRed = styled(LineGreen)`
   stroke: ${variables.red};
+`
+
+export let TheThingsUno = styled(TheThingsUnoSVG)`
+  display: block;
+  margin: 0 auto;
+`
+
+export let ContextHeading = styled.h4`
+  text-align: center;
+
+  span {
+    font-family: ${variables.monoTypo};
+    font-weight: normal;
+    display: block;
+  }
+  span:nth-of-type(1) {
+    font-size: ${modularScale(-1)};
+    font-family: ${variables.mainTypo};
+    color: ${variables.purple};
+  }
+`
+
+export let Title = styled.text`
+  font-family: ${variables.monoTypo};
+  font-size: 1rem;
+  fill: ${variables.purple};
+`
+
+export let TickText = styled.text`
+  font-family: ${variables.monoTypo};
+  font-size: 0.8rem;
+  fill: ${variables.highlightBlue};
+`
+
+export let TickLine = styled.line`
+  stroke: ${variables.purple};
+  stroke-opacity: 0.4;
 `
