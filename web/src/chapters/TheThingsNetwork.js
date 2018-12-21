@@ -52,6 +52,7 @@ let ContentWrapper = styled(Layout.ParentGrid)`
   }
 
   .mapScrollText {
+    pointer-events: none;
     position: relative;
   }
 
@@ -241,16 +242,8 @@ export default class TheThingsNetwork extends Component {
                   <Spring
                     delay={1500}
                     immediate={currentStep < 3}
-                    from={
-                      currentStep < 3
-                        ? { opacity: 1, transform: 'scale(1)' }
-                        : { opacity: 0, transform: 'scale(1.1)' }
-                    }
-                    to={
-                      currentStep < 3
-                        ? { opacity: 0, transform: 'scale(1.1)' }
-                        : { opacity: 1, transform: 'scale(1)' }
-                    }
+                    from={currentStep < 3 ? { opacity: 1 } : { opacity: 0 }}
+                    to={currentStep < 3 ? { opacity: 0 } : { opacity: 1 }}
                   >
                     {props => (
                       <OrthographicWorld
