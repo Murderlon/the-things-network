@@ -125,7 +125,7 @@ class Protocols extends Component {
                 </h3>
               </Layout.SubGrid>
               <Skurt>
-                <ResponsiveChart classProp="scroll__graphic">
+                <ResponsiveChart classProp="scroll__graphic sticky">
                   {({ width, height }) => (
                     <ProtocolChart
                       width={width}

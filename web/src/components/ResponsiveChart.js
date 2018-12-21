@@ -35,9 +35,10 @@ export default class ResponsiveChart extends Component {
   })
 
   render() {
+    let { classProp } = this.props
     return (
       <div
-        className={`${this.props.classProp} sticky`}
+        className={classProp && classProp}
         ref={this.root}
         style={this.props.style}
       >
