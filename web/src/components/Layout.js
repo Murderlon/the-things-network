@@ -28,6 +28,7 @@ let ParentGrid = styled.div`
 `
 
 let SubGrid = styled.div`
+  margin-bottom: ${vars.spacing.huge};
   grid-column: 1 / 7;
   ${({ fullWidth }) => (fullWidth ? one : two)}
   ${({ alignLeft }) => (alignLeft ? left : right)}
@@ -78,7 +79,6 @@ let two = css`
 
     > div:not(.context) {
       height: 50vw;
-      position: sticky;
     }
   }
 
