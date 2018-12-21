@@ -26,5 +26,6 @@ TARGET_DOCUMENT_ROOT="$TARGET_ROOT/html"
 echo "Deploying front-end code to '$TARGET_HOST:$TARGET_DOCUMENT_ROOT' as '$TARGET_USER'..."
 rsync --archive --compress --delete --force --rsh "ssh -p22" public $TARGET_USER@$TARGET_HOST:/$TARGET_DOCUMENT_ROOT
 if [ $? -ne 0 ]; then "Error: Failed to deploy code"; exit 1; fi
+yarn serve
 echo "- ok"
 echo
