@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
 import React, { Component } from 'react'
 import { StaticQuery, graphql } from 'gatsby'
-import { scaleLinear, scaleTime, scaleBand } from 'd3-scale'
+import { scaleLinear, scaleTime, scaleBand, scaleSequential } from 'd3-scale'
 import { line, curveCardinal } from 'd3-shape'
 import { extent, min, max } from 'd3-array'
+import { interpolateLab } from 'd3-interpolate'
 import flattenDeep from 'lodash.flattendeep'
 
 import Layout from 'components/Layout'
@@ -35,7 +36,9 @@ import {
   ContextHeading,
   Title,
   TickLine,
-  TickText
+  TickText,
+  TickConditionalText,
+  AxisLabel
 } from './HowItWorks.style'
 
 export let query = graphql`
@@ -103,7 +106,8 @@ class HowItWorks extends Component {
   ]
   state = {
     selectedDevice: 'theThingsUno',
-    selectedUseCase: this.props.useCaseOptions[0].value
+    selectedUseCase: this.props.useCaseOptions[0].value,
+    dataRateSelection: ''
   }
 
   selectedDeviceChange = ({ target }) => {
@@ -115,6 +119,12 @@ class HowItWorks extends Component {
   selectedUseCaseChange = ({ target }) => {
     if (this.state.selectedStory !== target.value) {
       this.setState({ selectedUseCase: target.value })
+    }
+  }
+
+  handleDataRateClick = dataRateSelection => {
+    if (this.state.dataRateSelection !== dataRateSelection) {
+      this.setState({ dataRateSelection })
     }
   }
 
@@ -337,7 +347,12 @@ class HowItWorks extends Component {
           <div className="context" />
           <ResponsiveChart>
             {dimensions => {
-              let margin = { top: 60, right: 60, bottom: 60, left: 60 }
+              let margin = {
+                top: 60,
+                right: 60,
+                bottom: dimensions.height / 3,
+                left: 60
+              }
               let width = dimensions.width - margin.left - margin.right
               let height = dimensions.height - margin.top - margin.bottom
               let { bandwidths } = bandwidth
@@ -346,29 +361,46 @@ class HowItWorks extends Component {
                   ({ spreading_factor }) => spreading_factor
                 )
               )
+              let sfExtent = flattenDeep(
+                bandwidths.map(({ spreading_factors }) =>
+                  spreading_factors.map(
+                    ({ uplinks, downlinks }) => uplinks + downlinks
+                  )
+                )
+              )
+              let total = sfExtent.reduce((acc, value) => acc + value, 0)
+              let rectWidth = width / 8
 
               let x = scaleBand()
                 .domain(flattenDeep(spreadingFactors).sort((a, b) => a - b))
                 .range([0, width])
-                .paddingInner(10)
 
               let y = scaleBand()
                 .domain(bandwidths.map(({ mhz }) => mhz))
                 .range([height, 0])
-                .paddingInner(10)
+
+              let c = scaleSequential(
+                interpolateLab('#f3f0ff', '#845ef7')
+              ).domain(extent(sfExtent))
 
               return (
                 <g transform={`translate(${margin.left}, ${margin.top})`}>
-                  <Title
-                    transform={`translate(${width / 2}, ${-margin.top / 3})`}
-                    textAnchor="middle"
-                  >
-                    pull up skurt
-                  </Title>
+                  <AxisLabel x={0} y={10}>
+                    Bandwidth (kHz)
+                  </AxisLabel>
+
+                  <AxisLabel x={width} y={height + margin.top} textAnchor="end">
+                    Spreading factor
+                  </AxisLabel>
 
                   <g transform={`translate(0, ${height})`} textAnchor="start">
                     {x.domain().map((tick, i) => (
-                      <g key={tick} transform={`translate(${x.step() * i}, 0)`}>
+                      <g
+                        key={tick}
+                        transform={`translate(${Math.round(
+                          x.step() * i + width / 20
+                        )}, 0)`}
+                      >
                         <TickLine />
                         <TickText y="30">{tick}</TickText>
                       </g>
@@ -379,13 +411,62 @@ class HowItWorks extends Component {
                     {y.domain().map((tick, i) => (
                       <g
                         key={tick}
-                        transform={`translate(0, ${Math.round(y.step() * i)})`}
+                        transform={`translate(0, ${Math.round(
+                          y.step() * i + rectWidth
+                        )})`}
                         textAnchor="end"
                       >
                         <TickLine />
                         <TickText x="-15">{tick}</TickText>
                       </g>
                     ))}
+                  </g>
+                  {bandwidths.map((bw, index) => {
+                    let sorted = bw.spreading_factors.sort(
+                      (a, b) => a.spreading_factor - b.spreading_factor
+                    )
+                    return sorted.map(
+                      ({ spreading_factor, uplinks, downlinks }, i) => {
+                        return (
+                          <g
+                            onClick={() =>
+                              this.handleDataRateClick(
+                                `${bw.mhz}-${spreading_factor}`
+                              )
+                            }
+                            key={(spreading_factor += index)}
+                            transform={`translate(${Math.round(
+                              x.step() * i
+                            )}, ${Math.round(
+                              y.step() * index + rectWidth / 2
+                            )})`}
+                          >
+                            <rect
+                              width={rectWidth}
+                              height={rectWidth}
+                              fill={c(uplinks + downlinks)}
+                            />
+                            <TickConditionalText
+                              backgroundColor={c(uplinks + downlinks)}
+                              dy={rectWidth / 2 + 5}
+                              dx={rectWidth / 2}
+                              textAnchor="middle"
+                            >
+                              {Math.round(
+                                (100 / total) * (uplinks + downlinks)
+                              )}
+                              %
+                            </TickConditionalText>
+                          </g>
+                        )
+                      }
+                    )
+                  })}
+                  <g
+                    transform={`translate(0, ${(dimensions.height / 3) * 2 +
+                      20})`}
+                  >
+                    <rect width={width} height={10} fill="white" />
                   </g>
                 </g>
               )

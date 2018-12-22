@@ -3,6 +3,7 @@ import Layout from 'components/Layout'
 import variables from 'styles/variables'
 import { Heading } from 'styles/base-components'
 import modularScale from 'styles/modular-scale'
+import { readableColor } from 'polished'
 
 import TheThingsUnoSVG from 'assets/the-things-uno.svg'
 
@@ -139,4 +140,12 @@ export let TickText = styled.text`
 export let TickLine = styled.line`
   stroke: ${variables.purple};
   stroke-opacity: 0.4;
+`
+
+export let TickConditionalText = styled(TickText)`
+  fill: ${({ backgroundColor }) => readableColor(backgroundColor)};
+`
+
+export let AxisLabel = styled(TickText)`
+  fill: ${variables.purple};
 `
