@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import Layout from 'components/Layout'
+import { readableColor } from 'polished'
+
 import variables from 'styles/variables'
 import { Heading } from 'styles/base-components'
 import modularScale from 'styles/modular-scale'
-import { readableColor } from 'polished'
 
 import TheThingsUnoSVG from 'assets/the-things-uno.svg'
 
@@ -58,24 +58,6 @@ export let Table = styled.table`
   }
 `
 
-export let AlteredLayout = styled(Layout.SubGrid)`
-  margin-bottom: ${variables.spacing.huge};
-
-  .context {
-    justify-content: ${({ isStatic }) => (isStatic ? 'center' : 'flex-start')};
-  }
-
-  .context,
-  > div:not(.context) {
-    height: auto;
-    padding: ${`${variables.spacing.xxlarge} ${variables.spacing.medium}`};
-  }
-
-  > div:not(.context) {
-    background: ${({ isStatic }) => isStatic && variables.secondaryBlue};
-  }
-`
-
 export let Div = styled.div`
   margin: ${variables.spacing.medium} auto;
 
@@ -101,6 +83,7 @@ export let LineGreen = styled.path`
   stroke: ${variables.green};
   stroke-width: 5;
 `
+
 export let LineRed = styled(LineGreen)`
   stroke: ${variables.red};
 `
@@ -125,16 +108,10 @@ export let ContextHeading = styled.h4`
   }
 `
 
-export let Title = styled.text`
-  font-family: ${variables.monoTypo};
-  font-size: 1rem;
-  fill: ${variables.purple};
-`
-
 export let TickText = styled.text`
   font-family: ${variables.monoTypo};
   font-size: 0.8rem;
-  fill: ${variables.highlightBlue};
+  fill: ${({ fill = variables.highlightBlue }) => fill};
 `
 
 export let TickLine = styled.line`

@@ -13,7 +13,7 @@ let ParentGroup = styled.g`
   }
   .label {
     font-family: ${variables.monoTypo};
-    font-size: 1rem;
+    font-size: 0.8rem;
     fill: ${variables.purple};
   }
 

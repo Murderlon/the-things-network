@@ -1,34 +1,18 @@
 import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
-import styled from 'styled-components'
 import { scaleLinear, scaleTime } from 'd3-scale'
 import { line, curveCardinal } from 'd3-shape'
 import { extent } from 'd3-array'
+import { timeFormat } from 'd3-time-format'
+import { format } from 'd3-format'
 
-import Layout from '../components/Layout'
-import LineChart from '../components/LineChart'
-import ResponsiveChart from '../components/ResponsiveChart'
+import Layout from 'components/Layout'
+import LineChart from 'components/LineChart'
+import ResponsiveChart from 'components/ResponsiveChart'
 import Tracker from 'components/Tracker'
+import Block from 'components/Block'
 
-import { Heading } from '../styles/base-components'
-import variables from '../styles/variables'
-
-let H2 = styled(Heading)`
-  &::after {
-    content: '0';
-  }
-`
-
-let LinePresent = styled.path`
-  fill: none;
-  stroke: ${variables.red};
-  stroke-width: 5;
-`
-
-let LineFuture = styled(LinePresent)`
-  stroke-dasharray: 10;
-  stroke-opacity: 0.4;
-`
+import { LinePresent, LineFuture, H2 } from './Introduction.style'
 
 let IoTGlobalMarketChart = () => (
   <StaticQuery
@@ -49,7 +33,7 @@ let IoTGlobalMarketChart = () => (
       )
 
       return (
-        <ResponsiveChart>
+        <ResponsiveChart heightAsWidth>
           {dimensions => {
             let margin = { top: 60, right: 60, bottom: 60, left: 60 }
             let width = dimensions.width - margin.left - margin.right
@@ -76,6 +60,8 @@ let IoTGlobalMarketChart = () => (
                 margin={margin}
                 x={x}
                 y={y}
+                xTickFormat={tick => timeFormat('%y')(new Date(tick))}
+                yTickFormat={tick => format('.2s')(tick).replace(/G/, 'B')}
                 title="IoT global market (billions)"
               >
                 <LinePresent
@@ -108,8 +94,10 @@ let Introduction = () => (
       </h3>
     </Layout.SubGrid>
     <Layout.SubGrid>
-      <IoTGlobalMarketChart />
-      <div className="context">
+      <Block.Primary>
+        <IoTGlobalMarketChart />
+      </Block.Primary>
+      <Block.Secondary centerContent>
         <p>
           From refrigerators to parking spaces to houses, the{' '}
           <span className="highlight">
@@ -119,7 +107,7 @@ let Introduction = () => (
           , which will likely make the Internet of Things a multi-trillion
           dollar industry in the near future.
         </p>
-      </div>
+      </Block.Secondary>
     </Layout.SubGrid>
   </Layout.ParentGrid>
 )

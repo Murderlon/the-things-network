@@ -30,7 +30,10 @@ export default class ResponsiveChart extends Component {
     if (this.root.current) {
       let { width, height } = this.root.current.getBoundingClientRect()
 
-      this.setState({ width, height })
+      this.setState({
+        width,
+        height: this.props.heightAsWidth ? width : height
+      })
     }
   })
 

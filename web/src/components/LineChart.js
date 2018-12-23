@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { format } from 'd3-format'
-import { timeFormat } from 'd3-time-format'
 
 import variables from '../styles/variables'
 
@@ -22,8 +20,8 @@ let TickLine = styled.line`
   stroke-opacity: 0.4;
 `
 
-let getXTicks = (x, numberTicks) =>
-  numberTicks ? x.ticks(numberTicks) : x.ticks()
+let getTicks = (axis, numberTicks) =>
+  numberTicks ? axis.ticks(numberTicks) : axis.ticks()
 
 export default ({
   x,
@@ -32,8 +30,10 @@ export default ({
   height,
   margin,
   title,
-  f = '%Y',
-  numberTicks,
+  xTickFormat,
+  yTickFormat,
+  xNumberTicks,
+  yNumberTicks,
   children
 }) => (
   <g transform={`translate(${margin.left}, ${margin.top})`}>
@@ -45,19 +45,19 @@ export default ({
     </Title>
 
     <g transform={`translate(0, ${height})`} textAnchor="end">
-      {getXTicks(x, numberTicks).map(tick => (
+      {getTicks(x, xNumberTicks).map(tick => (
         <g key={tick} transform={`translate(${x(tick)}, 0)`}>
           <TickLine y2={-width} />
-          <TickText y="30">{timeFormat(f)(new Date(tick))}</TickText>
+          <TickText y="30">{xTickFormat(tick)}</TickText>
         </g>
       ))}
     </g>
 
     <g>
-      {y.ticks().map(tick => (
+      {getTicks(y, yNumberTicks).map(tick => (
         <g key={tick} transform={`translate(0, ${y(tick)})`} textAnchor="end">
           <TickLine x2={height} />
-          <TickText x="-15">{format('.2s')(tick).replace(/G/, 'B')}</TickText>
+          <TickText x="-15">{yTickFormat(tick)}</TickText>
         </g>
       ))}
     </g>

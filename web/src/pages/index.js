@@ -2,9 +2,9 @@ import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 import Helmet from 'react-helmet'
 
-import Introduction from '../chapters/Introduction'
-import Protocols from '../chapters/Protocols'
-import TheThingsNetwork from '../chapters/TheThingsNetwork'
+import Introduction from '../chapters/Introduction/Introduction'
+import Protocols from '../chapters/Protocols/Protocols'
+import TheThingsNetwork from '../chapters/TheThingsNetwork/TheThingsNetwork'
 import HowItWorks from '../chapters/HowItWorks/HowItWorks'
 
 import Header from '../components/Header'

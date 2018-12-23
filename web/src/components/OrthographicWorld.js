@@ -127,6 +127,7 @@ class OrthographicWorld extends Component {
   }
 
   renderCanvas = () => {
+    if (!this.canvasRef.current) return
     let { width, height } = this.state
     let { gateways } = this.props
     let context = this.canvasRef.current.getContext('2d')
