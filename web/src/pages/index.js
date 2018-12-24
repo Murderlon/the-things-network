@@ -1,28 +1,18 @@
 import React from 'react'
-import { createGlobalStyle } from 'styled-components'
 import Helmet from 'react-helmet'
 
-import Introduction from '../chapters/Introduction/Introduction'
-import Protocols from '../chapters/Protocols/Protocols'
-import TheThingsNetwork from '../chapters/TheThingsNetwork/TheThingsNetwork'
-import HowItWorks from '../chapters/HowItWorks/HowItWorks'
+import Introduction from 'chapters/Introduction/Introduction'
+import Protocols from 'chapters/Protocols/Protocols'
+import TheThingsNetwork from 'chapters/TheThingsNetwork/TheThingsNetwork'
+import HowItWorks from 'chapters/HowItWorks/HowItWorks'
 
-import Header from '../components/Header'
-import Layout from '../components/Layout'
-import TableOfContents from '../components/TableOfContents'
-import Quote from '../components/Quote'
+import GlobalStyle from 'components/GlobalStyle'
+import Header from 'components/Header'
+import Layout from 'components/Layout'
+import TableOfContents from 'components/TableOfContents'
+import Quote from 'components/Quote'
 
-import fonts from '../styles/global/fonts'
-import base from '../styles/global/base'
-import typography from '../styles/global/typography'
-
-import Logo from '../assets/ttn-stacked.svg'
-
-let GlobalStyle = createGlobalStyle`
-  ${fonts};
-  ${base};
-  ${typography};
-`
+import Logo from 'assets/ttn-stacked.svg'
 
 let index = () => (
   <>

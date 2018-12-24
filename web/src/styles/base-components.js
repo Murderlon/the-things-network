@@ -13,3 +13,23 @@ export let Heading = styled.h2`
     top: 0;
   }
 `
+
+export let Table = styled.table`
+  margin-top: ${variables.spacing.large};
+  border-spacing: 0 0.5em;
+
+  tr {
+    padding: ${variables.spacing.small} 0;
+  }
+
+  td:first-of-type {
+    color: ${variables.purple};
+    text-align: right;
+    padding-right: ${variables.spacing.small};
+    min-width: 50%;
+  }
+
+  td {
+    vertical-align: top;
+  }
+`
