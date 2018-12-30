@@ -7,7 +7,7 @@ import { timeFormat } from 'd3-time-format'
 import { format } from 'd3-format'
 
 import Layout from 'components/Layout'
-import LineChart from 'components/LineChart'
+import Axis from 'components/Axis'
 import ResponsiveChart from 'components/ResponsiveChart'
 import Tracker from 'components/Tracker'
 import Block from 'components/Block'
@@ -53,7 +53,7 @@ let IoTGlobalMarketChart = () => (
               .curve(curveCardinal)
 
             return (
-              <LineChart
+              <Axis
                 data={ioTJson.years}
                 width={width}
                 height={height}
@@ -75,7 +75,7 @@ let IoTGlobalMarketChart = () => (
                   x={x}
                   y={y}
                 />
-              </LineChart>
+              </Axis>
             )
           }}
         </ResponsiveChart>

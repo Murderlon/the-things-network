@@ -5,7 +5,7 @@ import variables from '../styles/variables'
 
 let Title = styled.text`
   font-family: ${variables.monoTypo};
-  font-size: 1rem;
+  font-size: 0.9rem;
   fill: ${variables.purple};
 `
 
@@ -13,6 +13,10 @@ let TickText = styled.text`
   font-family: ${variables.monoTypo};
   font-size: 0.8rem;
   fill: ${variables.highlightBlue};
+
+  tspan {
+    fill: ${variables.purple};
+  }
 `
 
 let TickLine = styled.line`
@@ -44,20 +48,22 @@ export default ({
       {title}
     </Title>
 
-    <g transform={`translate(0, ${height})`} textAnchor="end">
-      {getTicks(x, xNumberTicks).map(tick => (
+    <g transform={`translate(0, ${height})`} textAnchor="middle">
+      {getTicks(x, xNumberTicks).map((tick, i) => (
         <g key={tick} transform={`translate(${x(tick)}, 0)`}>
           <TickLine y2={-width} />
-          <TickText y="30">{xTickFormat(tick)}</TickText>
+          <TickText y="30" x="0">
+            {xTickFormat(tick, i)}
+          </TickText>
         </g>
       ))}
     </g>
 
     <g>
-      {getTicks(y, yNumberTicks).map(tick => (
+      {getTicks(y, yNumberTicks).map((tick, i) => (
         <g key={tick} transform={`translate(0, ${y(tick)})`} textAnchor="end">
           <TickLine x2={height} />
-          <TickText x="-15">{yTickFormat(tick)}</TickText>
+          <TickText x="-15">{yTickFormat(tick, i)}</TickText>
         </g>
       ))}
     </g>

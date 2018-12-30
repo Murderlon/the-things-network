@@ -36,7 +36,7 @@ let ParentGroup = styled.g`
   }
 `
 
-class LineChart extends Component {
+class Axis extends Component {
   render() {
     let { currentStep, data } = this.props
     let margin = { top: 60, right: 60, bottom: 60, left: 60 }
@@ -150,4 +150,4 @@ class LineChart extends Component {
   }
 }
 
-export default LineChart
+export default Axis

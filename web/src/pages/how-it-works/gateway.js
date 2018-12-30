@@ -14,7 +14,7 @@ import { readableColor } from 'polished'
 import GlobalStyle from 'components/GlobalStyle'
 import Layout from 'components/Layout'
 import ResponsiveChart from 'components/ResponsiveChart'
-import LineChart from 'components/LineChart'
+import Axis from 'components/Axis'
 import TextExpand from 'components/TextExpand'
 import Block from 'components/Block'
 
@@ -246,7 +246,7 @@ class gateway extends Component {
                       .curve(curveCardinal)
 
                     return (
-                      <LineChart
+                      <Axis
                         width={width}
                         height={height}
                         margin={margin}
@@ -259,7 +259,7 @@ class gateway extends Component {
                       >
                         <LineGreen d={uplinksLineGenerator(data)} />
                         <LineRed d={downlinksLineGenerator(data)} />
-                      </LineChart>
+                      </Axis>
                     )
                   }}
                 </ResponsiveChart>
