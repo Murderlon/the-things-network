@@ -39,7 +39,7 @@ let typography = css`
     font-size: ${modularScale(1)};
   }
   h4 {
-    font-size: ${modularScale(0)};
+    font-size: ${modularScale(1)};
   }
   a {
     text-decoration-skip: ink;
@@ -51,9 +51,6 @@ let typography = css`
     }
     h3 {
       font-size: ${modularScale(2)};
-    }
-    h4 {
-      font-size: ${modularScale(1)};
     }
   }
 `
