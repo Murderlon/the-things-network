@@ -41,14 +41,6 @@ let base = css`
   section {
     display: block;
   }
-  section {
-    grid-column: 1 / 7;
-    margin: ${variables.spacing.xxlarge} 0;
-
-    @media screen and (min-width: 60rem) {
-      grid-column: 1 / 13;
-    }
-  }
   ul,
   dl {
     list-style: none;

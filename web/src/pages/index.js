@@ -5,6 +5,7 @@ import Introduction from 'chapters/Introduction/Introduction'
 import Protocols from 'chapters/Protocols/Protocols'
 import TheThingsNetwork from 'chapters/TheThingsNetwork/TheThingsNetwork'
 import HowItWorks from 'chapters/HowItWorks/HowItWorks'
+import YouAreTheNetwork from 'chapters/YouAreTheNetwork/YouAreTheNetwork'
 
 import GlobalStyle from 'components/GlobalStyle'
 import Header from 'components/Header'
@@ -37,6 +38,7 @@ let index = () => (
       <Quote />
       <TheThingsNetwork />
       <HowItWorks />
+      <YouAreTheNetwork />
     </Layout.RootGrid>
   </>
 )

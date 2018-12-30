@@ -21,7 +21,12 @@ let RootGrid = styled.div`
 
 let ParentGrid = styled.div`
   ${basicGrid};
+  grid-column: 1 / 7;
+  margin: ${vars.spacing.xxlarge} 0;
 
+  @media screen and (min-width: 60rem) {
+    grid-column: 1 / 13;
+  }
   @media screen and (min-width: 100rem) {
     grid-column: 4 / 16;
   }
