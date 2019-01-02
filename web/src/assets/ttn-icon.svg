@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="94" height="30" viewBox="0 0 94 30">
+  <defs>
+    <radialGradient id="ttn-icon-a" r="170.015%" fx="50%" fy="50%" gradientTransform="matrix(0 1 -.74699 0 .873 0)">
+      <stop offset="0%" stop-color="#78FEE0"/>
+      <stop offset="100%" stop-color="#7BA7FD"/>
+    </radialGradient>
+    <radialGradient id="ttn-icon-b" r="170.015%" fx="50%" fy="50%" gradientTransform="matrix(0 1 -.85427 0 .927 0)">
+      <stop offset="0%" stop-color="#78FEE0"/>
+      <stop offset="100%" stop-color="#7BA7FD"/>
+    </radialGradient>
+  </defs>
+  <g fill="none">
+    <rect width="86" height="24" x="4" y="3" fill="url(#ttn-icon-a)" opacity=".5"/>
+    <rect width="94" height="30" fill="url(#ttn-icon-b)" opacity=".5"/>
+    <rect width="14" height="6" x="67" y="12" fill="#78FEE0"/>
+    <rect width="14" height="6" x="47" y="12" fill="#78FEE0"/>
+  </g>
+</svg>

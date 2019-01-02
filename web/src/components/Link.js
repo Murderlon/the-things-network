@@ -1,32 +1,56 @@
 import React from 'react'
 import { Link as GatsbyLink } from 'gatsby'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import variables from 'styles/variables'
 import Arrow from 'assets/arrow.svg'
 
+let primary = css`
+  background: ${variables.green};
+  color: ${variables.secondaryBlue};
+  padding: ${variables.spacing.small};
+`
+
 let Link = styled.a`
-  display: block;
+  display: inline-block;
   color: ${variables.green};
   text-transform: uppercase;
   font-family: ${variables.monoTypo};
-  margin-bottom: ${variables.spacing.small};
+  font-weight: 500;
+  padding: ${variables.spacing.small} 0;
+  ${({ asPrimary }) => (asPrimary ? primary : null)}
+  svg {
+    transform: ${({ iconLeft }) => (iconLeft ? 'scaleX(-1)' : null)};
+    margin-left: ${({ iconLeft }) =>
+      iconLeft ? null : variables.spacing.small};
+    margin-right: ${({ iconLeft }) =>
+      iconLeft ? variables.spacing.small : null};
+  }
 `
 
-export default ({ children, to }) => {
+export default ({ children, to, asPrimary, iconLeft }) => {
   let internal = /^\/(?!\/)/.test(to)
+  let IconWithChildren = iconLeft ? (
+    <>
+      <Arrow /> {children}
+    </>
+  ) : (
+    <>
+      {children} <Arrow />
+    </>
+  )
 
   // Use Gatsby Link for internal links, and <a> for others
   if (internal) {
     return (
-      <Link as={GatsbyLink} to={to}>
-        {children} <Arrow />
+      <Link iconLeft={iconLeft} as={GatsbyLink} asPrimary={asPrimary} to={to}>
+        {IconWithChildren}
       </Link>
     )
   }
   return (
-    <Link href={to}>
-      {children} <Arrow />
+    <Link href={to} asPrimary={asPrimary}>
+      {IconWithChildren}
     </Link>
   )
 }

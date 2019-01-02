@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54">
+  <defs>
+    <radialGradient id="device-icon-a" cy="62.304%" r="96.054%" fx="50%" fy="62.304%" gradientTransform="matrix(0 1 -.95837 0 1.097 .123)">
+      <stop offset="0%" stop-color="#78FEE0"/>
+      <stop offset="100%" stop-color="#7BA7FD"/>
+    </radialGradient>
+  </defs>
+  <g fill="none">
+    <polygon fill="url(#device-icon-a)" points="27 0 54 54 0 54" opacity=".5"/>
+    <polygon fill="#78FEE0" points="27 8 48.5 51 5.5 51"/>
+  </g>
+</svg>

@@ -17,6 +17,8 @@ import ResponsiveChart from 'components/ResponsiveChart'
 import Axis from 'components/Axis'
 import TextExpand from 'components/TextExpand'
 import Block from 'components/Block'
+import TopicNavigation from 'components/TopicNavigation'
+import Link from 'components/Link'
 
 import { Table, Heading } from 'styles/base-components'
 import variables from 'styles/variables'
@@ -30,6 +32,12 @@ let GatewayHeading = styled(Heading)`
   &::after {
     content: '.02';
     left: -4rem;
+  }
+`
+
+let H2 = styled(Heading)`
+  &::after {
+    content: '3';
   }
 `
 
@@ -90,11 +98,21 @@ let TickLine = styled.line`
 `
 
 let TickConditionalText = styled(TickText)`
+  font-size: 1em;
   fill: ${({ backgroundColor }) => readableColor(backgroundColor)};
 `
 
 let AxisLabel = styled(TickText)`
   fill: ${variables.purple};
+`
+
+let Paragraph = styled.p`
+  margin: 0 ${variables.spacing.xlarge};
+  margin-top: ${variables.spacing.xxlarge};
+`
+
+let CenteredParagraph = styled.p`
+  text-align: center;
 `
 
 class gateway extends Component {
@@ -119,6 +137,12 @@ class gateway extends Component {
         <Layout.RootGrid>
           <Layout.ParentGrid as="section">
             <Layout.SubGrid fullWidth>
+              <p>
+                <Link to="/#how-it-works" iconLeft>
+                  back to home
+                </Link>
+              </p>
+              <H2>How it works</H2>
               <GatewayHeading as="h3">
                 Distributed and community driven gateways, powered by
                 Ethernet/WiFi, provide up to 10km of LoRaWAN coverage.
@@ -277,6 +301,11 @@ class gateway extends Component {
                 </h4>
               </Block.Secondary>
               <Block.Primary alignLeft>
+                <Paragraph>
+                  Percentage of data rate settings usage between bandwidth and
+                  spreading factor on the devices of The Things Network’s users
+                  from the past three months
+                </Paragraph>
                 <ResponsiveChart heightAsWidth>
                   {dimensions => {
                     let margin = {
@@ -344,7 +373,7 @@ class gateway extends Component {
                               )}, 0)`}
                             >
                               <TickLine />
-                              <TickText y="30">{tick}</TickText>
+                              <TickText y="40">{tick}</TickText>
                             </g>
                           ))}
                         </g>
@@ -448,6 +477,14 @@ class gateway extends Component {
                   }}
                 </ResponsiveChart>
               </Block.Primary>
+            </Layout.SubGrid>
+            <Layout.SubGrid fullWidth>
+              <TopicNavigation />
+              <CenteredParagraph>
+                <Link to="/#how-it-works" iconLeft>
+                  back to home
+                </Link>
+              </CenteredParagraph>
             </Layout.SubGrid>
           </Layout.ParentGrid>
         </Layout.RootGrid>

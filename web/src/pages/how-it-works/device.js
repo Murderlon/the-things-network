@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import GlobalStyle from 'components/GlobalStyle'
 import Layout from 'components/Layout'
 import Block from 'components/Block'
+import TopicNavigation from 'components/TopicNavigation'
+import Link from 'components/Link'
 
 import variables from 'styles/variables'
 import modularScale from 'styles/modular-scale'
@@ -15,13 +17,6 @@ import TheThingsUnoSVG from 'assets/the-things-uno.svg'
 let TheThingsUno = styled(TheThingsUnoSVG)`
   display: block;
   margin: 0 auto;
-`
-
-let Deviceheading = styled(Heading)`
-  &::after {
-    content: '.01';
-    left: -4rem;
-  }
 `
 
 let ContextHeading = styled.h4`
@@ -38,16 +33,32 @@ let ContextHeading = styled.h4`
     color: ${variables.purple};
   }
 `
+let H2 = styled(Heading)`
+  &::after {
+    content: '3';
+  }
+`
+
+let CenteredParagraph = styled.p`
+  text-align: center;
+`
+
 export default () => (
   <>
     <GlobalStyle />
     <Layout.RootGrid>
       <Layout.ParentGrid>
         <Layout.SubGrid fullWidth>
-          <Deviceheading as="h3">
+          <p>
+            <Link to="/#how-it-works" iconLeft>
+              back to home
+            </Link>
+          </p>
+          <H2>How it works</H2>
+          <h3>
             Registered devices to your TTN account intermittently send encrypted
             data over LoRaWAN.
-          </Deviceheading>
+          </h3>
         </Layout.SubGrid>
         <Layout.SubGrid>
           <Block.Secondary alignLeft>
@@ -104,6 +115,14 @@ export default () => (
             </p>
           </Block.Secondary>
           <Block.Primary alignLeft />
+        </Layout.SubGrid>
+        <Layout.SubGrid fullWidth>
+          <TopicNavigation />
+          <CenteredParagraph>
+            <Link to="/#how-it-works" iconLeft>
+              back to home
+            </Link>
+          </CenteredParagraph>
         </Layout.SubGrid>
       </Layout.ParentGrid>
     </Layout.RootGrid>

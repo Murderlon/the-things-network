@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="52" height="64" viewBox="0 0 52 64">
+  <defs>
+    <radialGradient id="app-icon-a" r="117.597%" fx="50%" fy="50%" gradientTransform="matrix(0 .96296 -1.44005 0 1.22 .019)">
+      <stop offset="0%" stop-color="#78FEE0"/>
+      <stop offset="100%" stop-color="#7BA7FD"/>
+    </radialGradient>
+    <radialGradient id="app-icon-b" r="118.389%" fx="50%" fy="50%" gradientTransform="matrix(0 .95652 -1.44005 0 1.22 .022)">
+      <stop offset="0%" stop-color="#78FEE0"/>
+      <stop offset="100%" stop-color="#7BA7FD"/>
+    </radialGradient>
+  </defs>
+  <g fill="none">
+    <rect width="52" height="54" fill="url(#app-icon-a)" opacity=".5"/>
+    <rect width="44" height="46" x="4" y="4" fill="url(#app-icon-b)" opacity=".5"/>
+    <rect width="10" height="10" x="20.5" y="54" fill="#78FEE0"/>
+  </g>
+</svg>
