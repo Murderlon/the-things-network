@@ -94,7 +94,10 @@ class OrthographicWorld extends Component {
     ) {
       this.start = Date.now()
       this.rotateInterval = setInterval(schedule(() => this.rotate()))
-    } else {
+    } else if (
+      (this.rotateInterval && !this.props.isVisible) ||
+      this.state.isDragging
+    ) {
       clearInterval(this.rotateInterval)
     }
   }
