@@ -59,18 +59,28 @@ export default () => (
       <BlockLeft as="p">
         In collaboration with:
         <span>
-          <CFLogo />
+          <a href="http://cleverfranke.com/">
+            <CFLogo />
+          </a>
         </span>
         <span>
-          <TTNLogo />
+          <a href="http://thethingsnetwork.org/">
+            <TTNLogo />
+          </a>
         </span>
       </BlockLeft>
 
       <BlockCenter as="p">
-        CMD graduation project by Merlijn Vos (@Murderlon)
+        <a href="https://github.com/Murderlon/the-things-network">
+          CMD graduation project by Merlijn Vos (@Murderlon)
+        </a>
       </BlockCenter>
 
-      <BlockRight as="p">© Merlijn Vos, all rights reserved</BlockRight>
+      <BlockRight as="p">
+      <a href="https://github.com/Murderlon/the-things-network/blob/master/LICENSE">
+        © GNU General Public License v3.0
+      </a>
+      </BlockRight>
     </Footer>
   </Background>
 )

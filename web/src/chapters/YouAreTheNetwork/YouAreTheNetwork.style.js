@@ -82,6 +82,13 @@ export let Footer = styled(Layout.ParentGrid)`
 
   p {
     color: rgb(185, 185, 185);
+    a {
+      transition: 100ms;
+
+      &:hover {
+        color: white;
+      }
+    }
 
     span {
       margin: ${variables.spacing.small} 0;
