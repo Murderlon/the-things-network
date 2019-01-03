@@ -47,10 +47,15 @@ let center = css`
   }
 `
 
+let padding = css`
+  padding: 6.25% 12.5%;
+`
+
 let Primary = styled.div`
   ${({ alignLeft }) => (alignLeft ? alignPrimaryLeft : alignPrimaryRight)}
   background: ${variables.primaryBlue};
   ${({ asSecondary }) => (asSecondary ? secondaryStyles : null)};
+  ${({ withPadding }) => (withPadding ? padding : null)};
 `
 
 let Secondary = styled.div`
