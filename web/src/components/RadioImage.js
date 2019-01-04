@@ -38,7 +38,7 @@ let Radio = styled('input')`
 `
 
 /** An fieldset with multiple radio buttons with a callback to change state */
-class RadioGroup extends Component {
+class RadioImage extends Component {
   randomId = randomHash()
 
   render() {
@@ -68,4 +68,4 @@ class RadioGroup extends Component {
   }
 }
 
-export default RadioGroup
+export default RadioImage

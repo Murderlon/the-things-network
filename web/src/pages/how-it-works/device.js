@@ -6,7 +6,7 @@ import Layout from 'components/Layout'
 import Block from 'components/Block'
 import TopicNavigation from 'components/TopicNavigation'
 import Link from 'components/Link'
-import RadioGroup from 'components/RadioGroup'
+import RadioImage from 'components/RadioImage'
 
 import { Table, Heading } from 'styles/base-components'
 
@@ -141,7 +141,7 @@ export default class Device extends Component {
               <Block.Primary alignLeft withPadding>
                 <Label>Example devices:</Label>
                 <Form>
-                  <RadioGroup
+                  <RadioImage
                     onChange={this.selectedDeviceChange}
                     selectedOption={this.state.selectedDevice}
                     options={[
@@ -187,7 +187,7 @@ export default class Device extends Component {
               <Block.Primary alignLeft withPadding>
                 <Label>Example use cases:</Label>
                 <Form>
-                  <RadioGroup
+                  <RadioImage
                     onChange={this.selectedUseCaseChange}
                     selectedOption={this.state.selectedUseCase}
                     options={useCases}
