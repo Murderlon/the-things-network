@@ -16,7 +16,8 @@ import {
   ContentWrapper,
   H2,
   LayoutWrapper,
-  MapGraphic
+  MapGraphic,
+  Legend
 } from './TheThingsNetwork.style'
 
 export default () => (
@@ -99,6 +100,11 @@ class TheThingsNetwork extends Component {
         <H2>The Things Network</H2>
         <LayoutWrapper>
           <MapGraphic className="mapGraphic">
+            <Legend>
+              <p>
+                <span /> LoRaWAN gateway (up to 10km range)
+              </p>
+            </Legend>
             <Spring
               delay={1000}
               from={{ opacity: currentStep < 3 ? 0 : 1 }}
@@ -172,7 +178,7 @@ class TheThingsNetwork extends Component {
             >
               {props => (
                 <OrthographicWorld
-                  isVisible={props.opacity === 1}
+                  isVisible={props.opacity >= 0.9}
                   style={props}
                 />
               )}

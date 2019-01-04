@@ -74,3 +74,27 @@ export let LayoutWrapper = styled.div`
 export let MapGraphic = styled.div`
   position: relative;
 `
+
+export let Legend = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: ${variables.secondaryBlue};
+  margin: ${variables.spacing.large};
+  padding: ${variables.spacing.small};
+  display: flex;
+  align-items: center;
+  max-width: 12em;
+
+  p {
+    margin: 0;
+  }
+
+  span {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    background: ${variables.green};
+  }
+`
