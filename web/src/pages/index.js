@@ -28,8 +28,12 @@ let index = () => (
           <Logo />
         </h1>
         <p>
-          The story of a free and open Internet of Things network, powered by a
-          new technology, and created by the people.
+          An interactive experience. Learn about{' '}
+          <span className="highlight">LoRaWAN</span>, a new protocol for the
+          Internet of Things and how{' '}
+          <span className="highlight">The Things Network</span>, a
+          community-powered and distributed network,{' '}
+          <span className="highlight">can help you leverage it.</span>
         </p>
       </Header>
       <TableOfContents />

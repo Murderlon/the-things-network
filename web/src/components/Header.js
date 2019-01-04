@@ -75,7 +75,6 @@ export default styled.header`
     p {
       margin: 0;
       grid-column: 10 / 13;
-      font-size: ${modularScale(2)};
     }
   }
 `
