@@ -2,6 +2,11 @@ import React, { Component, createRef } from 'react'
 import styled from 'styled-components'
 import schedule from 'raf-schd'
 
+let Root = styled.div`
+  width: 100%;
+  height: 100%;
+`
+
 let SVG = styled('svg')`
   width: auto;
   height: auto;
@@ -40,7 +45,7 @@ export default class ResponsiveChart extends Component {
   render() {
     let { classProp } = this.props
     return (
-      <div
+      <Root
         className={classProp && classProp}
         ref={this.root}
         style={this.props.style}
@@ -48,7 +53,7 @@ export default class ResponsiveChart extends Component {
         <SVG width={this.state.width} height={this.state.height}>
           {this.props.children(this.state)}
         </SVG>
-      </div>
+      </Root>
     )
   }
 }

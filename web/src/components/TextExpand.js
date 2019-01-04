@@ -3,31 +3,51 @@ import styled from 'styled-components'
 
 import variables from 'styles/variables'
 
-let Button = styled.button`
-  color: ${variables.green};
+import ExpandIcon from 'assets/expand-icon.svg'
+
+let Wrapper = styled.div`
+  margin: ${variables.spacing.small} 0;
+  width: 100%;
 `
 
-let ConditionalParagraph = styled.p`
-  display: ${({ isVisisble }) => (isVisisble ? 'block' : 'none')};
+let Button = styled.button`
+  color: ${variables.green};
+  margin: 0;
+  padding: 0;
+
+  svg {
+    width: 0.7em;
+    height: auto;
+    margin-left: ${variables.spacing.small};
+    transition: transform 200ms;
+    transition-timing-function: ${variables.timingFunction}};
+
+    &[aria-expanded='true'] {
+      svg {
+        transform: rotate(180deg);
+      }
+    }
+  }
 `
 
 export default class TextExpand extends Component {
-  state = { isVisisble: false }
+  state = { toggle: false }
 
   render() {
     let { buttonText, children } = this.props
+    let { toggle } = this.state
     return (
-      <div>
+      <Wrapper>
         <Button
           type="button"
-          onClick={() => this.setState({ isVisisble: !this.state.isVisisble })}
+          onClick={() => this.setState({ toggle: !toggle })}
+          aria-haspopup="true"
+          aria-expanded={toggle}
         >
-          {buttonText}
+          {buttonText} <ExpandIcon />
         </Button>
-        <ConditionalParagraph isVisisble={this.state.isVisisble}>
-          {children}
-        </ConditionalParagraph>
-      </div>
+        <div style={{ display: toggle ? 'block' : 'none' }}>{children}</div>
+      </Wrapper>
     )
   }
 }

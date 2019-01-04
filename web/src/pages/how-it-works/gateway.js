@@ -1,15 +1,11 @@
 /* eslint-disable camelcase */
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { scaleLinear, scaleTime, scaleBand, scaleSequential } from 'd3-scale'
+import { scaleLinear, scaleTime } from 'd3-scale'
 import { line, curveCardinal } from 'd3-shape'
 import { extent, min, max } from 'd3-array'
-import { interpolateLab } from 'd3-interpolate'
-import flattenDeep from 'lodash.flattendeep'
-import { Spring } from 'react-spring'
 import { timeFormat } from 'd3-time-format'
 import { format } from 'd3-format'
-import { readableColor } from 'polished'
 
 import GlobalStyle from 'components/GlobalStyle'
 import Layout from 'components/Layout'
@@ -19,6 +15,7 @@ import TextExpand from 'components/TextExpand'
 import Block from 'components/Block'
 import TopicNavigation from 'components/TopicNavigation'
 import Link from 'components/Link'
+import HeatMap from 'components/data-visualisation/HeatMap'
 
 import { Table, Heading } from 'styles/base-components'
 import variables from 'styles/variables'
@@ -26,7 +23,6 @@ import modularScale from 'styles/modular-scale'
 import gatewayImage from 'assets/the-things-gateway.jpg'
 
 import mockdata from 'data/mockdata.json'
-import bandwidth from 'data/bandwidth.json'
 
 let GatewayHeading = styled(Heading)`
   &::after {
@@ -86,49 +82,17 @@ let ContextHeading = styled.h4`
   }
 `
 
-let TickText = styled.text`
-  font-family: ${variables.monoTypo};
-  font-size: 0.8rem;
-  fill: ${({ fill = variables.highlightBlue }) => fill};
-`
-
-let TickLine = styled.line`
-  stroke: ${variables.purple};
-  stroke-opacity: 0.4;
-`
-
-let TickConditionalText = styled(TickText)`
-  font-size: 1em;
-  fill: ${({ backgroundColor }) => readableColor(backgroundColor)};
-`
-
-let AxisLabel = styled(TickText)`
-  fill: ${variables.purple};
-`
-
-let Paragraph = styled.p`
-  margin: 0 ${variables.spacing.xlarge};
-  margin-top: ${variables.spacing.xxlarge};
-`
-
 let CenteredParagraph = styled.p`
   text-align: center;
 `
 
-class gateway extends Component {
-  state = {
-    dataRateExponent: 3,
-    previousDataRateExponent: 0
-  }
+let Controls = styled.div`
+  text-align: center;
+  margin-top: ${variables.spacing.medium};
+`
 
-  handleDataRateClick = dataRateExponent => {
-    if (this.state.dataRateExponent !== dataRateExponent) {
-      this.setState({
-        dataRateExponent,
-        previousDataRateExponent: this.state.dataRateExponent
-      })
-    }
-  }
+class gateway extends Component {
+  state = { isScaleSpeed: true }
 
   render() {
     return (
@@ -137,11 +101,11 @@ class gateway extends Component {
         <Layout.RootGrid>
           <Layout.ParentGrid as="section">
             <Layout.SubGrid fullWidth>
-              <p>
+              <CenteredParagraph>
                 <Link to="/#how-it-works" iconLeft>
                   back to home
                 </Link>
-              </p>
+              </CenteredParagraph>
               <H2>How it works</H2>
               <GatewayHeading as="h3">
                 Distributed and community driven gateways, powered by
@@ -277,7 +241,7 @@ class gateway extends Component {
                         x={x}
                         y={y}
                         title="Amount of uplinks/downlinks from the past three months"
-                        xTickFormat={tick => timeFormat('%b')(new Date(tick))}
+                        xTickFormat={tick => timeFormat('%b')(tick)}
                         yTickFormat={tick => format('.2s')(tick)}
                         xNumberTicks={3}
                       >
@@ -290,192 +254,58 @@ class gateway extends Component {
               </Block.Primary>
             </Layout.SubGrid>
             <Layout.SubGrid>
-              <Block.Secondary alignLeft centerContent>
-                <h4>
-                  There are three knobs you can turn: transmission power,
-                  bandwidth and spreading factor.
-                  <TextExpand buttonText="What is the transmission power?">
-                    If you lower the transmission power, you’ll save battery,
-                    but the range of the signal will be shorter.
-                  </TextExpand>
-                </h4>
+              <Block.Secondary alignLeft>
+                <p>
+                  <span className="highlight">
+                    You can setup your device to be more reliable or faster.
+                  </span>{' '}
+                  There are three knobs you can turn, with options depending on
+                  where you are located in the world, to influence how you send
+                  data:
+                </p>
+                <TextExpand buttonText="Transmission power">
+                  If you lower the transmission power, you’ll save battery, but
+                  the range of the signal will be shorter.
+                </TextExpand>
+                <TextExpand buttonText="Spreading factor">
+                  <p>
+                    The spreading factors are - in short - the duration of the
+                    signal through the air. LoRa operates with spread factors
+                    from 7 to 12. SF7 is the shortest time on air, SF12 will be
+                    the longest
+                  </p>
+                  <p>
+                    Making the spreading factor 1 step lower (from SF10 to SF9)
+                    allows you to send 2x more bytes in the same time.
+                  </p>
+                  <p>
+                    Lowering the spreading factor makes it more difficult for
+                    the gateway to receive a transmission, as it will be more
+                    sensitive to noise.
+                  </p>
+                </TextExpand>
+                <TextExpand buttonText="Bandwidth">
+                  <p>
+                    LoRaWAN can use channels with a bandwidth of either 125 kHz,
+                    250 kHz or 500 kHz
+                  </p>
+                  <p>
+                    Making the bandwidth 2x wider (from BW125 to BW250) allows
+                    you to send 2x more bytes in the same time.
+                  </p>
+                </TextExpand>
               </Block.Secondary>
               <Block.Primary alignLeft>
-                <Paragraph>
-                  Percentage of data rate settings usage between bandwidth and
-                  spreading factor on the devices of The Things Network’s users
-                  from the past three months
-                </Paragraph>
-                <ResponsiveChart heightAsWidth>
-                  {dimensions => {
-                    let margin = {
-                      top: 60,
-                      right: 60,
-                      bottom: dimensions.height / 2,
-                      left: 60
+                <Controls>
+                  <button
+                    onClick={() =>
+                      this.setState({ isScaleSpeed: !this.state.isScaleSpeed })
                     }
-                    let width = dimensions.width - margin.left - margin.right
-                    let height = dimensions.width - margin.top - margin.bottom
-                    let { bandwidths } = bandwidth
-                    let spreadingFactors = bandwidths.map(
-                      ({ spreading_factors }) =>
-                        spreading_factors.map(
-                          ({ spreading_factor }) => spreading_factor
-                        )
-                    )
-                    let sfExtent = flattenDeep(
-                      bandwidths.map(({ spreading_factors }) =>
-                        spreading_factors.map(
-                          ({ uplinks, downlinks }) => uplinks + downlinks
-                        )
-                      )
-                    )
-                    let total = sfExtent.reduce((acc, value) => acc + value, 0)
-                    let rectWidth = width / 8
-
-                    let x = scaleBand()
-                      .domain(
-                        flattenDeep(spreadingFactors).sort((a, b) => a - b)
-                      )
-                      .range([0, width])
-
-                    let y = scaleBand()
-                      .domain(bandwidths.map(({ mhz }) => mhz))
-                      .range([height, 0])
-
-                    let c = scaleSequential(
-                      interpolateLab('#f3f0ff', '#845ef7')
-                    ).domain(extent(sfExtent))
-
-                    return (
-                      <g transform={`translate(${margin.left}, ${margin.top})`}>
-                        <AxisLabel x={0} y={10}>
-                          Bandwidth (kHz)
-                        </AxisLabel>
-
-                        <AxisLabel
-                          x={width}
-                          y={height + margin.top}
-                          textAnchor="end"
-                        >
-                          Spreading factor
-                        </AxisLabel>
-
-                        <g
-                          transform={`translate(0, ${height})`}
-                          textAnchor="start"
-                        >
-                          {x.domain().map((tick, i) => (
-                            <g
-                              key={tick}
-                              transform={`translate(${Math.round(
-                                x.step() * i + width / 20
-                              )}, 0)`}
-                            >
-                              <TickLine />
-                              <TickText y="40">{tick}</TickText>
-                            </g>
-                          ))}
-                        </g>
-
-                        <g>
-                          {y.domain().map((tick, i) => (
-                            <g
-                              key={tick}
-                              transform={`translate(0, ${Math.round(
-                                y.step() * i + rectWidth
-                              )})`}
-                              textAnchor="end"
-                            >
-                              <TickLine />
-                              <TickText x="-15">{tick}</TickText>
-                            </g>
-                          ))}
-                        </g>
-                        {bandwidths.map((bw, BWIndex) => {
-                          let sorted = bw.spreading_factors.sort(
-                            (a, b) => a.spreading_factor - b.spreading_factor
-                          )
-                          return sorted.map(
-                            (
-                              { spreading_factor, uplinks, downlinks },
-                              SFIndex
-                            ) => {
-                              return (
-                                <g
-                                  onClick={() =>
-                                    this.handleDataRateClick(
-                                      BWIndex + 6 - SFIndex
-                                    )
-                                  }
-                                  key={(spreading_factor += BWIndex)}
-                                  transform={`translate(${Math.round(
-                                    x.step() * SFIndex
-                                  )}, ${Math.round(
-                                    y.step() * BWIndex + rectWidth / 2
-                                  )})`}
-                                >
-                                  <rect
-                                    width={rectWidth}
-                                    height={rectWidth}
-                                    fill={c(uplinks + downlinks)}
-                                  />
-                                  <TickConditionalText
-                                    backgroundColor={c(uplinks + downlinks)}
-                                    dy={rectWidth / 2 + 5}
-                                    dx={rectWidth / 2}
-                                    textAnchor="middle"
-                                  >
-                                    {Math.round(
-                                      (100 / total) * (uplinks + downlinks)
-                                    )}
-                                    %
-                                  </TickConditionalText>
-                                </g>
-                              )
-                            }
-                          )
-                        })}
-                        <g
-                          transform={`translate(0, ${dimensions.height / 2 +
-                            40})`}
-                        >
-                          <TickText fill="white" x={0} y={0}>
-                            Relative data rate speed
-                          </TickText>
-                          <rect
-                            height={10}
-                            width={width}
-                            fill="#b197fc"
-                            fillOpacity={0.3}
-                            y={10}
-                          />
-                          <Spring
-                            from={{
-                              width:
-                                (width / Math.pow(2, 8)) *
-                                Math.pow(2, this.state.previousDataRateExponent)
-                            }}
-                            to={{
-                              width:
-                                (width / Math.pow(2, 8)) *
-                                Math.pow(2, this.state.dataRateExponent)
-                            }}
-                          >
-                            {props => (
-                              <rect
-                                {...props}
-                                height={10}
-                                y={10}
-                                fill="#b197fc"
-                              />
-                            )}
-                          </Spring>
-                        </g>
-                      </g>
-                    )
-                  }}
-                </ResponsiveChart>
+                  >
+                    switch
+                  </button>
+                </Controls>
+                <HeatMap isScaleSpeed={this.state.isScaleSpeed} />
               </Block.Primary>
             </Layout.SubGrid>
             <Layout.SubGrid fullWidth>

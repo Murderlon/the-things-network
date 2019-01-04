@@ -52,8 +52,9 @@ let padding = css`
 `
 
 let Primary = styled.div`
-  ${({ alignLeft }) => (alignLeft ? alignPrimaryLeft : alignPrimaryRight)}
   background: ${variables.primaryBlue};
+  align-self: start;
+  ${({ alignLeft }) => (alignLeft ? alignPrimaryLeft : alignPrimaryRight)}
   ${({ asSecondary }) => (asSecondary ? secondaryStyles : null)};
   ${({ withPadding }) => (withPadding ? padding : null)};
 `
