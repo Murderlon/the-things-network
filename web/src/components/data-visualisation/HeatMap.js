@@ -21,7 +21,6 @@ let TickText = styled.text`
 `
 
 let TickConditionalText = styled(TickText)`
-  font-size: 1em;
   fill: ${({ backgroundColor }) => readableColor(backgroundColor)};
 `
 
@@ -38,10 +37,10 @@ let total = sfExtent.reduce((acc, value) => acc + value, 0)
 
 export default ({ isScaleSpeed }) => {
   return (
-    <ResponsiveChart heightAsWidth>
+    <ResponsiveChart heightAsHalfWidth>
       {dimensions => {
         let margin = {
-          top: 60,
+          top: 80,
           right: 60,
           bottom: 60,
           left: 60

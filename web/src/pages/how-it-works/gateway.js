@@ -15,6 +15,7 @@ import TextExpand from 'components/TextExpand'
 import Block from 'components/Block'
 import TopicNavigation from 'components/TopicNavigation'
 import Link from 'components/Link'
+import RadioGroup from 'components/RadioGroup'
 import HeatMap from 'components/data-visualisation/HeatMap'
 
 import { Table, Heading } from 'styles/base-components'
@@ -86,15 +87,17 @@ let CenteredParagraph = styled.p`
   text-align: center;
 `
 
-let Controls = styled.div`
-  text-align: center;
-  margin-top: ${variables.spacing.medium};
-`
-
 class gateway extends Component {
-  state = { isScaleSpeed: true }
+  state = { selectedScale: 'speed' }
+
+  handleSelectedScale = ({ target }) => {
+    if (this.state.selectedScale !== target.value) {
+      this.setState({ selectedScale: target.value })
+    }
+  }
 
   render() {
+    let { selectedScale } = this.state
     return (
       <>
         <GlobalStyle />
@@ -257,17 +260,23 @@ class gateway extends Component {
               <Block.Secondary alignLeft>
                 <p>
                   <span className="highlight">
-                    You can setup your device to be more reliable or faster.
+                    You can setup your device to be more reliable or faster
                   </span>{' '}
-                  There are three knobs you can turn, with options depending on
-                  where you are located in the world, to influence how you send
-                  data:
+                  and there are three knobs you can turn to influence how you
+                  send data.
                 </p>
-                <TextExpand buttonText="Transmission power">
+                <p>
+                  <span className="highlight">
+                    The bandwith is determined by the region
+                  </span>{' '}
+                  but setting the spreading factor makes it possible to still
+                  achieve all possible data rates.
+                </p>
+                <TextExpand buttonText="1. Transmission power">
                   If you lower the transmission power, you’ll save battery, but
                   the range of the signal will be shorter.
                 </TextExpand>
-                <TextExpand buttonText="Spreading factor">
+                <TextExpand buttonText="2. Spreading factor">
                   <p>
                     The spreading factors are - in short - the duration of the
                     signal through the air. LoRa operates with spread factors
@@ -284,7 +293,7 @@ class gateway extends Component {
                     sensitive to noise.
                   </p>
                 </TextExpand>
-                <TextExpand buttonText="Bandwidth">
+                <TextExpand buttonText="3. Bandwidth">
                   <p>
                     LoRaWAN can use channels with a bandwidth of either 125 kHz,
                     250 kHz or 500 kHz
@@ -296,16 +305,23 @@ class gateway extends Component {
                 </TextExpand>
               </Block.Secondary>
               <Block.Primary alignLeft>
-                <Controls>
-                  <button
-                    onClick={() =>
-                      this.setState({ isScaleSpeed: !this.state.isScaleSpeed })
+                <HeatMap isScaleSpeed={selectedScale === 'speed'} />
+                <RadioGroup
+                  onChange={this.handleSelectedScale}
+                  selectedOption={this.state.selectedScale}
+                  options={[
+                    {
+                      label: 'Relative data speed',
+                      name: 'datarate',
+                      value: 'speed'
+                    },
+                    {
+                      label: 'Global usage',
+                      name: 'datarate',
+                      value: 'usage'
                     }
-                  >
-                    switch
-                  </button>
-                </Controls>
-                <HeatMap isScaleSpeed={this.state.isScaleSpeed} />
+                  ]}
+                />
               </Block.Primary>
             </Layout.SubGrid>
             <Layout.SubGrid fullWidth>
