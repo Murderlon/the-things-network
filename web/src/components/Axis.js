@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import variables from '../styles/variables'
 
 let Title = styled.text`
-  font-family: ${variables.monoTypo};
   font-size: 0.9rem;
   fill: ${variables.purple};
 `

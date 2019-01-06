@@ -83,10 +83,6 @@ let ContextHeading = styled.h4`
   }
 `
 
-let CenteredParagraph = styled.p`
-  text-align: center;
-`
-
 class gateway extends Component {
   state = { selectedScale: 'speed' }
 
@@ -104,11 +100,11 @@ class gateway extends Component {
         <Layout.RootGrid>
           <Layout.ParentGrid as="section">
             <Layout.SubGrid fullWidth>
-              <CenteredParagraph>
+              <p className="center">
                 <Link to="/#how-it-works" iconLeft>
                   back to home
                 </Link>
-              </CenteredParagraph>
+              </p>
               <H2>How it works</H2>
               <GatewayHeading as="h3">
                 Distributed and community driven gateways, powered by
@@ -198,6 +194,10 @@ class gateway extends Component {
             </Layout.SubGrid>
             <Layout.SubGrid>
               <Block.Secondary alignLeft centerContent>
+                <p className="highlight">
+                  Global amount of uplinks/downlinks send over The Things
+                  Network from the past three months
+                </p>
                 <p>
                   Devices send encrypted data to gateways over LoRaWAN, these
                   are called <span className="green">uplinks.</span>
@@ -243,7 +243,6 @@ class gateway extends Component {
                         margin={margin}
                         x={x}
                         y={y}
-                        title="Amount of uplinks/downlinks from the past three months"
                         xTickFormat={tick => timeFormat('%b')(tick)}
                         yTickFormat={tick => format('.2s')(tick)}
                         xNumberTicks={3}
@@ -311,7 +310,7 @@ class gateway extends Component {
                   selectedOption={this.state.selectedScale}
                   options={[
                     {
-                      label: 'Relative data speed',
+                      label: 'Data rate speed',
                       name: 'datarate',
                       value: 'speed'
                     },
@@ -326,11 +325,11 @@ class gateway extends Component {
             </Layout.SubGrid>
             <Layout.SubGrid fullWidth>
               <TopicNavigation />
-              <CenteredParagraph>
+              <p className="center">
                 <Link to="/#how-it-works" iconLeft>
                   back to home
                 </Link>
-              </CenteredParagraph>
+              </p>
             </Layout.SubGrid>
           </Layout.ParentGrid>
         </Layout.RootGrid>

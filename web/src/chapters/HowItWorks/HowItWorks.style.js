@@ -12,7 +12,7 @@ export let H2 = styled(Heading)`
 
 export let Vision = styled.div`
   max-width: 30em;
-  margin: ${modularScale(14)} auto;
+  margin: ${modularScale(12)} auto;
 
   p {
     font-family: ${variables.monoTypo};

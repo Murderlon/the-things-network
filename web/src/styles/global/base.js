@@ -84,6 +84,9 @@ let base = css`
   .red {
     color: ${variables.red};
   }
+  .center {
+    text-align: center;
+  }
 `
 
 export default base
