@@ -9,9 +9,9 @@ import { select, mouse } from 'd3-selection'
 import world from 'world-atlas/world/110m.json'
 import schedule from 'raf-schd'
 
-import TTNLogo from '../assets/ttn-logo.svg'
+import TTNLogo from 'assets/ttn-logo.svg'
 
-import variables from '../styles/variables'
+import variables from 'styles/variables'
 
 let Root = styled.div`
   width: 100vw;

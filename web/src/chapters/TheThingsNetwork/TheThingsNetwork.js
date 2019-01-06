@@ -6,10 +6,10 @@ import { select } from 'd3-selection'
 import interpolatePath from 'd3-interpolate-path/src/interpolatePath'
 import { animated, Spring, Trail } from 'react-spring'
 
-import ResponsiveChart from 'components/ResponsiveChart'
-import MapBaseGroup from 'components/MapBaseGroup'
-import TileLayer from 'components/TileLayer'
-import OrthographicWorld from 'components/OrthographicWorld'
+import ResponsiveChart from 'components/data-visualisation/ResponsiveChart'
+import MapBaseGroup from 'components/data-visualisation/MapBaseGroup'
+import TileLayer from 'components/data-visualisation/TileLayer'
+import OrthographicWorld from 'components/data-visualisation/OrthographicWorld'
 
 import variables from 'styles/variables'
 import {

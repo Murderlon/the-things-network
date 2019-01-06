@@ -7,9 +7,9 @@ import { extent } from 'd3-array'
 import { Spring } from 'react-spring'
 
 import Layout from 'components/Layout'
-import ResponsiveChart from 'components/ResponsiveChart'
+import ResponsiveChart from 'components/data-visualisation/ResponsiveChart'
 import Block from 'components/Block'
-import Axis from 'components/Axis'
+import Axis from 'components/data-visualisation/Axis'
 
 import variables from 'styles/variables'
 

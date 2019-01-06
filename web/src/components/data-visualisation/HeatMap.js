@@ -8,7 +8,7 @@ import { scaleBand, scaleSequential } from 'd3-scale'
 import { interpolateLab } from 'd3-interpolate'
 import { extent } from 'd3-array'
 
-import ResponsiveChart from 'components/ResponsiveChart'
+import ResponsiveChart from 'components/data-visualisation/ResponsiveChart'
 import BandAxis from './BandAxis'
 
 import variables from 'styles/variables'

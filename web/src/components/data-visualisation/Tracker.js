@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { format } from 'd3-format'
 import { bisector } from 'd3-array'
 
-import variables from '../styles/variables'
+import variables from 'styles/variables'
 
 let Overlay = styled.rect`
   fill: none;

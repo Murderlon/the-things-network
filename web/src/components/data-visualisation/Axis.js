@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import variables from '../styles/variables'
+import variables from 'styles/variables'
 
 let Title = styled.text`
   font-size: 0.9rem;

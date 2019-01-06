@@ -7,9 +7,9 @@ import { timeFormat } from 'd3-time-format'
 import { format } from 'd3-format'
 
 import Layout from 'components/Layout'
-import Axis from 'components/Axis'
-import ResponsiveChart from 'components/ResponsiveChart'
-import Tracker from 'components/Tracker'
+import Axis from 'components/data-visualisation/Axis'
+import ResponsiveChart from 'components/data-visualisation/ResponsiveChart'
+import Tracker from 'components/data-visualisation/Tracker'
 import Block from 'components/Block'
 
 import { LinePresent, LineFuture, H2 } from './Introduction.style'
