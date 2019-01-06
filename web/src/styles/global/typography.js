@@ -39,6 +39,7 @@ let typography = css`
     font-size: ${modularScale(1)};
   }
   h4 {
+    font-family: ${variables.mainTypo};
     font-size: ${modularScale(1)};
   }
   a {
