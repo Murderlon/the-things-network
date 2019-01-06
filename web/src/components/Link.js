@@ -12,19 +12,14 @@ let primary = css`
 `
 
 let Link = styled.a`
-  display: inline-block;
+  display: block;
   color: ${variables.green};
   text-transform: uppercase;
   font-family: ${variables.monoTypo};
-  font-weight: 500;
   padding: ${variables.spacing.small} 0;
   ${({ asPrimary }) => (asPrimary ? primary : null)}
   svg {
     transform: ${({ iconLeft }) => (iconLeft ? 'scaleX(-1)' : null)};
-    margin-left: ${({ iconLeft }) =>
-      iconLeft ? null : variables.spacing.small};
-    margin-right: ${({ iconLeft }) =>
-      iconLeft ? variables.spacing.small : null};
   }
 `
 
