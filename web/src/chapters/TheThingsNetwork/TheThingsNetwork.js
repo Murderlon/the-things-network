@@ -96,7 +96,7 @@ class TheThingsNetwork extends Component {
     let angle = (2500 / circumference) * 360
 
     return (
-      <ContentWrapper as="section" id="mapScroll">
+      <ContentWrapper currentStep={currentStep} as="section" id="mapScroll">
         <H2>The Things Network</H2>
         <LayoutWrapper>
           <MapGraphic className="mapGraphic">
@@ -106,12 +106,11 @@ class TheThingsNetwork extends Component {
               </p>
             </Legend>
             <Spring
-              delay={1000}
               from={{ opacity: currentStep < 3 ? 0 : 1 }}
               to={{ opacity: currentStep < 3 ? 1 : 0 }}
             >
               {props => (
-                <ResponsiveChart classProp="chart" style={props}>
+                <ResponsiveChart style={props} classProp="chart">
                   {dimensions => (
                     <MapBaseGroup {...dimensions} extent={this.props.data}>
                       {generators => (
@@ -121,23 +120,19 @@ class TheThingsNetwork extends Component {
                             items={features}
                             keys={({ properties }) => properties.name}
                             native
-                            from={{
-                              t: currentStep > 0 && currentStep < 3 ? 0 : 1
-                            }}
-                            to={{
-                              t: currentStep > 0 && currentStep < 3 ? 1 : 0
-                            }}
+                            from={{ t: currentStep > 0 ? 0 : 1 }}
+                            to={{ t: currentStep > 0 ? 1 : 0 }}
                           >
-                            {item => ({ t }) => {
+                            {({ geometry, properties }) => ({ t }) => {
                               let [x, y] = generators.projection(
-                                item.geometry.coordinates
+                                geometry.coordinates
                               )
                               let radius = geoCircle()
-                                .center(item.geometry.coordinates)
+                                .center(geometry.coordinates)
                                 .radius(angle)
 
                               let inactive = geoCircle()
-                                .center(item.geometry.coordinates)
+                                .center(geometry.coordinates)
                                 .radius(0)
 
                               let interpolator = interpolatePath(
@@ -158,6 +153,13 @@ class TheThingsNetwork extends Component {
                                     r="6"
                                     fill={variables.green}
                                   />
+                                  <text
+                                    fill={variables.green}
+                                    x={x + 10}
+                                    y={y + 5}
+                                  >
+                                    {properties.name}
+                                  </text>
                                 </g>
                               )
                             }}
@@ -170,19 +172,7 @@ class TheThingsNetwork extends Component {
                 </ResponsiveChart>
               )}
             </Spring>
-            <Spring
-              delay={1500}
-              immediate={currentStep < 3}
-              from={currentStep < 3 ? { opacity: 1 } : { opacity: 0 }}
-              to={currentStep < 3 ? { opacity: 0 } : { opacity: 1 }}
-            >
-              {props => (
-                <OrthographicWorld
-                  isVisible={props.opacity >= 0.9}
-                  style={props}
-                />
-              )}
-            </Spring>
+            <OrthographicWorld isVisible={this.state.currentStep === 3} />
           </MapGraphic>
           <div className="mapScrollText">
             <div className="step" data-step={0}>
@@ -200,7 +190,8 @@ class TheThingsNetwork extends Component {
                 <span className="highlight">
                   Amsterdam was fully covered in just four weeks.
                 </span>{' '}
-                However, the gateways were expensive and not that easy to use.
+                However, initially setting up a LoRa network was expensive and
+                required a lot of effort.
               </p>
             </div>
             <div className="step" data-step={2}>
