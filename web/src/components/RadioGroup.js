@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { rgba } from 'polished'
 
@@ -38,7 +38,7 @@ let Radio = styled('input')`
 `
 
 /** An Wrapper with multiple radio buttons with a callback to change state */
-class RadioImage extends Component {
+class RadioGroup extends Component {
   randomId = randomHash()
 
   render() {
@@ -48,7 +48,7 @@ class RadioImage extends Component {
         {options.map(({ label, name, value, backgroundSrc }, i) => {
           let id = `${this.randomId}_${value}`
           return (
-            <>
+            <Fragment key={value}>
               <Radio
                 type="radio"
                 name={name}
@@ -60,7 +60,7 @@ class RadioImage extends Component {
               <Label htmlFor={id} backgroundSrc={backgroundSrc}>
                 {label}
               </Label>
-            </>
+            </Fragment>
           )
         })}
       </Wrapper>
@@ -68,4 +68,4 @@ class RadioImage extends Component {
   }
 }
 
-export default RadioImage
+export default RadioGroup

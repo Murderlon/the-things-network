@@ -26,6 +26,8 @@ let TickLine = styled.line`
 let getTicks = (axis, numberTicks) =>
   numberTicks ? axis.ticks(numberTicks) : axis.ticks()
 
+let textAnchors = ['start', 'middle', 'end']
+
 export default ({
   x,
   y,
@@ -37,21 +39,26 @@ export default ({
   yTickFormat,
   xNumberTicks,
   yNumberTicks,
-  children
+  children,
+  textAnchorMiddle
 }) => (
   <g transform={`translate(${margin.left}, ${margin.top})`}>
     <Title
-      transform={`translate(${width / 2}, ${-margin.top / 3})`}
+      transform={`translate(${width / 2}, ${-margin.top / 2})`}
       textAnchor="middle"
     >
       {title}
     </Title>
 
-    <g transform={`translate(0, ${height})`} textAnchor="middle">
+    <g transform={`translate(0, ${height})`}>
       {getTicks(x, xNumberTicks).map((tick, i) => (
         <g key={tick} transform={`translate(${x(tick)}, 0)`}>
           <TickLine y2={-width} />
-          <TickText y="30" x="0">
+          <TickText
+            textAnchor={textAnchorMiddle ? 'middle' : textAnchors[i]}
+            y="30"
+            x="0"
+          >
             {xTickFormat(tick, i)}
           </TickText>
         </g>

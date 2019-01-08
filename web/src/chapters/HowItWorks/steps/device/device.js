@@ -96,7 +96,9 @@ export default class Device extends Component {
             </Form>
             <Table>
               <thead>
-                <th colspan="2">{devices[this.state.selectedDevice].name}</th>
+                <tr>
+                  <th colSpan="2">{devices[this.state.selectedDevice].name}</th>
+                </tr>
               </thead>
               <tbody>
                 {devices[this.state.selectedDevice].table.map(arr => (

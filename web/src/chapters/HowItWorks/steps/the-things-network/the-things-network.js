@@ -47,11 +47,5 @@ export default () => (
         </p>
       </Block.Secondary>
     </Layout.SubGrid>
-    <Layout.SubGrid>
-      <Block.Primary />
-      <Block.Secondary>
-        <p>Amount of traffic per region from the past three months.</p>
-      </Block.Secondary>
-    </Layout.SubGrid>
   </>
 )

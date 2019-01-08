@@ -45,10 +45,10 @@ class RadioImage extends Component {
     let { options, selectedOption, onChange } = this.props
     return (
       <Fieldset onChange={onChange}>
-        {options.map(({ label, name, value, backgroundSrc }) => {
+        {options.map(({ label, name, value, backgroundSrc, i }) => {
           let id = `${this.randomId}_${value}`
           return (
-            <Fragment key={value}>
+            <Fragment key={`${value}-${i}`}>
               <Radio
                 type="radio"
                 name={name}

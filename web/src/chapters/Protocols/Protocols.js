@@ -139,7 +139,7 @@ class Protocols extends Component {
                   ) : (
                     <>
                       {xLabels[index]}
-                      <tspan> cost</tspan>
+                      <tspan> recurring costs</tspan>
                     </>
                   )
 

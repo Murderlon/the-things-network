@@ -11,6 +11,7 @@ import Axis from 'components/data-visualisation/Axis'
 import ResponsiveChart from 'components/data-visualisation/ResponsiveChart'
 import Tracker from 'components/data-visualisation/Tracker'
 import Block from 'components/Block'
+import { AxisLabel } from 'styles/base-components'
 
 import { LinePresent, LineFuture, H2 } from './Introduction.style'
 
@@ -60,10 +61,18 @@ let IoTGlobalMarketChart = () => (
                 margin={margin}
                 x={x}
                 y={y}
-                xTickFormat={tick => timeFormat('%y')(new Date(tick))}
+                xTickFormat={(tick, i) =>
+                  timeFormat(i > 0 ? "'%y" : '%Y')(tick)
+                }
                 yTickFormat={tick => format('.2s')(tick).replace(/G/, 'B')}
-                title="IoT global market (billions)"
+                title="IoT global market"
               >
+                <AxisLabel y="-30" x={-50}>
+                  Billions
+                </AxisLabel>
+                <AxisLabel y={height + 50} x={width - margin.right / 2}>
+                  Years
+                </AxisLabel>
                 <LinePresent
                   d={lineGenerator(data.slice(0, currentYear + 1))}
                 />

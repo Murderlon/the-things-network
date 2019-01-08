@@ -14,7 +14,7 @@ import Block from 'components/Block'
 import RadioGroup from 'components/RadioGroup'
 import HeatMap from 'components/data-visualisation/HeatMap'
 
-import { Table } from 'styles/base-components'
+import { Table, AxisLabel } from 'styles/base-components'
 import gatewayImage from 'assets/the-things-gateway.jpg'
 
 import dataPackets from './data-packets.json'
@@ -121,8 +121,8 @@ class gateway extends Component {
         <Layout.SubGrid>
           <Block.Secondary alignLeft centerContent>
             <p className="highlight">
-              Global amount of uplinks/downlinks send over The Things Network
-              from the past three months
+              Global recieved data packets (uplinks/downlinks) by gateways from
+              The Things Network
             </p>
             <p>
               Devices send encrypted data to gateways over LoRaWAN, these are
@@ -172,7 +172,14 @@ class gateway extends Component {
                     xTickFormat={tick => timeFormat('%b')(tick)}
                     yTickFormat={tick => format('.2s')(tick)}
                     xNumberTicks={3}
+                    textAnchorMiddle
                   >
+                    <AxisLabel y="-20" x={-margin.left + 20}>
+                      Data packets recieved
+                    </AxisLabel>
+                    <AxisLabel y={height + 50} x={width - margin.right / 2}>
+                      Date
+                    </AxisLabel>
                     <LineGreen d={uplinksLineGenerator(data)} />
                     <LineRed d={downlinksLineGenerator(data)} />
                   </Axis>

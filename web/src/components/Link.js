@@ -23,7 +23,7 @@ let Link = styled.a`
   }
 `
 
-export default ({ children, to, asPrimary, iconLeft }) => {
+export default ({ children, to, asPrimary, iconLeft, ...props }) => {
   let internal = /^\/(?!\/)/.test(to)
   let IconWithChildren = iconLeft ? (
     <>
@@ -38,13 +38,19 @@ export default ({ children, to, asPrimary, iconLeft }) => {
   // Use Gatsby Link for internal links, and <a> for others
   if (internal) {
     return (
-      <Link iconLeft={iconLeft} as={GatsbyLink} asPrimary={asPrimary} to={to}>
+      <Link
+        iconLeft={iconLeft}
+        as={GatsbyLink}
+        asPrimary={asPrimary}
+        to={to}
+        {...props}
+      >
         {IconWithChildren}
       </Link>
     )
   }
   return (
-    <Link href={to} asPrimary={asPrimary}>
+    <Link href={to} asPrimary={asPrimary} {...props}>
       {IconWithChildren}
     </Link>
   )

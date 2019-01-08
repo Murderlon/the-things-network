@@ -18,10 +18,7 @@ let H3 = styled(Heading)`
 export default () => (
   <>
     <Layout.SubGrid fullWidth>
-      <H3 as="h3">
-        Distributed and community driven gateways, powered by Ethernet/WiFi,
-        provide up to 10km of LoRaWAN coverage.
-      </H3>
+      <H3 as="h3">The application of your choosing.</H3>
     </Layout.SubGrid>
     <Layout.SubGrid>
       <Block.Primary>
@@ -47,7 +44,9 @@ export default () => (
           Things Network.
         </p>
         <p>
-          <Link to="">explore integrations</Link>
+          <Link to="https://www.thethingsnetwork.org/docs/applications/">
+            explore integrations
+          </Link>
         </p>
       </Block.Secondary>
     </Layout.SubGrid>
