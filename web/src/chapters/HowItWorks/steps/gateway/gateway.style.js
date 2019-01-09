@@ -54,3 +54,7 @@ export let ContextHeading = styled.h4`
     color: ${variables.purple};
   }
 `
+
+export let Context = styled.div`
+  padding: 0 6.25%;
+`

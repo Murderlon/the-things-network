@@ -24,7 +24,8 @@ import {
   GatewayImage,
   Div,
   LineGreen,
-  LineRed
+  LineRed,
+  Context
 } from './gateway.style'
 
 class gateway extends Component {
@@ -197,13 +198,6 @@ class gateway extends Component {
               and there are three knobs you can turn to influence how you send
               data.
             </p>
-            <p>
-              <span className="highlight">
-                The bandwith is determined by the region
-              </span>{' '}
-              but setting the spreading factor makes it possible to still
-              achieve all possible data rates.
-            </p>
             <TextExpand buttonText="1. Transmission power">
               If you lower the transmission power, you’ll save battery, but the
               range of the signal will be shorter.
@@ -237,17 +231,40 @@ class gateway extends Component {
           </Block.Secondary>
           <Block.Primary alignLeft>
             <HeatMap isScaleSpeed={selectedScale === 'speed'} />
+            {selectedScale === 'speed' ? (
+              <Context>
+                <p className="center mono">
+                  Bandwidth <span className="highlight">+</span> spreading
+                  factor <span className="highlight">=</span> bits/s.
+                </p>
+                <p>
+                  <span className="highlight">
+                    The bandwith is determined by the region
+                  </span>{' '}
+                  but setting the spreading factor makes it possible to still
+                  achieve all possible data rates.
+                </p>
+              </Context>
+            ) : (
+              <Context>
+                <p className="center mono">Percentile global usage</p>
+                <p>
+                  Gateways only recieve metadata about a packet. These are the
+                  settings the users of The Things Network use the most.
+                </p>
+              </Context>
+            )}
             <RadioGroup
               onChange={this.handleSelectedScale}
               selectedOption={this.state.selectedScale}
               options={[
                 {
-                  label: 'Data rate speed',
+                  label: 'Theoretical',
                   name: 'datarate',
                   value: 'speed'
                 },
                 {
-                  label: 'Global usage',
+                  label: 'Usage',
                   name: 'datarate',
                   value: 'usage'
                 }
