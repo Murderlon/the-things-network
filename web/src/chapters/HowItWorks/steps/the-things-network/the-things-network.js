@@ -6,6 +6,7 @@ import Block from 'components/Block'
 
 import { Heading } from 'styles/base-components'
 import theThingsNetworkImage from 'assets/the-things-network.jpg'
+import Link from 'components/Link'
 
 let H3 = styled(Heading)`
   &::after {
@@ -44,6 +45,11 @@ export default () => (
             The Things Network is positioned between the gateways and the
             applications and takes care of these routing and processing steps.
           </span>
+        </p>
+        <p>
+          <Link to="https://www.thethingsnetwork.org/docs/network/security.html">
+            More info on security
+          </Link>
         </p>
       </Block.Secondary>
     </Layout.SubGrid>

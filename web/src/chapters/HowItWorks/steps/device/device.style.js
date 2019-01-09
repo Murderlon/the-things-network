@@ -5,7 +5,7 @@ import variables from 'styles/variables'
 export let Label = styled.p`
   text-align: center;
   font-family: ${variables.monoTypo};
-  color: ${variables.green};
+  color: ${variables.highlightBlue};
 `
 
 export let H3 = styled(Heading)`

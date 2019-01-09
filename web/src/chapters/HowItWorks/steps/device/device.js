@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import Layout from 'components/Layout'
 import Block from 'components/Block'
-import TopicNavigation from 'components/TopicNavigation'
 import Link from 'components/Link'
 import RadioImage from 'components/RadioImage'
 
@@ -109,6 +108,17 @@ export default class Device extends Component {
                 ))}
               </tbody>
             </Table>
+            <p className="center">
+              <Link
+                to={
+                  this.state.selectedDevice === 'theThingsUno'
+                    ? 'https://www.thethingsnetwork.org/marketplace/product/the-things-uno'
+                    : 'https://www.thethingsnetwork.org/marketplace/product/sodaq-one'
+                }
+              >
+                more info
+              </Link>
+            </p>
           </Block.Primary>
         </Layout.SubGrid>
         <Layout.SubGrid>
@@ -129,6 +139,9 @@ export default class Device extends Component {
             </Form>
             <h4>{selectedUseCase.label}</h4>
             <p>{selectedUseCase.text}</p>
+            <p className="center">
+              <Link to={selectedUseCase.link}>more info</Link>
+            </p>
           </Block.Primary>
         </Layout.SubGrid>
       </>

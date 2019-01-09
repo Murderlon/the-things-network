@@ -16,6 +16,7 @@ let Link = styled.a`
   color: ${variables.green};
   text-transform: uppercase;
   font-family: ${variables.monoTypo};
+  font-weight: 500;
   padding: ${variables.spacing.small} 0;
   ${({ asPrimary }) => (asPrimary ? primary : null)}
   svg {
