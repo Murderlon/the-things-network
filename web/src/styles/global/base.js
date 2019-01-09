@@ -87,6 +87,9 @@ let base = css`
   .center {
     text-align: center;
   }
+  .mono {
+    font-family: ${variables.monoTypo};
+  }
 `
 
 export default base

@@ -41,7 +41,8 @@ export let ContentWrapper = styled(Layout.ParentGrid)`
   }
 
   .mapScrollText {
-    pointer-events: none;
+    pointer-events: ${({ currentStep }) =>
+      currentStep < 3 ? 'initial' : 'none'};
     position: relative;
   }
 
@@ -78,7 +79,7 @@ export let MapGraphic = styled.div`
 export let Legend = styled.div`
   position: absolute;
   left: 0;
-  bottom: 0;
+  top: 50%;
   background: ${variables.secondaryBlue};
   margin: ${variables.spacing.large};
   padding: ${variables.spacing.small};

@@ -40,3 +40,9 @@ export let Table = styled.table`
     vertical-align: top;
   }
 `
+
+export let AxisLabel = styled.text`
+  font-family: ${variables.monoTypo};
+  font-size: 0.8rem;
+  fill: ${variables.purple};
+`

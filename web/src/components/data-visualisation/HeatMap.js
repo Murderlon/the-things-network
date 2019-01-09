@@ -3,10 +3,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { readableColor } from 'polished'
 import flattenDeep from 'lodash.flattendeep'
-import { Spring, config } from 'react-spring'
+import { Spring } from 'react-spring'
 import { scaleBand, scaleSequential } from 'd3-scale'
 import { interpolateLab } from 'd3-interpolate'
 import { extent } from 'd3-array'
+import { format } from 'd3-format'
 
 import ResponsiveChart from 'components/data-visualisation/ResponsiveChart'
 import BandAxis from './BandAxis'
@@ -48,6 +49,7 @@ export default ({ isScaleSpeed }) => {
         let width = dimensions.width - margin.left - margin.right
         let height = dimensions.width - margin.top - margin.bottom
         let rectWidth = width / 8
+        let coefficient = 3.489818456067459
 
         let x = scaleBand()
           .domain(flattenDeep(spreadingFactors).sort((a, b) => a - b))
@@ -63,7 +65,7 @@ export default ({ isScaleSpeed }) => {
 
         let scaleSpeed = scaleSequential(
           interpolateLab('#f3f0ff', '#845ef7')
-        ).domain([Math.pow(2, 1), Math.pow(2, 8)])
+        ).domain([Math.pow(coefficient, 1), Math.pow(coefficient, 8)])
 
         return (
           <BandAxis
@@ -81,7 +83,9 @@ export default ({ isScaleSpeed }) => {
                 (a, b) => a.spreading_factor - b.spreading_factor
               )
               return Array.from({ length: 6 }).map((_, SFIndex) => {
-                let speed = Math.pow(2, BWIndex + (6 - SFIndex))
+                let speed = Math.round(
+                  Math.pow(coefficient, BWIndex + (6 - SFIndex))
+                )
                 let usage = sorted[SFIndex]
                   ? sorted[SFIndex].uplinks + sorted[SFIndex].downlinks
                   : 0
@@ -89,7 +93,6 @@ export default ({ isScaleSpeed }) => {
                   x.step() * SFIndex
                 )}, ${Math.round((y.step() / 2) * BWIndex + rectWidth / 2)})`
                 let relativeUsage = Math.round((100 / total) * usage)
-                let relativeSpeed = Math.round((100 / Math.pow(2, 8)) * speed)
 
                 return (
                   <g key={(SFIndex += BWIndex)} transform={translate}>
@@ -113,23 +116,24 @@ export default ({ isScaleSpeed }) => {
                       )}
                     </Spring>
                     <Spring
-                      config={config.slow}
                       from={{
-                        number: isScaleSpeed ? relativeUsage : relativeSpeed
+                        number: isScaleSpeed ? relativeUsage : speed
                       }}
                       to={{
-                        number: isScaleSpeed ? relativeSpeed : relativeUsage
+                        number: isScaleSpeed ? speed : relativeUsage
                       }}
                     >
-                      {props => (
+                      {({ number, opacity }) => (
                         <TickConditionalText
                           backgroundColor={scaleUsage(usage)}
                           dy={rectWidth / 2 + 5}
                           dx={rectWidth / 2}
                           textAnchor="middle"
-                          fillOpacity={props.opacity}
+                          fillOpacity={opacity}
                         >
-                          {Math.round(props.number)}%
+                          {isScaleSpeed
+                            ? format('.2s')(number)
+                            : `${Math.round(number)}%`}
                         </TickConditionalText>
                       )}
                     </Spring>

@@ -2,12 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import variables from 'styles/variables'
-
-let AxisLabel = styled.text`
-  font-family: ${variables.monoTypo};
-  font-size: 0.8rem;
-  fill: ${variables.purple};
-`
+import { AxisLabel } from 'styles/base-components'
 
 let TickText = styled.text`
   font-family: ${variables.monoTypo};

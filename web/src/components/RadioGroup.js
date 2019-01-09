@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { rgba } from 'polished'
 
@@ -13,9 +13,8 @@ let Label = styled('label')`
   flex: 1;
   font-size: 0.8em;
   font-family: ${variables.monoTypo};
-  font-weight: 500;
   text-align: center;
-  color: ${variables.highlightBlue};
+  color: ${variables.green};
   padding: ${variables.spacing.small};
 `
 
@@ -24,21 +23,21 @@ let Radio = styled('input')`
   clip: rect(0, 0, 0, 0);
 
   &:checked + label {
-    background: ${variables.highlightBlue};
+    background: ${variables.green};
     color: ${variables.secondaryBlue};
   }
 
   &:not(:checked) + label {
-    border: 1px solid ${variables.highlightBlue};
+    border: 1px solid ${variables.green};
   }
   &:not(:checked):hover + label,
   &:not(:checked):focus + label {
-    background: ${rgba(variables.highlightBlue, 0.1)};
+    background: ${rgba(variables.green, 0.1)};
   }
 `
 
 /** An Wrapper with multiple radio buttons with a callback to change state */
-class RadioImage extends Component {
+class RadioGroup extends Component {
   randomId = randomHash()
 
   render() {
@@ -48,7 +47,7 @@ class RadioImage extends Component {
         {options.map(({ label, name, value, backgroundSrc }, i) => {
           let id = `${this.randomId}_${value}`
           return (
-            <>
+            <Fragment key={value}>
               <Radio
                 type="radio"
                 name={name}
@@ -60,7 +59,7 @@ class RadioImage extends Component {
               <Label htmlFor={id} backgroundSrc={backgroundSrc}>
                 {label}
               </Label>
-            </>
+            </Fragment>
           )
         })}
       </Wrapper>
@@ -68,4 +67,4 @@ class RadioImage extends Component {
   }
 }
 
-export default RadioImage
+export default RadioGroup
