@@ -46,7 +46,8 @@ export default () => (
 
 class TheThingsNetwork extends Component {
   state = {
-    currentStep: 0
+    currentStep: 0,
+    isInsideContainer: false
   }
 
   componentDidMount() {
@@ -67,6 +68,8 @@ class TheThingsNetwork extends Component {
         offset: 0.7
       })
       .onStepEnter(this.handleStepEnter)
+      .onContainerEnter(this.handleContainerEnter)
+      .onContainerExit(this.handleContainerExit)
 
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
@@ -89,8 +92,16 @@ class TheThingsNetwork extends Component {
     this.setState({ currentStep: index })
   }
 
+  handleContainerEnter = () => {
+    this.setState({ isInsideContainer: true })
+  }
+
+  handleContainerExit = () => {
+    this.setState({ isInsideContainer: false })
+  }
+
   render() {
-    let { currentStep } = this.state
+    let { currentStep, isInsideContainer } = this.state
     let { features } = this.props.data
     let circumference = 6371000 * Math.PI * 2
     let angle = (2500 / circumference) * 360
@@ -172,7 +183,10 @@ class TheThingsNetwork extends Component {
                 </ResponsiveChart>
               )}
             </Spring>
-            <OrthographicWorld isVisible={this.state.currentStep === 3} />
+            <OrthographicWorld
+              currentStep={currentStep}
+              isInsideContainer={isInsideContainer}
+            />
           </MapGraphic>
           <div className="mapScrollText">
             <div className="step" data-step={0}>

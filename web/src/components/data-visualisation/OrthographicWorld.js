@@ -21,6 +21,8 @@ let Root = styled.div`
   display: block;
   top: 0;
   z-index: 1;
+  pointer-events: ${({ currentStep }) =>
+    currentStep < 3 ? 'none' : 'initial'};
 `
 
 let LogoWrapper = styled.div`
@@ -91,7 +93,8 @@ class OrthographicWorld extends Component {
   state = {
     width: 0,
     height: 0,
-    isDragging: false
+    isDragging: false,
+    isRendered: false
   }
 
   componentDidMount() {
@@ -100,23 +103,52 @@ class OrthographicWorld extends Component {
     window.addEventListener('resize', this.handleResize)
   }
 
-  componentDidUpdate() {
-    let { isVisible } = this.props
+  shouldComponentUpdate(nextProps, nextState) {
+    let { isInsideContainer, currentStep } = this.props
     let { isDragging } = this.state
+
+    if (
+      !isInsideContainer &&
+      currentStep === 3 &&
+      nextProps.isInsideContainer
+    ) {
+      return false
+    }
+
+    if (
+      isInsideContainer &&
+      currentStep === 3 &&
+      isDragging &&
+      !nextState.isDragging
+    ) {
+      return false
+    }
+
+    return true
+  }
+
+  componentDidUpdate() {
+    let { isDragging } = this.state
+    let { currentStep, isInsideContainer } = this.props
+    let isVisible = currentStep === 3 && isInsideContainer
 
     if (isVisible && !isDragging) {
       this.start = Date.now()
       this.revealCanvas()
     }
 
+    if (currentStep === 2) {
+      this.clearCanvas()
+    }
+
     if ((this.rotateInterval && !isVisible) || isDragging) {
       clearInterval(this.rotateInterval)
-      this.clearCanvas()
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize)
+    clearInterval(this.scaleInterval)
     clearInterval(this.rotateInterval)
   }
 
@@ -128,7 +160,6 @@ class OrthographicWorld extends Component {
   })
 
   revealCanvas = () => {
-    console.log('reveal')
     let scale = 3
     let { width, height } = this.state
     let context = this.canvasRef.current.getContext('2d')
@@ -137,7 +168,7 @@ class OrthographicWorld extends Component {
       .translate([0, 0])
       .precision(1)
 
-    let scaleInterval = setInterval(
+    this.scaleInterval = setInterval(
       schedule(() => {
         if (scale >= 1) {
           scale -= 0.05
@@ -157,7 +188,7 @@ class OrthographicWorld extends Component {
           context.restore()
           return
         }
-        clearInterval(scaleInterval)
+        clearInterval(this.scaleInterval)
         this.projection
           .fitExtent([[1, 1], [width / 1.5, height / 1.5]], this.sphere)
           .translate([width / 2, height / 2])
@@ -227,17 +258,23 @@ class OrthographicWorld extends Component {
       projection.rotate(versor.rotation(q1))
     }
 
+    function dragended() {
+      self.setState({ isDragging: false })
+    }
+
     return drag()
       .on('start', dragstarted)
       .on('drag', dragged)
+      .on('end', dragended)
   }
 
   render() {
     let { width, height } = this.state
-    let { isVisible } = this.props
+    let { currentStep } = this.props
+    let isVisible = currentStep === 3
 
     return (
-      <Root ref={this.rootRef}>
+      <Root ref={this.rootRef} currentStep={currentStep}>
         <Canvas width={width} height={height} ref={this.canvasRef} />
         <Spring
           immediate={!isVisible}
