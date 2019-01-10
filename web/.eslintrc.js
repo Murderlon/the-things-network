@@ -23,7 +23,7 @@ module.exports = {
 
     // options to emulate prettier setup
     semi: ['error', 'never'],
-    'max-len': ['error', { code: 80 }],
+    'max-len': ['error', { code: 90 }],
     'template-curly-spacing': ['error', 'never'],
     'arrow-parens': ['error', 'as-needed'],
 
