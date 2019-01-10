@@ -179,7 +179,7 @@ class gateway extends Component {
                   .y(({ downlinks }) => y(downlinks))
                   .curve(curveCardinal)
 
-                let handleMouseMove = (previousPositions, ref) => {
+                let handleMouseMove = ref => {
                   let xValue = x.invert(mouse(ref)[0])
                   let yIndex = data.findIndex(({ date }) =>
                     isSameDay(xValue, new Date(date))
@@ -222,7 +222,6 @@ class gateway extends Component {
                     <LineGreen d={uplinksLineGenerator(data)} />
                     <LineRed d={downlinksLineGenerator(data)} />
                     <Tracker
-                      data={data}
                       initialPosition={initialPosition}
                       handleMouseMove={handleMouseMove}
                       width={width}

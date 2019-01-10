@@ -23,14 +23,10 @@ export default class Tracker extends Component {
     select(this.overlayRef.current).on('mousemove', this.onMove)
   }
 
-  onMove = () => {
-    let { handleMouseMove } = this.props
-    let { position } = this.state
-
+  onMove = () =>
     this.setState({
-      position: handleMouseMove(position, this.overlayRef.current)
+      position: this.props.handleMouseMove(this.overlayRef.current)
     })
-  }
 
   render() {
     let { width, height, x, y } = this.props

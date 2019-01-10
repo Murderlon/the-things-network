@@ -63,18 +63,20 @@ let IoTGlobalMarketChart = () => (
               .y(({ value }) => y(value))
               .curve(curveCardinal)
 
-            let handleMoveMouse = (previousPositions, ref) => {
+            let handleMouseMove = ref => {
               let xValue = x.invert(mouse(ref)[0])
               let yIndex = data.findIndex(({ year }) =>
                 isSameYear(xValue, new Date(year))
               )
 
               if (yIndex >= 0) {
-                return previousPositions.map(({ color }) => ({
-                  x: new Date(xValue.getFullYear(), 0, 0),
-                  y: data[yIndex].value,
-                  color
-                }))
+                return [
+                  {
+                    x: new Date(xValue.getFullYear(), 0, 0),
+                    y: data[yIndex].value,
+                    color: variables.red
+                  }
+                ]
               }
             }
 
@@ -104,9 +106,8 @@ let IoTGlobalMarketChart = () => (
                 />
                 <LineFuture d={lineGenerator(data.slice(currentYear))} />
                 <Tracker
-                  data={ioTJson.years}
                   initialPosition={initialPosition}
-                  handleMoveMouse={handleMoveMouse}
+                  handleMouseMove={handleMouseMove}
                   width={width}
                   height={height}
                   x={x}
