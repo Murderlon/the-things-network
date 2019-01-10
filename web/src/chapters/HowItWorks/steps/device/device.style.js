@@ -2,12 +2,6 @@ import styled from 'styled-components'
 import { Heading } from 'styles/base-components'
 import variables from 'styles/variables'
 
-export let Label = styled.p`
-  text-align: center;
-  font-family: ${variables.monoTypo};
-  color: ${variables.highlightBlue};
-`
-
 export let H3 = styled(Heading)`
   &::after {
     content: '.01';

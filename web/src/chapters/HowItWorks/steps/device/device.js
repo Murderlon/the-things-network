@@ -12,7 +12,7 @@ import theThingsUnoImage from 'assets/the-things-uno.jpg'
 import sodaqOneImage from 'assets/sodaq-one.png'
 import useCases from './use-cases'
 
-import { H3, Label, Form } from './device.style'
+import { H3, Form } from './device.style'
 
 export default class Device extends Component {
   state = { selectedDevice: 'theThingsUno', selectedUseCase: 'cowTracking' }
@@ -71,8 +71,7 @@ export default class Device extends Component {
               </li>
             </ol>
           </Block.Secondary>
-          <Block.Primary alignLeft withPadding>
-            <Label>Example devices:</Label>
+          <Block.Primary alignLeft withPadding asSecondary>
             <Form>
               <RadioImage
                 onChange={this.selectedDeviceChange}
@@ -128,8 +127,7 @@ export default class Device extends Component {
               to build all kinds of value driving applications.
             </p>
           </Block.Secondary>
-          <Block.Primary alignLeft withPadding>
-            <Label>Example use cases:</Label>
+          <Block.Primary alignLeft withPadding asSecondary>
             <Form>
               <RadioImage
                 onChange={this.selectedUseCaseChange}

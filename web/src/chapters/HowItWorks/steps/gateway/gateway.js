@@ -14,6 +14,7 @@ import Axis from 'components/data-visualisation/Axis'
 import TextExpand from 'components/TextExpand'
 import Block from 'components/Block'
 import RadioGroup from 'components/RadioGroup'
+import RadioImage from 'components/RadioImage'
 import HeatMap from 'components/data-visualisation/HeatMap'
 import Tracker from 'components/data-visualisation/Tracker'
 
@@ -22,22 +23,20 @@ import variables from 'styles/variables'
 import gatewayImage from 'assets/the-things-gateway.jpg'
 
 import dataPackets from './data-packets.json'
-import {
-  H3,
-  ContextHeading,
-  GatewayImage,
-  Div,
-  LineGreen,
-  LineRed,
-  Context
-} from './gateway.style'
+import { H3, LineGreen, LineRed, Context } from './gateway.style'
 
 class gateway extends Component {
-  state = { selectedScale: 'speed' }
+  state = { selectedScale: 'speed', selectedGateway: 'theThingsGateway' }
 
   handleSelectedScale = ({ target }) => {
     if (this.state.selectedScale !== target.value) {
       this.setState({ selectedScale: target.value })
+    }
+  }
+
+  handleSelectedGateway = ({ target }) => {
+    if (this.state.selectedGateway !== target.value) {
+      this.setState({ selectedGateway: target.value })
     }
   }
 
@@ -72,55 +71,67 @@ class gateway extends Component {
               </span>
             </p>
           </Block.Secondary>
-          <Block.Primary alignLeft asSecondary>
-            <ContextHeading>
-              <span>Example gateway:</span>
-              <span>The Things Gateway</span>
-            </ContextHeading>
-            <GatewayImage src={gatewayImage} alt="The Things Gateway" />
-            <Div>
-              <Table>
-                <tbody>
-                  <tr>
-                    <td>Setup</td>
-                    <td>Your own LoRaWAN network in as little as 5 minutes</td>
-                  </tr>
-                  <tr>
-                    <td>Connection</td>
-                    <td>Connects easily to your WiFi or Ethernet </td>
-                  </tr>
-                  <tr>
-                    <td>Range</td>
-                    <td>Up to 10 km (6 miles) </td>
-                  </tr>
-                  <tr>
-                    <td>Integrations</td>
-                    <td>Easy cloud integration with popular IoT platforms</td>
-                  </tr>
-                  <tr>
-                    <td>Standards</td>
-                    <td>Open source hardware and software</td>
-                  </tr>
-                  <tr>
-                    <td>XBEE</td>
-                    <td>
-                      Slot for future connectivity protocols or homebrew add-ons
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Security</td>
-                    <td>
-                      HTTPS connection and embedded encryption in the LoRaWAN
-                      protocol
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Load</td>
-                    <td>Can serve thousands of nodes (depending on traffic)</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Div>
+          <Block.Primary alignLeft withPadding asSecondary>
+            <form>
+              <RadioImage
+                onChange={this.handleSelectedGateway}
+                selectedOption={this.state.selectedGateway}
+                options={[
+                  {
+                    label: 'The Things Gateway',
+                    name: 'gateways',
+                    value: 'theThingsGateway',
+                    backgroundSrc: gatewayImage
+                  }
+                ]}
+              />
+            </form>
+            <Table>
+              <thead>
+                <tr>
+                  <th colSpan="2">The Things Gateway</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Setup</td>
+                  <td>Your own LoRaWAN network in as little as 5 minutes</td>
+                </tr>
+                <tr>
+                  <td>Connection</td>
+                  <td>Connects easily to your WiFi or Ethernet </td>
+                </tr>
+                <tr>
+                  <td>Range</td>
+                  <td>Up to 10 km (6 miles) </td>
+                </tr>
+                <tr>
+                  <td>Integrations</td>
+                  <td>Easy cloud integration with popular IoT platforms</td>
+                </tr>
+                <tr>
+                  <td>Standards</td>
+                  <td>Open source hardware and software</td>
+                </tr>
+                <tr>
+                  <td>XBEE</td>
+                  <td>
+                    Slot for future connectivity protocols or homebrew add-ons
+                  </td>
+                </tr>
+                <tr>
+                  <td>Security</td>
+                  <td>
+                    HTTPS connection and embedded encryption in the LoRaWAN
+                    protocol
+                  </td>
+                </tr>
+                <tr>
+                  <td>Load</td>
+                  <td>Can serve thousands of nodes (depending on traffic)</td>
+                </tr>
+              </tbody>
+            </Table>
           </Block.Primary>
         </Layout.SubGrid>
         <Layout.SubGrid>

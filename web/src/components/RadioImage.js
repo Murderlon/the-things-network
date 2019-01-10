@@ -5,7 +5,9 @@ import { hideText } from 'polished'
 import randomHash from '../helpers/generateRandomHash'
 import variables from '../styles/variables'
 
-let Fieldset = styled('div')``
+let Fieldset = styled('div')`
+  text-align: center;
+`
 
 let Label = styled('label')`
   ${hideText()};
