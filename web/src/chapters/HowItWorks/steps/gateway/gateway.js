@@ -5,6 +5,8 @@ import { line, curveCardinal } from 'd3-shape'
 import { extent, min, max } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
 import { format } from 'd3-format'
+import { mouse } from 'd3-selection'
+import isSameDay from 'date-fns/is_same_day'
 
 import Layout from 'components/Layout'
 import ResponsiveChart from 'components/data-visualisation/ResponsiveChart'
@@ -13,8 +15,10 @@ import TextExpand from 'components/TextExpand'
 import Block from 'components/Block'
 import RadioGroup from 'components/RadioGroup'
 import HeatMap from 'components/data-visualisation/HeatMap'
+import Tracker from 'components/data-visualisation/Tracker'
 
 import { Table, AxisLabel } from 'styles/base-components'
+import variables from 'styles/variables'
 import gatewayImage from 'assets/the-things-gateway.jpg'
 
 import dataPackets from './data-packets.json'
@@ -141,6 +145,18 @@ class gateway extends Component {
                 let width = dimensions.width - margin.left - margin.right
                 let height = dimensions.height - margin.top - margin.bottom
                 let { data } = dataPackets
+                let initialPosition = [
+                  {
+                    x: data[data.length / 2].date,
+                    y: data[data.length / 2].downlinks,
+                    color: variables.red
+                  },
+                  {
+                    x: data[data.length / 2].date,
+                    y: data[data.length / 2].uplinks,
+                    color: variables.green
+                  }
+                ]
 
                 let x = scaleTime()
                   .domain(extent(data.map(({ date }) => new Date(date))))
@@ -163,6 +179,28 @@ class gateway extends Component {
                   .y(({ downlinks }) => y(downlinks))
                   .curve(curveCardinal)
 
+                let handleMouseMove = (previousPositions, ref) => {
+                  let xValue = x.invert(mouse(ref)[0])
+                  let yIndex = data.findIndex(({ date }) =>
+                    isSameDay(xValue, new Date(date))
+                  )
+
+                  if (yIndex >= 0) {
+                    return [
+                      {
+                        x: xValue,
+                        y: data[yIndex].uplinks,
+                        color: variables.green
+                      },
+                      {
+                        x: xValue,
+                        y: data[yIndex].downlinks,
+                        color: variables.red
+                      }
+                    ]
+                  }
+                }
+
                 return (
                   <Axis
                     width={width}
@@ -183,6 +221,15 @@ class gateway extends Component {
                     </AxisLabel>
                     <LineGreen d={uplinksLineGenerator(data)} />
                     <LineRed d={downlinksLineGenerator(data)} />
+                    <Tracker
+                      data={data}
+                      initialPosition={initialPosition}
+                      handleMouseMove={handleMouseMove}
+                      width={width}
+                      height={height}
+                      x={x}
+                      y={y}
+                    />
                   </Axis>
                 )
               }}

@@ -5,14 +5,17 @@ import { line, curveCardinal } from 'd3-shape'
 import { extent } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
 import { format } from 'd3-format'
+import { mouse } from 'd3-selection'
+import isSameYear from 'date-fns/is_same_year'
 
 import Layout from 'components/Layout'
 import Axis from 'components/data-visualisation/Axis'
 import ResponsiveChart from 'components/data-visualisation/ResponsiveChart'
 import Tracker from 'components/data-visualisation/Tracker'
 import Block from 'components/Block'
-import { AxisLabel } from 'styles/base-components'
 
+import { AxisLabel } from 'styles/base-components'
+import variables from 'styles/variables'
 import { LinePresent, LineFuture, H2 } from './Introduction.style'
 
 let IoTGlobalMarketChart = () => (
@@ -39,6 +42,13 @@ let IoTGlobalMarketChart = () => (
             let margin = { top: 60, right: 60, bottom: 60, left: 60 }
             let width = dimensions.width - margin.left - margin.right
             let height = dimensions.height - margin.top - margin.bottom
+            let initialPosition = [
+              {
+                x: data[currentYear].year,
+                y: data[currentYear].value,
+                color: variables.red
+              }
+            ]
 
             let x = scaleTime()
               .domain(extent(data.map(({ year }) => new Date(year))))
@@ -53,6 +63,21 @@ let IoTGlobalMarketChart = () => (
               .y(({ value }) => y(value))
               .curve(curveCardinal)
 
+            let handleMoveMouse = (previousPositions, ref) => {
+              let xValue = x.invert(mouse(ref)[0])
+              let yIndex = data.findIndex(({ year }) =>
+                isSameYear(xValue, new Date(year))
+              )
+
+              if (yIndex >= 0) {
+                return previousPositions.map(({ color }) => ({
+                  x: new Date(xValue.getFullYear(), 0, 0),
+                  y: data[yIndex].value,
+                  color
+                }))
+              }
+            }
+
             return (
               <Axis
                 data={ioTJson.years}
@@ -66,6 +91,7 @@ let IoTGlobalMarketChart = () => (
                 }
                 yTickFormat={tick => format('.2s')(tick).replace(/G/, 'B')}
                 title="IoT global market"
+                textAnchorMiddle
               >
                 <AxisLabel y="-30" x={-50}>
                   Billions
@@ -78,7 +104,9 @@ let IoTGlobalMarketChart = () => (
                 />
                 <LineFuture d={lineGenerator(data.slice(currentYear))} />
                 <Tracker
-                  initialPosition={data[currentYear]}
+                  data={ioTJson.years}
+                  initialPosition={initialPosition}
+                  handleMoveMouse={handleMoveMouse}
                   width={width}
                   height={height}
                   x={x}
