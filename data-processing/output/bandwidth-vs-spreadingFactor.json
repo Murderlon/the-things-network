@@ -1,0 +1,30 @@
+{
+  "bandwidths": [
+    {
+      "mhz": 125,
+      "spreadingFactors": [
+        {"value": 7, "uplinks": 32067515, "downlinks": 860956},
+        {"value": 8, "uplinks": 4151911, "downlinks": 68430},
+        {"value": 9, "uplinks": 6614327, "downlinks": 1063633},
+        {"value": 10, "uplinks": 6526952, "downlinks": 57412},
+        {"value": 11, "uplinks": 2109208, "downlinks": 366},
+        {"value": 12, "uplinks": 16970601, "downlinks": 225463}
+      ]
+    },
+    {
+      "mhz": 250,
+      "spreadingFactors": [{"value": 7, "uplinks": 7363, "downlinks": 0}]
+    },
+    {
+      "mhz": 500,
+      "spreadingFactors": [
+        {"value": 7, "uplinks": 0, "downlinks": 151567},
+        {"value": 8, "uplinks": 136341, "downlinks": 12413},
+        {"value": 9, "uplinks": 0, "downlinks": 27873},
+        {"value": 10, "uplinks": 0, "downlinks": 106125},
+        {"value": 11, "uplinks": 0, "downlinks": 183},
+        {"value": 12, "uplinks": 0, "downlinks": 41277}
+      ]
+    }
+  ]
+}
