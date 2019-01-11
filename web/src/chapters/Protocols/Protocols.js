@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { StaticQuery, graphql } from 'gatsby'
 import scrollama from 'scrollama'
 import { select } from 'd3-selection'
 import { scaleLinear, scaleSqrt } from 'd3-scale'
@@ -15,33 +14,9 @@ import variables from 'styles/variables'
 
 import { H2, SubGrid, Step } from './Protocols.style'
 
-export default () => (
-  <StaticQuery
-    query={graphql`
-      query {
-        protocolsJson {
-          protocols {
-            protocol
-            description
-            powerUsage
-            cost
-            range
-            rangeAsText
-            pros
-            cons
-            useCases
-          }
-        }
-      }
-    `}
-    render={data => {
-      let { protocols } = data.protocolsJson
-      return <Protocols data={protocols} />
-    }}
-  />
-)
+import data from './protocols.json'
 
-class Protocols extends Component {
+export default class Protocols extends Component {
   state = {
     currentStep: 0
   }
@@ -89,6 +64,7 @@ class Protocols extends Component {
   }
 
   render() {
+    let { protocols } = data
     return (
       <Layout.ParentGrid as="section" id="scroll">
         <Layout.SubGrid fullWidth>
@@ -104,7 +80,6 @@ class Protocols extends Component {
                 let height = dimensions.height - margin.top - margin.bottom
                 let xLabels = ['Cheap', 'Mid', 'Expensive']
                 let yLabels = ['Low', 'Mid', 'High']
-                let { data } = this.props
                 let { currentStep } = this.state
 
                 let x = scaleLinear()
@@ -116,7 +91,7 @@ class Protocols extends Component {
                   .range([height, 0])
 
                 let r = scaleSqrt()
-                  .domain(extent(data.map(({ range }) => range)))
+                  .domain(extent(protocols.map(({ range }) => range)))
                   .range([10, width / 4])
 
                 let yTickFormat = (tick, index) =>
@@ -156,47 +131,51 @@ class Protocols extends Component {
                     xNumberTicks={3}
                     yNumberTicks={3}
                   >
-                    {data.map(({ protocol, cost, powerUsage, range }, i) => (
-                      <g
-                        key={protocol}
-                        fillOpacity={currentStep > i ? 0.3 : 1}
-                        transform={`translate(${x(cost)}, ${y(powerUsage)})`}
-                      >
-                        <Spring
-                          from={{ r: currentStep >= i ? 0 : r(range) }}
-                          to={{ r: currentStep >= i ? r(range) : 0 }}
+                    {protocols.map(
+                      ({ protocol, cost, powerUsage, range }, i) => (
+                        <g
+                          key={protocol}
+                          fillOpacity={currentStep > i ? 0.3 : 1}
+                          transform={`translate(${x(cost)}, ${y(powerUsage)})`}
                         >
-                          {props =>
-                            props.r > 0 ? (
-                              <circle {...props} fill={variables.green} />
-                            ) : null
-                          }
-                        </Spring>
-                        <Spring
-                          from={{ opacity: currentStep >= i ? 0 : 1 }}
-                          to={{ opacity: currentStep >= i ? 1 : 0 }}
-                        >
-                          {props => (
-                            <text
-                              textAnchor={i <= 1 ? 'start' : 'middle'}
-                              dx={i <= 1 ? r(range) + 10 : null}
-                              dy={5}
-                              fill={i <= 1 ? 'white' : variables.secondaryBlue}
-                              style={props}
-                            >
-                              {protocol}
-                            </text>
-                          )}
-                        </Spring>
-                      </g>
-                    ))}
+                          <Spring
+                            from={{ r: currentStep >= i ? 0 : r(range) }}
+                            to={{ r: currentStep >= i ? r(range) : 0 }}
+                          >
+                            {props =>
+                              props.r > 0 ? (
+                                <circle {...props} fill={variables.green} />
+                              ) : null
+                            }
+                          </Spring>
+                          <Spring
+                            from={{ opacity: currentStep >= i ? 0 : 1 }}
+                            to={{ opacity: currentStep >= i ? 1 : 0 }}
+                          >
+                            {props => (
+                              <text
+                                textAnchor={i <= 1 ? 'start' : 'middle'}
+                                dx={i <= 1 ? r(range) + 10 : null}
+                                dy={5}
+                                fill={
+                                  i <= 1 ? 'white' : variables.secondaryBlue
+                                }
+                                style={props}
+                              >
+                                {protocol}
+                              </text>
+                            )}
+                          </Spring>
+                        </g>
+                      )
+                    )}
                   </Axis>
                 )
               }}
             </ResponsiveChart>
           </Block.Primary>
           <Block.Secondary className="scroll__text">
-            {this.props.data.map(
+            {protocols.map(
               ({
                 protocol,
                 description,

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import scrollama from 'scrollama'
-import { StaticQuery, graphql } from 'gatsby'
 import { geoCircle } from 'd3-geo'
 import { select } from 'd3-selection'
 import interpolatePath from 'd3-interpolate-path/src/interpolatePath'
@@ -20,31 +19,9 @@ import {
   Legend
 } from './TheThingsNetwork.style'
 
-export default () => (
-  <StaticQuery
-    query={graphql`
-      query {
-        poCJson {
-          type
-          features {
-            type
-            properties {
-              id
-              name
-            }
-            geometry {
-              type
-              coordinates
-            }
-          }
-        }
-      }
-    `}
-    render={data => <TheThingsNetwork data={data.poCJson} />}
-  />
-)
+import data from './proof-of-concept.json'
 
-class TheThingsNetwork extends Component {
+export default class TheThingsNetwork extends Component {
   state = {
     currentStep: 0,
     isInsideContainer: false
@@ -102,7 +79,7 @@ class TheThingsNetwork extends Component {
 
   render() {
     let { currentStep, isInsideContainer } = this.state
-    let { features } = this.props.data
+    let { features } = data
     let circumference = 6371000 * Math.PI * 2
     let angle = (2500 / circumference) * 360
 
@@ -123,7 +100,7 @@ class TheThingsNetwork extends Component {
               {props => (
                 <ResponsiveChart style={props} classProp="chart">
                   {dimensions => (
-                    <MapBaseGroup {...dimensions} extent={this.props.data}>
+                    <MapBaseGroup {...dimensions} extent={data}>
                       {generators => (
                         <>
                           <TileLayer {...dimensions} {...generators} />

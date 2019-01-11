@@ -13,7 +13,7 @@ import ResponsiveChart from 'components/data-visualisation/ResponsiveChart'
 import BandAxis from './BandAxis'
 
 import variables from 'styles/variables'
-import bandwidth from 'data/bandwidth.json'
+import data from 'data/bandwidth-vs-spreadingFactor.json'
 
 let TickText = styled.text`
   font-family: ${variables.monoTypo};
@@ -25,16 +25,15 @@ let TickConditionalText = styled(TickText)`
   fill: ${({ backgroundColor }) => readableColor(backgroundColor)};
 `
 
-let { bandwidths } = bandwidth
-let spreadingFactors = bandwidths.map(({ spreading_factors }) =>
-  spreading_factors.map(({ spreading_factor }) => spreading_factor)
-)
+let { bandwidths } = data
+
 let sfExtent = flattenDeep(
-  bandwidths.map(({ spreading_factors }) =>
-    spreading_factors.map(({ uplinks, downlinks }) => uplinks + downlinks)
+  bandwidths.map(({ spreadingFactors }) =>
+    spreadingFactors.map(({ uplinks, downlinks }) => uplinks + downlinks)
   )
 )
 let total = sfExtent.reduce((acc, value) => acc + value, 0)
+console.log(total)
 
 export default ({ isScaleSpeed }) => {
   return (
@@ -52,7 +51,7 @@ export default ({ isScaleSpeed }) => {
         let coefficient = 3.489818456067459
 
         let x = scaleBand()
-          .domain(flattenDeep(spreadingFactors).sort((a, b) => a - b))
+          .domain([7, 8, 9, 10, 11, 12])
           .range([0, width])
 
         let y = scaleBand()
@@ -78,21 +77,22 @@ export default ({ isScaleSpeed }) => {
             yLabel="Bandwidth (kHz)"
             xLabel="Spreading factor"
           >
-            {bandwidths.map((bw, BWIndex) => {
-              let sorted = bw.spreading_factors.sort(
-                (a, b) => a.spreading_factor - b.spreading_factor
-              )
-              return Array.from({ length: 6 }).map((_, SFIndex) => {
+            {bandwidths.map(({ spreadingFactors }, BWIndex) =>
+              Array.from({ length: 6 }).map((_, SFIndex) => {
                 let speed = Math.round(
                   Math.pow(coefficient, BWIndex + (6 - SFIndex))
                 )
-                let usage = sorted[SFIndex]
-                  ? sorted[SFIndex].uplinks + sorted[SFIndex].downlinks
+
+                let usage = spreadingFactors[SFIndex]
+                  ? spreadingFactors[SFIndex].uplinks +
+                    spreadingFactors[SFIndex].downlinks
                   : 0
-                let translate = `translate(${Math.round(
-                  x.step() * SFIndex
-                )}, ${Math.round((y.step() / 2) * BWIndex + rectWidth / 2)})`
-                let relativeUsage = Math.round((100 / total) * usage)
+
+                let translate = `translate(
+                  ${Math.round(x.step() * SFIndex)},
+                  ${Math.round((y.step() / 2) * BWIndex + rectWidth / 2)})`
+
+                let relativeUsage = Math.ceil((100 / total) * usage)
 
                 return (
                   <g key={(SFIndex += BWIndex)} transform={translate}>
@@ -140,7 +140,7 @@ export default ({ isScaleSpeed }) => {
                   </g>
                 )
               })
-            })}
+            )}
           </BandAxis>
         )
       }}

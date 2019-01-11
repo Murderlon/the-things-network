@@ -1,5 +1,4 @@
 import React, { Component, createRef } from 'react'
-import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 import versor from 'versor'
 import * as topoJSON from 'topojson-client'
@@ -9,10 +8,12 @@ import { mouse, select } from 'd3-selection'
 import world from 'world-atlas/world/110m.json'
 import schedule from 'raf-schd'
 import { Spring } from 'react-spring'
+import { format } from 'd3-format'
 
 import TTNLogo from 'assets/ttn-logo.svg'
-
 import variables from 'styles/variables'
+
+import data from 'data/gateway-locations.json'
 
 let Root = styled.div`
   width: 100vw;
@@ -62,29 +63,7 @@ let Canvas = styled.canvas`
   cursor: move;
 `
 
-export default props => (
-  <StaticQuery
-    query={graphql`
-      query {
-        gatewaysJson {
-          type
-          features {
-            type
-            geometry {
-              type
-              coordinates
-            }
-          }
-        }
-      }
-    `}
-    render={({ gatewaysJson }) => {
-      return <OrthographicWorld gateways={gatewaysJson} {...props} />
-    }}
-  />
-)
-
-class OrthographicWorld extends Component {
+export default class OrthographicWorld extends Component {
   projection = geoOrthographic()
   sphere = { type: 'Sphere' }
   land = topoJSON.feature(world, world.objects.land)
@@ -209,7 +188,6 @@ class OrthographicWorld extends Component {
   renderCanvas = () => {
     if (!this.canvasRef.current) return
     let { width, height } = this.state
-    let { gateways } = this.props
     let context = this.canvasRef.current.getContext('2d')
 
     let path = geoPath(this.projection, context)
@@ -231,7 +209,7 @@ class OrthographicWorld extends Component {
     context.stroke()
 
     context.beginPath()
-    path(gateways)
+    path(data.geoJSON)
     context.fillStyle = variables.green
     context.fill()
   }
@@ -293,8 +271,10 @@ class OrthographicWorld extends Component {
               <TTNLogo />
               <p>
                 <span>
-                  <span className="highlight">17.456</span> gateways placed by
-                  the people
+                  <span className="highlight">
+                    {format(',')(data.gatewayTotal)}
+                  </span>{' '}
+                  gateways placed by the people
                 </span>
               </p>
             </LogoWrapper>

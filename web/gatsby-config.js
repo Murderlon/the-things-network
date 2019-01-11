@@ -11,7 +11,7 @@ module.exports = {
         assets: path.join(__dirname, 'src/assets'),
         chapters: path.join(__dirname, 'src/chapters'),
         components: path.join(__dirname, 'src/components'),
-        data: path.join(__dirname, 'src/data'),
+        data: path.join(__dirname, '../data-processing/output'),
         helpers: path.join(__dirname, 'src/helpers'),
         pages: path.join(__dirname, 'src/pages'),
         styles: path.join(__dirname, 'src/styles')

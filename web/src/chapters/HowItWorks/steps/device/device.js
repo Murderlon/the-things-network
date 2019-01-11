@@ -7,7 +7,7 @@ import RadioImage from 'components/RadioImage'
 
 import { Table } from 'styles/base-components'
 
-import devices from 'data/devices.json'
+import devices from './devices.json'
 import theThingsUnoImage from 'assets/the-things-uno.jpg'
 import sodaqOneImage from 'assets/sodaq-one.png'
 import useCases from './use-cases'
