@@ -108,22 +108,43 @@ export default class OrthographicWorld extends Component {
     return true
   }
 
-  componentDidUpdate() {
-    let { isDragging } = this.state
+  componentDidUpdate(prevProps, prevState) {
+    let { isDragging, width, height } = this.state
     let { currentStep, isInsideContainer } = this.props
     let isVisible = currentStep === 3 && isInsideContainer
 
-    if (isVisible && !isDragging) {
+    if ((this.rotateInterval && !isVisible) || isDragging) {
+      this.rotateInterval = null
+      clearInterval(this.rotateInterval)
+    }
+
+    if (
+      isVisible &&
+      !isDragging &&
+      width === prevState.width &&
+      height === prevState.height &&
+      currentStep !== prevProps.currentStep
+    ) {
       this.start = Date.now()
       this.revealCanvas()
     }
 
-    if (currentStep === 2) {
-      this.clearCanvas()
+    if (
+      isVisible &&
+      !isDragging &&
+      currentStep === prevProps.currentStep &&
+      (width !== prevState.width || height !== prevState.height)
+    ) {
+      this.projection
+        .fitExtent([[1, 1], [width / 1.5, height / 1.5]], this.sphere)
+        .translate([width / 2, height / 2])
+        .precision(1)
+
+      this.renderCanvas()
     }
 
-    if ((this.rotateInterval && !isVisible) || isDragging) {
-      clearInterval(this.rotateInterval)
+    if (currentStep === 2 && currentStep !== prevProps.currentStep) {
+      this.clearCanvas()
     }
   }
 
@@ -131,6 +152,8 @@ export default class OrthographicWorld extends Component {
     window.removeEventListener('resize', this.handleResize)
     clearInterval(this.scaleInterval)
     clearInterval(this.rotateInterval)
+    this.scaleInterval = null
+    this.rotateInterval = null
   }
 
   handleResize = schedule(() => {
@@ -170,11 +193,18 @@ export default class OrthographicWorld extends Component {
           return
         }
         clearInterval(this.scaleInterval)
+        this.scaleInterval = null
         this.projection
           .fitExtent([[1, 1], [width / 1.5, height / 1.5]], this.sphere)
           .translate([width / 2, height / 2])
           .precision(1)
-        this.rotateInterval = setInterval(schedule(() => this.rotate()))
+        this.rotateInterval = setInterval(
+          schedule(() => {
+            if (this.rotateInterval) {
+              return this.rotate()
+            }
+          })
+        )
         select(context.canvas).call(
           this.dragging().on('drag.render', this.renderCanvas)
         )
