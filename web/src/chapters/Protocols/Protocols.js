@@ -18,7 +18,7 @@ import data from './protocols.json'
 
 export default class Protocols extends Component {
   breakpoint = '60rem'
-  mq = window.matchMedia(`(min-width: ${this.breakpoint})`)
+  mq = null
 
   state = {
     currentStep: 0,
@@ -26,6 +26,7 @@ export default class Protocols extends Component {
   }
 
   componentDidMount() {
+    this.mq = window.matchMedia(`(min-width: ${this.breakpoint})`)
     this.setState({ hasLargeScreen: this.mq.matches }, this.setupScrollama)
     this.mq.addListener(this.updateLayout)
   }
