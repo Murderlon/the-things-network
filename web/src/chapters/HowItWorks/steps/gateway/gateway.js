@@ -6,7 +6,7 @@ import { extent, min, max } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
 import { format } from 'd3-format'
 import { mouse } from 'd3-selection'
-import isSameDay from 'date-fns/is_same_day'
+import closestIndexTo from 'date-fns/closest_index_to'
 
 import Layout from 'components/Layout'
 import ResponsiveChart from 'components/data-visualisation/ResponsiveChart'
@@ -22,7 +22,7 @@ import { Table, AxisLabel } from 'styles/base-components'
 import variables from 'styles/variables'
 import gatewayImage from 'assets/the-things-gateway.jpg'
 
-import dataPackets from './data-packets.json'
+import dataPackets from 'data/gateway-packets.json'
 import { H3, LineGreen, LineRed, Context } from './gateway.style'
 
 class gateway extends Component {
@@ -155,61 +155,58 @@ class gateway extends Component {
                 let margin = { top: 60, right: 60, bottom: 60, left: 60 }
                 let width = dimensions.width - margin.left - margin.right
                 let height = dimensions.height - margin.top - margin.bottom
-                let { data } = dataPackets
+                let { days } = dataPackets
+                let dates = days.map(({ time }) => time)
                 let initialPosition = [
                   {
-                    x: data[data.length / 2].date,
-                    y: data[data.length / 2].downlinks,
+                    x: days[Math.floor(days.length / 2)].time,
+                    y: days[Math.floor(days.length / 2)].downlink_count,
                     color: variables.red
                   },
                   {
-                    x: data[data.length / 2].date,
-                    y: data[data.length / 2].uplinks,
+                    x: days[Math.floor(days.length / 2)].time,
+                    y: days[Math.floor(days.length / 2)].uplink_count,
                     color: variables.green
                   }
                 ]
 
                 let x = scaleTime()
-                  .domain(extent(data.map(({ date }) => new Date(date))))
+                  .domain(extent(days.map(({ time }) => new Date(time))))
                   .range([0, width])
 
                 let y = scaleLinear()
                   .domain([
-                    min(data.map(({ downlinks }) => downlinks)),
-                    max(data.map(({ uplinks }) => uplinks))
+                    min(days.map(({ downlink_count }) => downlink_count)),
+                    max(days.map(({ uplink_count }) => uplink_count))
                   ])
                   .range([height, 0])
 
                 let uplinksLineGenerator = line()
-                  .x(({ date }) => x(new Date(date)))
-                  .y(({ uplinks }) => y(uplinks))
+                  .x(({ time }) => x(new Date(time)))
+                  .y(({ uplink_count }) => y(uplink_count))
                   .curve(curveCardinal)
 
                 let downlinksLineGenerator = line()
-                  .x(({ date }) => x(new Date(date)))
-                  .y(({ downlinks }) => y(downlinks))
+                  .x(({ time }) => x(new Date(time)))
+                  .y(({ downlink_count }) => y(downlink_count))
                   .curve(curveCardinal)
 
                 let handleMouseMove = ref => {
                   let xValue = x.invert(mouse(ref)[0])
-                  let yIndex = data.findIndex(({ date }) =>
-                    isSameDay(xValue, new Date(date))
-                  )
+                  let index = closestIndexTo(xValue, dates)
 
-                  if (yIndex >= 0) {
-                    return [
-                      {
-                        x: xValue,
-                        y: data[yIndex].uplinks,
-                        color: variables.green
-                      },
-                      {
-                        x: xValue,
-                        y: data[yIndex].downlinks,
-                        color: variables.red
-                      }
-                    ]
-                  }
+                  return [
+                    {
+                      x: days[index].time,
+                      y: days[index].uplink_count,
+                      color: variables.green
+                    },
+                    {
+                      x: days[index].time,
+                      y: days[index].downlink_count,
+                      color: variables.red
+                    }
+                  ]
                 }
 
                 return (
@@ -219,19 +216,19 @@ class gateway extends Component {
                     margin={margin}
                     x={x}
                     y={y}
-                    xTickFormat={tick => timeFormat('%b')(tick)}
-                    yTickFormat={tick => format('.2s')(tick)}
-                    xNumberTicks={3}
+                    xTickFormat={tick => timeFormat('%a %d')(tick)}
+                    yTickFormat={tick => format('.1s')(tick)}
+                    xNumberTicks={7}
                     textAnchorMiddle
                   >
                     <AxisLabel y="-20" x={-margin.left + 20}>
                       Data packets recieved
                     </AxisLabel>
-                    <AxisLabel y={height + 50} x={width - margin.right / 2}>
-                      Date
+                    <AxisLabel y={height + 50} x={width - margin.right * 2}>
+                      Date ({timeFormat('%B %Y')(new Date(days[0].time))})
                     </AxisLabel>
-                    <LineGreen d={uplinksLineGenerator(data)} />
-                    <LineRed d={downlinksLineGenerator(data)} />
+                    <LineGreen d={uplinksLineGenerator(days)} />
+                    <LineRed d={downlinksLineGenerator(days)} />
                     <Tracker
                       initialPosition={initialPosition}
                       handleMouseMove={handleMouseMove}

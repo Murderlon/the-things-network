@@ -5,7 +5,7 @@ import { extent } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
 import { format } from 'd3-format'
 import { mouse } from 'd3-selection'
-import isSameYear from 'date-fns/is_same_year'
+import closestIndexTo from 'date-fns/closest_index_to'
 
 import Layout from 'components/Layout'
 import Axis from 'components/data-visualisation/Axis'
@@ -31,6 +31,7 @@ let IoTGlobalMarketChart = () => {
         let margin = { top: 60, right: 60, bottom: 60, left: 60 }
         let width = dimensions.width - margin.left - margin.right
         let height = dimensions.height - margin.top - margin.bottom
+        let dates = years.map(({ year }) => year)
         let initialPosition = [
           {
             x: years[currentYear].year,
@@ -54,19 +55,15 @@ let IoTGlobalMarketChart = () => {
 
         let handleMouseMove = ref => {
           let xValue = x.invert(mouse(ref)[0])
-          let yIndex = years.findIndex(({ year }) =>
-            isSameYear(xValue, new Date(year))
-          )
+          let index = closestIndexTo(xValue, dates)
 
-          if (yIndex >= 0) {
-            return [
-              {
-                x: new Date(xValue.getFullYear(), 0, 0),
-                y: years[yIndex].value,
-                color: variables.red
-              }
-            ]
-          }
+          return [
+            {
+              x: years[index].year,
+              y: years[index].value,
+              color: variables.red
+            }
+          ]
         }
 
         return (
