@@ -22,20 +22,20 @@ export default class Protocols extends Component {
   }
 
   componentDidMount() {
-    this.container = select('#scroll')
-    this.graphic = this.container.select('.scroll__graphic')
-    this.text = this.container.select('.scroll__text')
-    this.step = this.text.selectAll('.step')
+    this.container = select('#scroll-protocol')
+    this.graphic = this.container.select('.scroll-protocol__graphic')
+    this.text = this.container.select('.scroll-protocol__text')
+    this.step = this.text.selectAll('.step-protocol')
 
     this.scroller = scrollama()
     this.handleResize()
 
     this.scroller
       .setup({
-        container: '#scroll',
-        graphic: '.scroll__graphic',
-        text: '.scroll__text',
-        step: '.scroll__text .step',
+        container: '#scroll-protocol',
+        graphic: '.scroll-protocol__graphic',
+        text: '.scroll-protocol__text',
+        step: '.scroll-protocol__text .step-protocol',
         offset: 0.5
       })
       .onStepEnter(this.handleStepEnter)
@@ -66,13 +66,13 @@ export default class Protocols extends Component {
   render() {
     let { protocols } = data
     return (
-      <Layout.ParentGrid as="section" id="scroll">
+      <Layout.ParentGrid as="section" id="scroll-protocol">
         <Layout.SubGrid fullWidth>
           <H2 id="protocols">Protocols</H2>
           <h3>Internet of Things is powered by its connectivity protocols.</h3>
         </Layout.SubGrid>
         <SubGrid>
-          <Block.Primary className="scroll__graphic">
+          <Block.Primary className="scroll-protocol__graphic">
             <ResponsiveChart heightAsWidth>
               {dimensions => {
                 let margin = { top: 60, right: 60, bottom: 60, left: 60 }
@@ -174,7 +174,7 @@ export default class Protocols extends Component {
               }}
             </ResponsiveChart>
           </Block.Primary>
-          <Block.Secondary className="scroll__text">
+          <Block.Secondary className="scroll-protocol__text">
             {protocols.map(
               ({
                 protocol,
@@ -184,7 +184,7 @@ export default class Protocols extends Component {
                 cons,
                 useCases
               }) => (
-                <Step key={protocol} className="step">
+                <Step key={protocol} className="step-protocol">
                   <h4>{protocol}</h4>
                   <p>{description}</p>
                   <p className="range">

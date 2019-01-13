@@ -50,19 +50,19 @@ export let SubGrid = styled(Layout.SubGrid)`
     }
   }
 
-  .step:first-of-type {
+  .step-protocol:first-of-type {
     margin-top: ${variables.spacing.huge};
   }
 
-  .step:last-of-type {
+  .step-protocol:last-of-type {
     height: auto !important;
     margin-bottom: ${variables.spacing.xxlarge};
   }
 
-  .scroll__graphic {
+  .scroll-protocol__graphic {
     position: sticky;
   }
-  .scroll__text {
+  .scroll-protocol__text {
     position: relative;
   }
 `
