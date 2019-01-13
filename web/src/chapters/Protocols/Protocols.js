@@ -17,11 +17,21 @@ import { H2, SubGrid, Step } from './Protocols.style'
 import data from './protocols.json'
 
 export default class Protocols extends Component {
+  breakpoint = '60rem'
+  mq = window.matchMedia(`(min-width: ${this.breakpoint})`)
+
   state = {
-    currentStep: 0
+    currentStep: 0,
+    hasLargeScreen: null
   }
 
   componentDidMount() {
+    this.setState({ hasLargeScreen: this.mq.matches }, this.setupScrollama)
+    this.mq.addListener(this.updateLayout)
+  }
+
+  setupScrollama = () => {
+    let offset = this.state.hasLargeScreen ? 0.5 : 0.9
     this.container = select('#scroll-protocol')
     this.graphic = this.container.select('.scroll-protocol__graphic')
     this.text = this.container.select('.scroll-protocol__text')
@@ -36,7 +46,7 @@ export default class Protocols extends Component {
         graphic: '.scroll-protocol__graphic',
         text: '.scroll-protocol__text',
         step: '.scroll-protocol__text .step-protocol',
-        offset: 0.5
+        offset
       })
       .onStepEnter(this.handleStepEnter)
     // setup resize event
@@ -45,14 +55,22 @@ export default class Protocols extends Component {
   }
 
   componentWillUnmount() {
+    this.mq.removeListener(this.updateLayout)
     window.removeEventListener('resize', this.handleResize)
     this.scroller.destroy()
   }
 
+  updateLayout = ({ matches }) => {
+    this.setState({ hasLargeScreen: matches })
+  }
+
   handleResize = () => {
+    let { hasLargeScreen } = this.state
     let stepHeight = Math.floor(window.innerHeight)
-    let graphicHeight = Math.floor(window.innerHeight / 2)
-    let graphicMarginTop = Math.floor(graphicHeight / 3)
+    let graphicHeight = Math.floor(
+      window.innerHeight / (hasLargeScreen ? 2 : 15)
+    )
+    let graphicMarginTop = Math.floor(graphicHeight / (hasLargeScreen ? 3 : 15))
 
     this.step.style('height', stepHeight + 'px')
     this.graphic.style('top', graphicMarginTop + 'px')

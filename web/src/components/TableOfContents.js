@@ -12,6 +12,7 @@ import Four from '../assets/four.svg'
 
 let Section = styled.section`
   margin-bottom: ${variables.spacing.enormous};
+  grid-column: 1 / 7;
   @media screen and (min-width: 60rem) {
     grid-column: 2 / 8;
   }

@@ -79,7 +79,7 @@ export let MapGraphic = styled.div`
 export let Legend = styled.div`
   position: absolute;
   left: 0;
-  top: 50%;
+  top: 0;
   background: ${variables.secondaryBlue};
   margin: ${variables.spacing.large};
   padding: ${variables.spacing.small};

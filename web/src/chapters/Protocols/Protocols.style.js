@@ -42,14 +42,6 @@ export let Step = styled.div`
 export let SubGrid = styled(Layout.SubGrid)`
   position: relative;
 
-  > div:first-of-type {
-    height: 50vw;
-
-    @media screen and (min-width: 100rem) {
-      height: 33.333vw;
-    }
-  }
-
   .step-protocol:first-of-type {
     margin-top: ${variables.spacing.huge};
   }
@@ -61,8 +53,10 @@ export let SubGrid = styled(Layout.SubGrid)`
 
   .scroll-protocol__graphic {
     position: sticky;
+    z-index: 1;
   }
   .scroll-protocol__text {
     position: relative;
+    z-index: 0;
   }
 `

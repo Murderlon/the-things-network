@@ -34,8 +34,10 @@ let LogoWrapper = styled.div`
   top: 0;
   bottom: 0;
   margin: auto;
-  width: 15rem;
-  height: 15rem;
+  width: 30%;
+  max-width: 15rem;
+  height: 30%;
+  max-height: 15rem;
   display: flex;
   flex-direction: column;
   align-items: center;

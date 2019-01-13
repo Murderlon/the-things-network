@@ -35,10 +35,14 @@ let Section = styled.section`
   }
 
   p {
-    font-size: ${modularScale(2)};
+    font-size: ${modularScale(1)};
     font-style: italic;
     max-width: 40rem;
+    padding 0 ${variables.spacing.small};
     margin: ${variables.spacing.medium} auto;
+    @media screen and (min-width: 60rem) {
+      font-size: ${modularScale(2)};
+    }
   }
 
   cite {
