@@ -17,13 +17,6 @@ module.exports = {
         styles: path.join(__dirname, 'src/styles')
       }
     },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: path.join(__dirname, 'src/data')
-      }
-    },
-    'gatsby-transformer-json',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     'gatsby-plugin-react-svg'
