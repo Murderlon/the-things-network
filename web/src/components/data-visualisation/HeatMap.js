@@ -33,7 +33,6 @@ let sfExtent = flattenDeep(
   )
 )
 let total = sfExtent.reduce((acc, value) => acc + value, 0)
-console.log(total)
 
 export default ({ isScaleSpeed }) => {
   return (
