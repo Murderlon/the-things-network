@@ -1,18 +1,22 @@
+import React, { Component } from 'react'
 import styled, { keyframes } from 'styled-components'
 import modularScale from '../styles/modular-scale'
 
+import Logo from 'assets/ttn-stacked.svg'
+
 import vars from '../styles/variables'
 
-let bounce = keyframes`
+let fly = keyframes`
   from {
-    transform: translateY(0px);
-  }
+    transform: translateX(0vw)
+   }
   to {
-    transform: translateY(8px);
+    transform: translateX(-170vw) 
   }
 `
 
-export default styled.header`
+let Header = styled.header`
+  position: relative;
   height: 100vh;
   grid-column: 2 / 6;
   display: flex;
@@ -32,18 +36,6 @@ export default styled.header`
     display: inline-block;
     width: 100%;
     height: inherit;
-
-      path {
-        animation: ${bounce} 0.5s infinite alternate;
-        transition-timing-function: ${vars.timingFunction};
-      }
-      path:nth-of-type(2) {
-        animation-delay: 50ms;
-      }
-      path:nth-of-type(3) {
-        animation-delay: 100ms;
-      }
-    }
   }
 
   @media screen and (min-width: 60rem) {
@@ -53,7 +45,7 @@ export default styled.header`
 
     h1 {
       grid-column: 1 / 7;
-      
+
       div {
         width: 100%;
       }
@@ -78,3 +70,140 @@ export default styled.header`
     }
   }
 `
+
+const Downlink = styled.div`
+  position: absolute;
+  display: flex;
+  top: calc(100vw / 18 * ${p => p.position});
+  right: -60vw;
+  animation: ${fly} 4s infinite linear;
+  z-index: -10;
+
+  div {
+    background: ${vars.red};
+    width: calc(100vw / 18);
+    height: calc(100vw / 18);
+
+    &:first-of-type {
+      opacity: 0.8;
+    }
+    &:nth-of-type(2) {
+      opacity: 0.7;
+    }
+    &:nth-of-type(3) {
+      opacity: 0.6;
+    }
+    &:nth-of-type(4) {
+      opacity: 0.5;
+    }
+    &:nth-of-type(5) {
+      opacity: 0.4;
+    }
+    &:nth-of-type(6) {
+      opacity: 0.3;
+    }
+    &:nth-of-type(7) {
+      opacity: 0.2;
+    }
+  }
+`
+
+const Uplink = styled(Downlink)`
+  animation-direction: reverse;
+  animation-delay: 2000ms;
+  top: calc(100vw / 18 * ${p => p.position});
+  flex-direction: row-reverse;
+
+  div {
+    background: ${vars.green};
+  }
+`
+
+let randomPosition = () => Math.floor(Math.random() * (9 - 1 + 1) + 1)
+
+export default class HeaderClass extends Component {
+  state = {
+    randomDownlinkPosition: Math.floor(Math.random() * (9 - 6 + 1) + 6),
+    randomUplinkPosition: Math.floor(Math.random() * (5 - 1 + 1) + 1)
+  }
+
+  setDownlinkPosition = () => {
+    let pos = randomPosition()
+    let state
+
+    if (pos !== this.state.randomUplinkPosition) {
+      state = pos
+    }
+
+    state = randomPosition()
+
+    this.setState({
+      randomDownlinkPosition: state
+    })
+  }
+
+  setUplinkPosition = () => {
+    let pos = randomPosition()
+    let state
+
+    if (pos !== this.state.randomDownlinkPosition) {
+      state = pos
+    }
+
+    state = randomPosition()
+
+    this.setState({
+      randomUplinkPosition: state
+    })
+  }
+
+  componentDidMount() {
+    this.downlinkInterval = setInterval(this.setDownlinkPosition, 4060)
+    let timeout = setTimeout(() => {
+      this.uplinkInterval = setInterval(this.setUplinkPosition, 4060)
+      clearTimeout(timeout)
+    }, 2000)
+  }
+
+  componentWillUnMount() {
+    clearInterval(this.downlinkInterval)
+    clearInterval(this.uplinkInterval)
+  }
+
+  render() {
+    return (
+      <Header>
+        <h1>
+          <Logo />
+        </h1>
+        <p>
+          An interactive experience. Learn about{' '}
+          <span className="highlight">LoRaWAN</span>, a new protocol for the
+          Internet of Things and how{' '}
+          <span className="highlight">The Things Network</span>, a
+          community-powered and distributed network,{' '}
+          <span className="highlight">can help you leverage it.</span>
+        </p>
+
+        <Downlink position={this.state.randomDownlinkPosition}>
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </Downlink>
+        <Uplink position={this.state.randomUplinkPosition}>
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </Uplink>
+      </Header>
+    )
+  }
+}
