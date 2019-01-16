@@ -6,17 +6,7 @@ import Logo from 'assets/ttn-stacked.svg'
 
 import vars from '../styles/variables'
 
-let fly = keyframes`
-  from {
-    transform: translateX(0vw)
-   }
-  to {
-    transform: translateX(-170vw) 
-  }
-`
-
 let Header = styled.header`
-  position: relative;
   height: 100vh;
   grid-column: 2 / 6;
   display: flex;
@@ -71,105 +61,58 @@ let Header = styled.header`
   }
 `
 
-const Downlink = styled.div`
-  position: absolute;
-  display: flex;
-  top: calc(100vw / 18 * ${p => p.position});
-  right: -60vw;
-  animation: ${fly} 4s infinite linear;
-  z-index: -10;
+// const Downlink = styled.div`
+//   position: absolute;
+//   display: flex;
+//   top: calc(100vw / 6 * 3);
+//   /* right: 0vw; */
+//   right: -116.666666667vw;
+//   animation: ${fly} 5s infinite steps(6);
+//   z-index: -10;
 
-  div {
-    background: ${vars.red};
-    width: calc(100vw / 18);
-    height: calc(100vw / 18);
+//   div {
+//     background: ${vars.red};
+//     width: calc(100vw / 6);
+//     height: calc(100vw / 6);
 
-    &:first-of-type {
-      opacity: 0.8;
-    }
-    &:nth-of-type(2) {
-      opacity: 0.7;
-    }
-    &:nth-of-type(3) {
-      opacity: 0.6;
-    }
-    &:nth-of-type(4) {
-      opacity: 0.5;
-    }
-    &:nth-of-type(5) {
-      opacity: 0.4;
-    }
-    &:nth-of-type(6) {
-      opacity: 0.3;
-    }
-    &:nth-of-type(7) {
-      opacity: 0.2;
-    }
-  }
-`
+//     &:first-of-type {
+//       opacity: 0.8;
+//     }
+//     &:nth-of-type(2) {
+//       opacity: 0.7;
+//     }
+//     &:nth-of-type(3) {
+//       opacity: 0.6;
+//     }
+//     &:nth-of-type(4) {
+//       opacity: 0.5;
+//     }
+//     &:nth-of-type(5) {
+//       opacity: 0.4;
+//     }
+//     &:nth-of-type(6) {
+//       opacity: 0.3;
+//     }
+//     &:nth-of-type(7) {
+//       opacity: 0.2;
+//     }
+//   }
+// `
 
-const Uplink = styled(Downlink)`
-  animation-direction: reverse;
-  animation-delay: 2000ms;
-  top: calc(100vw / 18 * ${p => p.position});
-  flex-direction: row-reverse;
+// const Uplink = styled(Downlink)`
+//   animation-delay: 2000ms;
+//   right: 0vw;
+//   top: calc(100vw / 18 * ${p => p.position});
+//   flex-direction: row-reverse;
 
-  div {
-    background: ${vars.green};
-  }
-`
+//   div {
+//     background: ${vars.green};
+//   }
+// `
 
 let randomPosition = () => Math.floor(Math.random() * (9 - 1 + 1) + 1)
 
 export default class HeaderClass extends Component {
-  state = {
-    randomDownlinkPosition: Math.floor(Math.random() * (9 - 6 + 1) + 6),
-    randomUplinkPosition: Math.floor(Math.random() * (5 - 1 + 1) + 1)
-  }
-
-  setDownlinkPosition = () => {
-    let pos = randomPosition()
-    let state
-
-    if (pos !== this.state.randomUplinkPosition) {
-      state = pos
-    }
-
-    state = randomPosition()
-
-    this.setState({
-      randomDownlinkPosition: state
-    })
-  }
-
-  setUplinkPosition = () => {
-    let pos = randomPosition()
-    let state
-
-    if (pos !== this.state.randomDownlinkPosition) {
-      state = pos
-    }
-
-    state = randomPosition()
-
-    this.setState({
-      randomUplinkPosition: state
-    })
-  }
-
-  componentDidMount() {
-    this.downlinkInterval = setInterval(this.setDownlinkPosition, 4060)
-    let timeout = setTimeout(() => {
-      this.uplinkInterval = setInterval(this.setUplinkPosition, 4060)
-      clearTimeout(timeout)
-    }, 2000)
-  }
-
-  componentWillUnMount() {
-    clearInterval(this.downlinkInterval)
-    clearInterval(this.uplinkInterval)
-  }
-
   render() {
     return (
       <Header>
@@ -184,25 +127,6 @@ export default class HeaderClass extends Component {
           community-powered and distributed network,{' '}
           <span className="highlight">can help you leverage it.</span>
         </p>
-
-        <Downlink position={this.state.randomDownlinkPosition}>
-          <div />
-          <div />
-          <div />
-          <div />
-          <div />
-          <div />
-          <div />
-        </Downlink>
-        <Uplink position={this.state.randomUplinkPosition}>
-          <div />
-          <div />
-          <div />
-          <div />
-          <div />
-          <div />
-          <div />
-        </Uplink>
       </Header>
     )
   }

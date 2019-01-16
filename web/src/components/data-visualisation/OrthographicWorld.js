@@ -7,7 +7,7 @@ import { geoOrthographic, geoPath } from 'd3-geo'
 import { mouse, select } from 'd3-selection'
 import world from 'world-atlas/world/110m.json'
 import schedule from 'raf-schd'
-import { Spring } from 'react-spring'
+import { Spring, animated } from 'react-spring'
 import { format } from 'd3-format'
 
 import TTNLogo from 'assets/ttn-logo.svg'
@@ -26,7 +26,7 @@ let Root = styled.div`
     currentStep < 3 ? 'none' : 'initial'};
 `
 
-let LogoWrapper = styled.div`
+let LogoWrapper = styled(animated.div)`
   display: block;
   position: absolute;
   left: 0;
@@ -287,6 +287,7 @@ export default class OrthographicWorld extends Component {
       <Root ref={this.rootRef} currentStep={currentStep}>
         <Canvas width={width} height={height} ref={this.canvasRef} />
         <Spring
+          native
           immediate={!isVisible}
           delay={1000}
           from={{

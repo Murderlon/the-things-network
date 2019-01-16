@@ -12,8 +12,7 @@ import Header from 'components/Header'
 import Layout from 'components/Layout'
 import TableOfContents from 'components/TableOfContents'
 import Quote from 'components/Quote'
-
-import Logo from 'assets/ttn-stacked.svg'
+import AnimatedGrid from 'components/AnimatedGrid'
 
 let index = () => (
   <>
@@ -22,20 +21,11 @@ let index = () => (
       <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,Intl.~locale.en,Array.prototype.find,Array.prototype.findIndex,Array.prototype.includes,IntersectionObserver,Object.values,Number.parseFloat" />
     </Helmet>
     <GlobalStyle />
+    <Layout.RootGrid css={{ overflow: 'hidden', position: 'relative' }}>
+      <AnimatedGrid />
+      <Header />
+    </Layout.RootGrid>
     <Layout.RootGrid>
-      <Header>
-        <h1>
-          <Logo />
-        </h1>
-        <p>
-          An interactive experience. Learn about{' '}
-          <span className="highlight">LoRaWAN</span>, a new protocol for the
-          Internet of Things and how{' '}
-          <span className="highlight">The Things Network</span>, a
-          community-powered and distributed network,{' '}
-          <span className="highlight">can help you leverage it.</span>
-        </p>
-      </Header>
       <TableOfContents />
       <Introduction />
       <Protocols />
