@@ -23,7 +23,7 @@ let variables = {
   timingFunction: 'cubic-bezier(0.5, 0 , 0.5, 1)',
   mainTypo:
     "'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-  monoTypo: '"Input Mono", mono'
+  monoTypo: '"input-mono-condensed", monospace'
 }
 
 export default variables
