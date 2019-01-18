@@ -12,7 +12,7 @@ import Axis from 'components/data-visualisation/Axis'
 
 import variables from 'styles/variables'
 
-import { H2, SubGrid, Step } from './Protocols.style'
+import { H2, SubGrid, Step, Text } from './Protocols.style'
 
 import data from './protocols.json'
 
@@ -97,8 +97,7 @@ export default class Protocols extends Component {
                 let margin = { top: 60, right: 60, bottom: 60, left: 60 }
                 let width = dimensions.width - margin.left - margin.right
                 let height = dimensions.height - margin.top - margin.bottom
-                let xLabels = ['Cheap', 'Mid', 'Expensive']
-                let yLabels = ['Low', 'Mid', 'High']
+                let labels = ['Low', 'Mid', 'High']
                 let { currentStep } = this.state
 
                 let x = scaleLinear()
@@ -115,10 +114,10 @@ export default class Protocols extends Component {
 
                 let yTickFormat = (tick, index) =>
                   index < 2 ? (
-                    yLabels[index]
+                    labels[index]
                   ) : (
                     <>
-                      {yLabels[index]}
+                      {labels[index]}
                       <tspan x="-10" y="20">
                         power
                       </tspan>
@@ -129,11 +128,11 @@ export default class Protocols extends Component {
                   )
                 let xTickFormat = (tick, index) =>
                   index > 0 ? (
-                    xLabels[index]
+                    labels[index]
                   ) : (
                     <>
-                      {xLabels[index]}
-                      <tspan> recurring costs</tspan>
+                      {labels[index]}
+                      <tspan> bandwidth</tspan>
                     </>
                   )
 
@@ -144,18 +143,23 @@ export default class Protocols extends Component {
                     margin={margin}
                     x={x}
                     y={y}
-                    title="Range and power usage vs. recurring costs"
+                    title="Power usage, bandwidth, and range"
                     xTickFormat={xTickFormat}
                     yTickFormat={yTickFormat}
                     xNumberTicks={3}
                     yNumberTicks={3}
                   >
                     {protocols.map(
-                      ({ protocol, cost, powerUsage, range }, i) => (
+                      (
+                        { protocol, bandwidth, powerUsage, range, rangeAsText },
+                        i
+                      ) => (
                         <g
                           key={protocol}
                           fillOpacity={currentStep > i ? 0.3 : 1}
-                          transform={`translate(${x(cost)}, ${y(powerUsage)})`}
+                          transform={`translate(${x(bandwidth)}, ${y(
+                            powerUsage
+                          )})`}
                         >
                           <Spring
                             from={{ r: currentStep >= i ? 0 : r(range) }}
@@ -172,7 +176,7 @@ export default class Protocols extends Component {
                             to={{ opacity: currentStep >= i ? 1 : 0 }}
                           >
                             {props => (
-                              <text
+                              <Text
                                 textAnchor={i <= 1 ? 'start' : 'middle'}
                                 dx={i <= 1 ? r(range) + 10 : null}
                                 dy={5}
@@ -181,8 +185,11 @@ export default class Protocols extends Component {
                                 }
                                 style={props}
                               >
-                                {protocol}
-                              </text>
+                                <tspan>{protocol}</tspan>
+                                <tspan x={i <= 1 ? r(range) + 10 : 0} y={25}>
+                                  {rangeAsText}m
+                                </tspan>
+                              </Text>
                             )}
                           </Spring>
                         </g>

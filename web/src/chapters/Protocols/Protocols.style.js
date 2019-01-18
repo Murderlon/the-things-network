@@ -60,3 +60,10 @@ export let SubGrid = styled(Layout.SubGrid)`
     z-index: 0;
   }
 `
+
+export let Text = styled.text`
+  tspan:nth-last-of-type(1) {
+    font-size: 0.7em;
+    font-family: ${variables.monoTypo};
+  }
+`
