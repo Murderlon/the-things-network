@@ -29,7 +29,7 @@ export let Background = styled(Layout.RootGrid)`
   @media screen and (min-width: 60rem) {
     grid-column: 1 / 13;
   }
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 1 / 19;
   }
 `
@@ -47,7 +47,7 @@ export let BlockLeft = styled.article`
   @media screen and (min-width: 60rem) {
     grid-column: 2 / 5;
   }
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 1 / 4;
   }
 `
@@ -59,7 +59,7 @@ export let BlockCenter = styled.article`
   @media screen and (min-width: 60rem) {
     grid-column: 6 / 8;
   }
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 5 / 9;
   }
 `
@@ -71,7 +71,7 @@ export let BlockRight = styled.article`
   @media screen and (min-width: 60rem) {
     grid-column: 9 / 12;
   }
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 10 / 14;
   }
 `

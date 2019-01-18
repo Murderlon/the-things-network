@@ -15,7 +15,7 @@ let Section = styled.section`
     grid-column: 2 / 12;
   }
 
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 4 / 16;
   }
 

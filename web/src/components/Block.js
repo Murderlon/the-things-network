@@ -7,7 +7,7 @@ let alignPrimaryLeft = css`
     grid-column: 6 / 13;
   }
 
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 6 / 14;
   }
 `
@@ -34,7 +34,7 @@ let alignSecondaryRight = css`
     grid-column: 7 / 13;
   }
 
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 7 / 14;
   }
 `

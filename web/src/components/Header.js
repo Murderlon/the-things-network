@@ -46,7 +46,7 @@ let Header = styled.header`
     }
   }
 
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 4 / 16;
     grid-template-columns: repeat(12, 1fr);
 

@@ -14,7 +14,7 @@ let basicGrid = css`
 let RootGrid = styled.div`
   ${basicGrid};
 
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-template-columns: repeat(18, 1fr);
   }
 `
@@ -27,7 +27,7 @@ let ParentGrid = styled.div`
   @media screen and (min-width: 60rem) {
     grid-column: 1 / 13;
   }
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 4 / 16;
   }
 `
@@ -46,7 +46,7 @@ let one = css`
     grid-column: 2 / 12;
   }
 
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 1 / 13;
   }
 `
@@ -58,7 +58,7 @@ let two = css`
     grid-template-columns: repeat(11, 1fr);
   }
 
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 1 / 13;
     grid-template-columns: repeat(12, 1fr);
   }

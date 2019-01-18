@@ -13,7 +13,7 @@ export let H2 = styled(Heading)`
     grid-column: 2 / 11;
   }
 
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 3 / 12;
   }
 
@@ -23,7 +23,7 @@ export let H2 = styled(Heading)`
 `
 
 export let ContentWrapper = styled(Layout.ParentGrid)`
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 1 / 19;
   }
 
@@ -67,7 +67,7 @@ export let LayoutWrapper = styled.div`
     grid-column: 1 / 13;
   }
 
-  @media screen and (min-width: 100rem) {
+  @media screen and (min-width: 90rem) {
     grid-column: 1 / 18;
   }
 `
