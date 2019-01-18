@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import modularScale from '../styles/modular-scale'
 
 import Logo from 'assets/ttn-stacked.svg'
-
-import vars from '../styles/variables'
 
 let Header = styled.header`
   height: 100vh;
@@ -60,57 +58,6 @@ let Header = styled.header`
     }
   }
 `
-
-// const Downlink = styled.div`
-//   position: absolute;
-//   display: flex;
-//   top: calc(100vw / 6 * 3);
-//   /* right: 0vw; */
-//   right: -116.666666667vw;
-//   animation: ${fly} 5s infinite steps(6);
-//   z-index: -10;
-
-//   div {
-//     background: ${vars.red};
-//     width: calc(100vw / 6);
-//     height: calc(100vw / 6);
-
-//     &:first-of-type {
-//       opacity: 0.8;
-//     }
-//     &:nth-of-type(2) {
-//       opacity: 0.7;
-//     }
-//     &:nth-of-type(3) {
-//       opacity: 0.6;
-//     }
-//     &:nth-of-type(4) {
-//       opacity: 0.5;
-//     }
-//     &:nth-of-type(5) {
-//       opacity: 0.4;
-//     }
-//     &:nth-of-type(6) {
-//       opacity: 0.3;
-//     }
-//     &:nth-of-type(7) {
-//       opacity: 0.2;
-//     }
-//   }
-// `
-
-// const Uplink = styled(Downlink)`
-//   animation-delay: 2000ms;
-//   right: 0vw;
-//   top: calc(100vw / 18 * ${p => p.position});
-//   flex-direction: row-reverse;
-
-//   div {
-//     background: ${vars.green};
-//   }
-// `
-
-let randomPosition = () => Math.floor(Math.random() * (9 - 1 + 1) + 1)
 
 export default class HeaderClass extends Component {
   render() {
