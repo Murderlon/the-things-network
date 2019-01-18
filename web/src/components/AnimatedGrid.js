@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { select, selectAll } from 'd3-selection'
 
-import grid18 from 'assets/transparent-grid-18.svg'
+import grid from 'assets/transparent-grid.svg'
 import variables from '../styles/variables'
 
-let TransparentGrid = styled(grid18)`
+let TransparentGrid = styled(grid)`
   position: absolute;
   z-index: -10;
   width: 100%;
