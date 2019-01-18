@@ -34,6 +34,12 @@ let sfExtent = flattenDeep(
 )
 let total = sfExtent.reduce((acc, value) => acc + value, 0)
 
+let dataRates = [
+  [5470, 3125, 1760, 980, 440, 250],
+  [11000],
+  [21900, 12500, 7000, 3900, 1760, 980]
+]
+
 export default ({ isScaleSpeed }) => {
   return (
     <ResponsiveChart heightAsHalfWidth>
@@ -47,7 +53,6 @@ export default ({ isScaleSpeed }) => {
         let width = dimensions.width - margin.left - margin.right
         let height = dimensions.width - margin.top - margin.bottom
         let rectWidth = width / 8
-        let coefficient = 3.489818456067459
 
         let x = scaleBand()
           .domain([7, 8, 9, 10, 11, 12])
@@ -63,7 +68,7 @@ export default ({ isScaleSpeed }) => {
 
         let scaleSpeed = scaleSequential(
           interpolateLab('#f3f0ff', '#845ef7')
-        ).domain([Math.pow(coefficient, 1), Math.pow(coefficient, 8)])
+        ).domain(extent(flattenDeep(dataRates)))
 
         return (
           <BandAxis
@@ -77,11 +82,7 @@ export default ({ isScaleSpeed }) => {
             xLabel="Spreading factor"
           >
             {bandwidths.map(({ spreadingFactors }, BWIndex) =>
-              Array.from({ length: 6 }).map((_, SFIndex) => {
-                let speed = Math.round(
-                  Math.pow(coefficient, BWIndex + (6 - SFIndex))
-                )
-
+              dataRates[BWIndex].map((speed, SFIndex) => {
                 let usage = spreadingFactors[SFIndex]
                   ? spreadingFactors[SFIndex].uplinks +
                     spreadingFactors[SFIndex].downlinks
