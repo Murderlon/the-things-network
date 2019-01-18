@@ -48,7 +48,10 @@ export default () => (
       </BlockCenter>
       <BlockRight>
         <h4>Spread the word, share the knowledge.</h4>
-        <p>... </p>
+        <p>
+          The Things Network has a strong close knit communities present around
+          the world who partake in meetups and network expansion together.
+        </p>
         <Link to="https://www.thethingsnetwork.org/community">
           start or join a community
         </Link>
@@ -77,9 +80,9 @@ export default () => (
       </BlockCenter>
 
       <BlockRight as="p">
-      <a href="https://github.com/Murderlon/the-things-network/blob/master/LICENSE">
-        © GNU General Public License v3.0
-      </a>
+        <a href="https://github.com/Murderlon/the-things-network/blob/master/LICENSE">
+          © GNU General Public License v3.0
+        </a>
       </BlockRight>
     </Footer>
   </Background>
