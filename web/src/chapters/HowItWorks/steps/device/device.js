@@ -62,7 +62,7 @@ export default class Device extends Component {
               </span>
             </p>
             <ol>
-              <li>Create a free account</li>
+              <li>Create an account</li>
               <li>Register with an application to communicate with</li>
               <li>Register your device</li>
               <li>Setup code & environment variables</li>

@@ -171,7 +171,7 @@ export default class TheThingsNetwork extends Component {
                 Imagine an Internet of Things network build around LoRaWAN that
                 is{' '}
                 <span className="highlight">
-                  created by the people, free, and open for everyone to use.
+                  created by the people and open for everyone to use.
                 </span>
               </p>
             </div>

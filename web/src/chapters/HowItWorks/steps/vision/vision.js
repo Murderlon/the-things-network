@@ -26,8 +26,8 @@ export default () => (
       </p>
       <p>
         We enable this through a{' '}
-        <span className="highlight">free, open, and distributed network</span>{' '}
-        with low battery usage, long range, and low bandwidth.
+        <span className="highlight"> open and distributed network</span> with
+        low battery usage, long range, and low bandwidth.
       </p>
     </Vision>
   </Layout.SubGrid>
