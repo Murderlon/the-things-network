@@ -180,9 +180,7 @@ export default class Protocols extends Component {
                                 textAnchor={i <= 1 ? 'start' : 'middle'}
                                 dx={i <= 1 ? r(range) + 10 : null}
                                 dy={5}
-                                fill={
-                                  i <= 1 ? 'white' : variables.secondaryBlue
-                                }
+                                fill={i <= 1 ? 'white' : variables.primaryBlue}
                                 style={props}
                               >
                                 <tspan>{protocol}</tspan>
