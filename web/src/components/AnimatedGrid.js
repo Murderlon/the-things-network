@@ -33,10 +33,8 @@ class AnimatedGrid extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.hasLargeScreen === null) return
     let { hasLargeScreen } = this.state
-    console.log('didupdate')
 
     if (hasLargeScreen && !prevState.hasLargeScreen) {
-      console.log('resstart')
       this.setupAnimatedGrid()
     }
     if (!hasLargeScreen && prevState.hasLargeScreen) {
