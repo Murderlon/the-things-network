@@ -6,7 +6,7 @@
       "powerUsage": 0.55,
       "bandwidth": 0.9,
       "range": 50,
-      "rangeAsText": "40 - 50",
+      "rangeAsText": "40-50",
       "pros": ["High bandwith"],
       "cons": ["Expensive"],
       "useCases": ["Real-time data streaming"]
@@ -17,7 +17,7 @@
       "powerUsage": 0.3,
       "bandwidth": 0.4,
       "range": 20,
-      "rangeAsText": "10 - 20",
+      "rangeAsText": "10-20",
       "pros": ["Low power"],
       "cons": ["It needs a smart hub to control it"],
       "useCases": ["Controlling lights in your house"]
@@ -28,7 +28,7 @@
       "powerUsage": 0.85,
       "bandwidth": 0.7,
       "range": 2500,
-      "rangeAsText": "2.000 - 3.000",
+      "rangeAsText": "2.000-3.000",
       "pros": ["High bandwith"],
       "cons": ["High power usage", "Expensive"],
       "useCases": ["Drones"]
@@ -39,7 +39,7 @@
       "powerUsage": 0.25,
       "bandwidth": 0.13,
       "range": 10000,
-      "rangeAsText": "10.000 - 12.000",
+      "rangeAsText": "10.000- 2.000",
       "pros": [
         "Low power — can last month or even years",
         "Low cost",

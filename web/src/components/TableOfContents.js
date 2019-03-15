@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import Quote from 'components/Quote'
+
 import modularScale from '../styles/modular-scale'
 import variables from '../styles/variables'
 
@@ -56,39 +58,42 @@ let List = styled.ol`
 
 let TableOfContents = () => {
   return (
-    <Section>
-      <List>
-        <li>
-          <a href="#introduction">
-            <Zero /> Introduction
-          </a>
-        </li>
-        <li>
-          <a href="#protocols">
-            <One />
-            Protocols
-          </a>
-        </li>
-        <li>
-          <a href="#the-things-network">
-            <Two />
-            The Things Network
-          </a>
-        </li>
-        <li>
-          <a href="#how-it-works">
-            <Three />
-            How it works
-          </a>
-        </li>
-        <li>
-          <a href="#you-are-the-network">
-            <Four />
-            You are the network
-          </a>
-        </li>
-      </List>
-    </Section>
+    <>
+      <Section>
+        <List>
+          <li>
+            <a href="#introduction">
+              <Zero /> Introduction
+            </a>
+          </li>
+          <li>
+            <a href="#protocols">
+              <One />
+              Protocols
+            </a>
+          </li>
+          <li>
+            <a href="#the-things-network">
+              <Two />
+              The Things Network
+            </a>
+          </li>
+          <li>
+            <a href="#how-it-works">
+              <Three />
+              How it works
+            </a>
+          </li>
+          <li>
+            <a href="#you-are-the-network">
+              <Four />
+              You are the network
+            </a>
+          </li>
+        </List>
+      </Section>
+      <Quote />
+    </>
   )
 }
 

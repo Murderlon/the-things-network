@@ -6,7 +6,6 @@ import Device from './steps/device/device'
 import Gateway from './steps/gateway/gateway'
 import TheThingsNetwork from './steps/the-things-network/the-things-network'
 import Application from './steps/application/application'
-import Vision from './steps/vision/vision'
 
 import { H2 } from './HowItWorks.style'
 
@@ -21,7 +20,6 @@ export default class HowItWorks extends Component {
         <Gateway />
         <TheThingsNetwork />
         <Application />
-        <Vision />
       </Layout.ParentGrid>
     )
   }

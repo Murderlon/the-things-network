@@ -6,27 +6,31 @@ import modularScale from '../styles/modular-scale'
 
 let Section = styled.section`
   grid-column: 1 / 7;
+  align-self: center;
   text-align: center;
   position: relative;
-  padding: ${variables.spacing.huge} 0;
-  margin: ${variables.spacing.enormous} 0;
+  margin-bottom: ${variables.spacing.enormous};
 
   @media screen and (min-width: 60rem) {
-    grid-column: 2 / 12;
+    grid-column: 9 / 12;
   }
 
   @media screen and (min-width: 90rem) {
-    grid-column: 4 / 16;
+    grid-column: 11 / 16;
   }
 
   div span {
     display: inline-block;
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     background: ${variables.primaryBlue};
     border-radius: 50%;
-    font-size: ${modularScale(8)};
+    font-size: ${modularScale(7)};
     color: ${variables.green};
+
+    &:before {
+      content: '”'
+    }
   }
 
   blockquote {
@@ -40,9 +44,6 @@ let Section = styled.section`
     max-width: 40rem;
     padding 0 ${variables.spacing.small};
     margin: ${variables.spacing.medium} auto;
-    @media screen and (min-width: 60rem) {
-      font-size: ${modularScale(2)};
-    }
   }
 
   cite {
@@ -51,7 +52,6 @@ let Section = styled.section`
 
     span {
       font-style: normal;
-      font-size: ${modularScale(1)};
       display: block;
     }
   }
@@ -60,12 +60,14 @@ let Section = styled.section`
 let Quote = () => (
   <Section>
     <div>
-      <span>”</span>
+      <span />
     </div>
     <blockquote cite="https://thenextweb.com/insider/2015/08/19/the-things-network-wants-to-make-every-city-smart-starting-with-amsterdam/">
       <p>
-        Traditional connectivity methods are like a pager, LoRaWAN is like the
-        first mobile phone.
+        <a href="https://thenextweb.com/insider/2015/08/19/the-things-network-wants-to-make-every-city-smart-starting-with-amsterdam/">
+          Traditional connectivity methods are like a pager, LoRaWAN is like the
+          first mobile phone.
+        </a>
       </p>
     </blockquote>
     <cite>

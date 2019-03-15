@@ -179,12 +179,12 @@ export default class Protocols extends Component {
                               <Text
                                 textAnchor={i <= 1 ? 'start' : 'middle'}
                                 dx={i <= 1 ? r(range) + 10 : null}
-                                dy={5}
+                                dy={0}
                                 fill={i <= 1 ? 'white' : variables.primaryBlue}
                                 style={props}
                               >
                                 <tspan>{protocol}</tspan>
-                                <tspan x={i <= 1 ? r(range) + 10 : 0} y={25}>
+                                <tspan x={i <= 1 ? r(range) + 10 : 0} y={20}>
                                   {rangeAsText}m
                                 </tspan>
                               </Text>

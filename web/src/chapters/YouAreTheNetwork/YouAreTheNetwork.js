@@ -1,10 +1,14 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import Layout from 'components/Layout'
 import Link from 'components/Link'
 
-import CFLogo from 'assets/cf.svg'
+import CFLogo from 'assets/cf-logo.svg'
 import TTNLogo from 'assets/ttn-footer.svg'
+import Cog from 'assets/cog.svg'
+import Flag from 'assets/flag.svg'
+import Map from 'assets/maps-pin.svg'
 
 import {
   Background,
@@ -15,15 +19,28 @@ import {
   Footer
 } from './YouAreTheNetwork.style.js'
 
+let Icon = styled(Cog)`
+  color: white;
+  width: 3em;
+`
+
 export default () => (
   <Background>
     <Layout.ParentGrid>
       <Layout.SubGrid fullWidth>
         <H2>You are the network</H2>
+        <p>
+          We believe in enabling businesses and applications to{' '}
+          <span className="highlight">flourish to their potential</span>, by
+          creating abundant connectivity. We enable this through a{' '}
+          <span className="highlight"> open and distributed network</span> with
+          low battery usage, long range, and low bandwidth.
+        </p>
       </Layout.SubGrid>
     </Layout.ParentGrid>
     <Layout.ParentGrid as="section">
       <BlockLeft>
+        <Icon as={Map} />
         <h4>Provide up to 10km of abundant connectivity yourself.</h4>
         <p>
           Small, easy to install router between the LoRa-enabeled things and the
@@ -35,6 +52,7 @@ export default () => (
         </Link>
       </BlockLeft>
       <BlockCenter>
+        <Icon />
         <h4>Build your proof of concept in a day.</h4>
         <p>The fastest way to get started with LoRaWAN. </p>
         {/* eslint-disable-next-line max-len */}
@@ -47,6 +65,7 @@ export default () => (
         </Link>
       </BlockCenter>
       <BlockRight>
+        <Icon as={Flag} />
         <h4>Spread the word, share the knowledge.</h4>
         <p>
           The Things Network has a strong close knit communities present around
@@ -66,22 +85,20 @@ export default () => (
             <CFLogo />
           </a>
         </span>
+      </BlockLeft>
+
+      <BlockCenter as="p">
+        Story and data from:
         <span>
           <a href="http://thethingsnetwork.org/">
             <TTNLogo />
           </a>
         </span>
-      </BlockLeft>
-
-      <BlockCenter as="p">
-        <a href="https://github.com/Murderlon/the-things-network">
-          CMD graduation project by Merlijn Vos (@Murderlon)
-        </a>
       </BlockCenter>
 
       <BlockRight as="p">
-        <a href="https://github.com/Murderlon/the-things-network/blob/master/LICENSE">
-          © GNU General Public License v3.0
+        <a href="https://github.com/Murderlon/the-things-network">
+          CMD graduation project by Merlijn Vos (@Murderlon)
         </a>
       </BlockRight>
     </Footer>

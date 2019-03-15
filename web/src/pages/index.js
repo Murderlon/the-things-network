@@ -11,7 +11,6 @@ import GlobalStyle from 'components/GlobalStyle'
 import Header from 'components/Header'
 import Layout from 'components/Layout'
 import TableOfContents from 'components/TableOfContents'
-import Quote from 'components/Quote'
 import AnimatedGrid from 'components/AnimatedGrid'
 
 let index = () => (
@@ -29,7 +28,6 @@ let index = () => (
       <TableOfContents />
       <Introduction />
       <Protocols />
-      <Quote />
       <TheThingsNetwork />
       <HowItWorks />
       <YouAreTheNetwork />

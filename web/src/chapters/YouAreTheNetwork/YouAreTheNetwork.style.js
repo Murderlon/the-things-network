@@ -96,7 +96,7 @@ export let Footer = styled(Layout.ParentGrid)`
 
       svg {
         width: 70%;
-        max-width: 14em;
+        max-width: 12em;
         height: auto;
       }
     }
