@@ -23,8 +23,7 @@ import data from './proof-of-concept.json'
 
 export default class TheThingsNetwork extends Component {
   state = {
-    currentStep: 0,
-    isInsideContainer: false
+    currentStep: 0
   }
 
   componentDidMount() {
@@ -45,8 +44,6 @@ export default class TheThingsNetwork extends Component {
         offset: 0.7
       })
       .onStepEnter(this.handleStepEnter)
-      .onContainerEnter(this.handleContainerEnter)
-      .onContainerExit(this.handleContainerExit)
 
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
@@ -69,14 +66,6 @@ export default class TheThingsNetwork extends Component {
     this.setState({ currentStep: index })
   }
 
-  handleContainerEnter = () => {
-    this.setState({ isInsideContainer: true })
-  }
-
-  handleContainerExit = () => {
-    this.setState({ isInsideContainer: false })
-  }
-
   render() {
     let { currentStep, isInsideContainer } = this.state
     let { features } = data
@@ -93,77 +82,63 @@ export default class TheThingsNetwork extends Component {
                 <span /> LoRaWAN gateway (up to 10km range)
               </p>
             </Legend>
-            <Spring
-              from={{ opacity: currentStep < 3 ? 0 : 1 }}
-              to={{ opacity: currentStep < 3 ? 1 : 0 }}
-            >
-              {props => (
-                <ResponsiveChart style={props} classProp="chart">
-                  {dimensions => (
-                    <MapBaseGroup {...dimensions} extent={data}>
-                      {generators => (
-                        <>
-                          <TileLayer {...dimensions} {...generators} />
-                          <Trail
-                            items={features}
-                            keys={({ properties }) => properties.name}
-                            native
-                            from={{ t: currentStep > 0 ? 0 : 1 }}
-                            to={{ t: currentStep > 0 ? 1 : 0 }}
-                          >
-                            {({ geometry, properties }) => ({ t }) => {
-                              let [x, y] = generators.projection(
-                                geometry.coordinates
-                              )
-                              let radius = geoCircle()
-                                .center(geometry.coordinates)
-                                .radius(angle)
+            <ResponsiveChart classProp="chart">
+              {dimensions => (
+                <MapBaseGroup {...dimensions} extent={data}>
+                  {generators => (
+                    <>
+                      <TileLayer {...dimensions} {...generators} />
+                      <Trail
+                        items={features}
+                        keys={({ properties }) => properties.name}
+                        native
+                        from={{ t: currentStep > 0 ? 0 : 1 }}
+                        to={{ t: currentStep > 0 ? 1 : 0 }}
+                      >
+                        {({ geometry, properties }) => ({ t }) => {
+                          let [x, y] = generators.projection(
+                            geometry.coordinates
+                          )
+                          let radius = geoCircle()
+                            .center(geometry.coordinates)
+                            .radius(angle)
 
-                              let inactive = geoCircle()
-                                .center(geometry.coordinates)
-                                .radius(0)
+                          let inactive = geoCircle()
+                            .center(geometry.coordinates)
+                            .radius(0)
 
-                              let interpolator = interpolatePath(
-                                generators.path(inactive()),
-                                generators.path(radius())
-                              )
+                          let interpolator = interpolatePath(
+                            generators.path(inactive()),
+                            generators.path(radius())
+                          )
 
-                              return (
-                                <g>
-                                  <animated.path
-                                    d={t.interpolate(interpolator)}
-                                    fill={variables.green}
-                                    fillOpacity={0.3}
-                                  />
-                                  <circle
-                                    cx={x}
-                                    cy={y}
-                                    r="6"
-                                    fill={variables.green}
-                                  />
-                                  <text
-                                    fill={variables.green}
-                                    x={x + 10}
-                                    y={y + 5}
-                                  >
-                                    {properties.name}
-                                  </text>
-                                </g>
-                              )
-                            }}
-                          </Trail>
-                          )}
-                        </>
+                          return (
+                            <g>
+                              <animated.path
+                                d={t.interpolate(interpolator)}
+                                fill={variables.green}
+                                fillOpacity={0.3}
+                              />
+                              <circle
+                                cx={x}
+                                cy={y}
+                                r="6"
+                                fill={variables.green}
+                              />
+                              <text fill={variables.green} x={x + 10} y={y + 5}>
+                                {properties.name}
+                              </text>
+                            </g>
+                          )
+                        }}
+                      </Trail>
                       )}
-                    </MapBaseGroup>
+                    </>
                   )}
-                </ResponsiveChart>
+                </MapBaseGroup>
               )}
-            </Spring>
-            <OrthographicWorld
-              currentStep={currentStep}
-              isInsideContainer={isInsideContainer}
-            />
+            </ResponsiveChart>
+            <OrthographicWorld isVisible={currentStep === 3} />
           </MapGraphic>
           <div className="mapScrollText">
             <div className="step" data-step={0}>

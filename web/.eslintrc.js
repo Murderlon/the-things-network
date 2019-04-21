@@ -4,7 +4,7 @@ module.exports = {
     node: true
   },
   extends: ['standard'],
-  plugins: ['standard', 'react'],
+  plugins: ['standard', 'react', 'react-hooks'],
   rules: {
     'no-var': 'error',
     'no-unused-vars': 1,
@@ -44,7 +44,9 @@ module.exports = {
 
     // react plugin - options
     'react/jsx-uses-react': 'error',
-    'react/jsx-uses-vars': 'error'
+    'react/jsx-uses-vars': 'error',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn'
   },
   parser: 'babel-eslint',
   parserOptions: {
