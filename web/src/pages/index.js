@@ -1,5 +1,4 @@
 import React from 'react'
-import Helmet from 'react-helmet'
 
 import Introduction from 'chapters/Introduction/Introduction'
 import Protocols from 'chapters/Protocols/Protocols'
@@ -12,13 +11,11 @@ import Header from 'components/Header'
 import Layout from 'components/Layout'
 import TableOfContents from 'components/TableOfContents'
 import AnimatedGrid from 'components/AnimatedGrid'
+import HelmetMetaTags from 'components/MetaTags'
 
 let index = () => (
   <>
-    <Helmet>
-      {/* eslint-disable-next-line max-len */}
-      <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,Intl.~locale.en,Array.prototype.find,Array.prototype.findIndex,Array.prototype.includes,IntersectionObserver,Object.values,Number.parseFloat" />
-    </Helmet>
+    <HelmetMetaTags />
     <GlobalStyle />
     <Layout.RootGrid css={{ overflow: 'hidden', position: 'relative' }}>
       <AnimatedGrid />
