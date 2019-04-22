@@ -61,7 +61,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
-    "react-spring": "^8.0.19",
+    "react-spring": "^6.1.10",
     "scrollama": "^2.0.0",
     "stickyfilljs": "^2.1.0",
     "styled-components": "^4.2.0",
