@@ -18,6 +18,7 @@ let Link = styled.a`
   font-family: ${variables.monoTypo};
   font-weight: 500;
   padding: ${variables.spacing.small} 0;
+  white-space: nowrap;
   ${({ asPrimary }) => (asPrimary ? primary : null)}
   svg {
     transform: ${({ iconLeft }) => (iconLeft ? 'scaleX(-1)' : null)};
