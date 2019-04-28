@@ -6,6 +6,7 @@ import { geoOrthographic, geoPath } from 'd3-geo'
 import { mouse, select } from 'd3-selection'
 import world from 'world-atlas/world/110m.json'
 import schedule from 'raf-schd'
+import { format } from 'd3-format'
 
 import TTNLogo from 'assets/ttn-logo.svg'
 import variables from 'styles/variables'
@@ -62,7 +63,6 @@ function OrthographicWorld(props) {
   useEffect(() => {
     let { width, height } = dimensions
     let context = canvasRef.current.getContext('2d')
-    let startTime
 
     projection
       .fitExtent([[1, 1], [width / 1.5, height / 1.5]], { type: 'Sphere' })
@@ -89,22 +89,29 @@ function OrthographicWorld(props) {
         .on('drag', dragged)
     }
 
-    function setRotateInterval() {
-      startTime = Date.now()
-      console.log('set rotate interval')
-      setInterval(schedule(rotate))
-    }
+    select(context.canvas)
+      .call(dragging().on('drag.render', renderCanvas))
+      .call(renderCanvas)
+      .node()
+  }, [dimensions, renderCanvas])
+
+  useEffect(() => {
+    let rotateInterval
+    let startTime = Date.now()
 
     function rotate() {
       projection.rotate([-1e-2 * (Date.now() - startTime), 0])
       renderCanvas()
     }
 
-    select(context.canvas)
-      .call(dragging().on('drag.render', renderCanvas))
-      .call(renderCanvas)
-      .node()
-  }, [dimensions, renderCanvas])
+    if (isVisible && !isDragging) {
+      rotateInterval = setInterval(schedule(rotate))
+    }
+
+    return function onUnmount() {
+      clearInterval(rotateInterval)
+    }
+  }, [isVisible, renderCanvas, isDragging])
 
   function handleResize() {
     let { width, height } = rootRef.current.getBoundingClientRect()
@@ -120,6 +127,12 @@ function OrthographicWorld(props) {
       />
       <LogoWrapper>
         <TTNLogo />
+        <p>
+          <span>
+            <span className="highlight">{format(',')(data.gatewayTotal)}</span>{' '}
+            gateways placed by the people
+          </span>
+        </p>
       </LogoWrapper>
     </Root>
   )

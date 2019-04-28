@@ -22,9 +22,9 @@ export let LogoWrapper = styled.div`
   bottom: 0;
   margin: auto;
   width: 30%;
-  max-width: 15rem;
+  max-width: 12rem;
   height: 30%;
-  max-height: 15rem;
+  max-height: 12rem;
   display: flex;
   flex-direction: column;
   align-items: center;
