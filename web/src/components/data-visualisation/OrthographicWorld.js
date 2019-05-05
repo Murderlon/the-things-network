@@ -3,10 +3,11 @@ import versor from 'versor'
 import * as topoJSON from 'topojson-client'
 import { drag } from 'd3-drag'
 import { geoOrthographic, geoPath } from 'd3-geo'
-import { mouse, select } from 'd3-selection'
+import { mouse, select, event } from 'd3-selection'
 import world from 'world-atlas/world/110m.json'
 import schedule from 'raf-schd'
 import { format } from 'd3-format'
+import { zoom } from 'd3-zoom'
 
 import TTNLogo from 'assets/ttn-logo.svg'
 import variables from 'styles/variables'
@@ -63,6 +64,7 @@ function OrthographicWorld(props) {
   useEffect(() => {
     let { width, height } = dimensions
     let context = canvasRef.current.getContext('2d')
+    let initialScale = projection.scale()
 
     projection
       .fitExtent([[1, 1], [width / 1.5, height / 1.5]], { type: 'Sphere' })
@@ -87,6 +89,14 @@ function OrthographicWorld(props) {
       return drag()
         .on('start', dragstarted)
         .on('drag', dragged)
+    }
+
+    function zooming() {
+      function onZoom() {
+        projection.scale(initialScale * 1.5)
+      }
+
+      return zoom().on('zoom', onZoom)
     }
 
     select(context.canvas)

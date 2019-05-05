@@ -67,7 +67,7 @@ export default class TheThingsNetwork extends Component {
   }
 
   render() {
-    let { currentStep, isInsideContainer } = this.state
+    let { currentStep } = this.state
     let { features } = data
     let circumference = 6371000 * Math.PI * 2
     let angle = (2500 / circumference) * 360
@@ -82,63 +82,9 @@ export default class TheThingsNetwork extends Component {
                 <span /> LoRaWAN gateway (up to 10km range)
               </p>
             </Legend>
-            <ResponsiveChart classProp="chart">
-              {dimensions => (
-                <MapBaseGroup {...dimensions} extent={data}>
-                  {generators => (
-                    <>
-                      <TileLayer {...dimensions} {...generators} />
-                      <Trail
-                        items={features}
-                        keys={({ properties }) => properties.name}
-                        native
-                        from={{ t: currentStep > 0 ? 0 : 1 }}
-                        to={{ t: currentStep > 0 ? 1 : 0 }}
-                      >
-                        {({ geometry, properties }) => ({ t }) => {
-                          let [x, y] = generators.projection(
-                            geometry.coordinates
-                          )
-                          let radius = geoCircle()
-                            .center(geometry.coordinates)
-                            .radius(angle)
 
-                          let inactive = geoCircle()
-                            .center(geometry.coordinates)
-                            .radius(0)
-
-                          let interpolator = interpolatePath(
-                            generators.path(inactive()),
-                            generators.path(radius())
-                          )
-
-                          return (
-                            <g>
-                              <animated.path
-                                d={t.interpolate(interpolator)}
-                                fill={variables.green}
-                                fillOpacity={0.3}
-                              />
-                              <circle
-                                cx={x}
-                                cy={y}
-                                r="6"
-                                fill={variables.green}
-                              />
-                              <text fill={variables.green} x={x + 10} y={y + 5}>
-                                {properties.name}
-                              </text>
-                            </g>
-                          )
-                        }}
-                      </Trail>
-                      )}
-                    </>
-                  )}
-                </MapBaseGroup>
-              )}
-            </ResponsiveChart>
             <OrthographicWorld isVisible={currentStep === 3} />
+
           </MapGraphic>
           <div className="mapScrollText">
             <div className="step" data-step={0}>

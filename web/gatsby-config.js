@@ -14,7 +14,8 @@ module.exports = {
         data: path.join(__dirname, '../data-processing/output'),
         helpers: path.join(__dirname, 'src/helpers'),
         pages: path.join(__dirname, 'src/pages'),
-        styles: path.join(__dirname, 'src/styles')
+        styles: path.join(__dirname, 'src/styles'),
+        hooks: path.join(__dirname, 'src/hooks')
       }
     },
     'gatsby-plugin-react-helmet',
