@@ -2,12 +2,14 @@ import React, { useRef, useState, useEffect, useCallback } from 'react'
 import versor from 'versor'
 import * as topoJSON from 'topojson-client'
 import { drag } from 'd3-drag'
-import { geoOrthographic, geoPath } from 'd3-geo'
+import { geoOrthographic, geoPath, geoInterpolate, geoCentroid } from 'd3-geo'
 import { mouse, select, event } from 'd3-selection'
 import world from 'world-atlas/world/110m.json'
 import schedule from 'raf-schd'
 import { format } from 'd3-format'
 import { zoom } from 'd3-zoom'
+import { transition } from 'd3-transition'
+import { interpolate } from 'd3-interpolate'
 
 import TTNLogo from 'assets/ttn-logo.svg'
 import variables from 'styles/variables'
@@ -16,6 +18,28 @@ import { Root, LogoWrapper, Canvas } from './OrthographicWorld.style'
 
 let projection = geoOrthographic()
 let land = topoJSON.feature(world, world.objects.land)
+let colorGlobe = '#1F2033'
+let colorLand = '#292B44'
+let points = [
+  {
+    type: 'Point',
+    coordinates: [-74.2582011, 40.7058316],
+    location: 'Your Location',
+    icon: '\uF015'
+  },
+  {
+    type: 'Point',
+    coordinates: [34.8887969, 32.4406351],
+    location: 'Caribe Royale Orlando',
+    icon: '\uF236'
+  }
+]
+
+function focusGlobeOnPoint(point, scale) {
+  let editablePoint = [point[0], point[1]]
+  projection.rotate(point).scale(scale)
+  editablePoint[1] += 10
+}
 
 function OrthographicWorld(props) {
   let { isVisible } = props
@@ -34,12 +58,12 @@ function OrthographicWorld(props) {
 
     context.beginPath()
     path({ type: 'Sphere' })
-    context.fillStyle = '#1F2033'
+    context.fillStyle = colorGlobe
     context.fill()
 
     context.beginPath()
     path(land)
-    context.fillStyle = '#292B44'
+    context.fillStyle = colorLand
     context.fill()
 
     context.beginPath()
@@ -64,10 +88,10 @@ function OrthographicWorld(props) {
   useEffect(() => {
     let { width, height } = dimensions
     let context = canvasRef.current.getContext('2d')
-    let initialScale = projection.scale()
 
     projection
       .fitExtent([[1, 1], [width / 1.5, height / 1.5]], { type: 'Sphere' })
+      .center(points[0].coordinates)
       .translate([width / 2, height / 2])
       .precision(1)
 
@@ -91,37 +115,67 @@ function OrthographicWorld(props) {
         .on('drag', dragged)
     }
 
-    function zooming() {
-      function onZoom() {
-        projection.scale(initialScale * 1.5)
-      }
-
-      return zoom().on('zoom', onZoom)
-    }
-
     select(context.canvas)
       .call(dragging().on('drag.render', renderCanvas))
+      // .call(
+      //   zoom()
+      //     .on('zoom', () => {
+      //       console.log(initialScale * event.transform.k)
+      //       projection.scale(initialScale * event.transform.k)
+      //       renderCanvas()
+      //     })
+      //     .on('end', () => {
+      //       renderCanvas()
+      //     })
+      // )
       .call(renderCanvas)
       .node()
   }, [dimensions, renderCanvas])
 
   useEffect(() => {
-    let rotateInterval
-    let startTime = Date.now()
+    let { width } = dimensions
 
-    function rotate() {
-      projection.rotate([-1e-2 * (Date.now() - startTime), 0])
-      renderCanvas()
+    function tween() {
+      let p = geoCentroid(points[0])
+      let r = geoInterpolate(projection.rotate(), [-p[0], -p[1]])
+      let startEndScale = width * 2
+      let middleScale = width / 3
+      let s = interpolate(0.0000001, Math.PI)
+
+      return function(t) {
+        focusGlobeOnPoint(
+          r(t),
+          (1 - Math.abs(Math.sin(s(t)))) * startEndScale +
+            Math.abs(Math.sin(s(t))) * middleScale
+        )
+        renderCanvas()
+      }
     }
 
-    if (isVisible && !isDragging) {
-      rotateInterval = setInterval(schedule(rotate))
+    if (isVisible) {
+      transition()
+        .duration(3000)
+        .tween('rotate', tween)
     }
+  }, [isVisible, dimensions, renderCanvas])
 
-    return function onUnmount() {
-      clearInterval(rotateInterval)
-    }
-  }, [isVisible, renderCanvas, isDragging])
+  // useEffect(() => {
+  //   let rotateInterval
+  //   let startTime = Date.now()
+
+  //   function rotate() {
+  //     projection.rotate([-1e-2 * (Date.now() - startTime), 0])
+  //     renderCanvas()
+  //   }
+
+  //   if (isVisible && !isDragging) {
+  //     rotateInterval = setInterval(schedule(rotate))
+  //   }
+
+  //   return function onUnmount() {
+  //     clearInterval(rotateInterval)
+  //   }
+  // }, [isVisible, renderCanvas, isDragging])
 
   function handleResize() {
     let { width, height } = rootRef.current.getBoundingClientRect()
@@ -135,7 +189,7 @@ function OrthographicWorld(props) {
         height={dimensions.height}
         ref={canvasRef}
       />
-      <LogoWrapper>
+      {/* <LogoWrapper>
         <TTNLogo />
         <p>
           <span>
@@ -143,7 +197,7 @@ function OrthographicWorld(props) {
             gateways placed by the people
           </span>
         </p>
-      </LogoWrapper>
+      </LogoWrapper>*/}
     </Root>
   )
 }
