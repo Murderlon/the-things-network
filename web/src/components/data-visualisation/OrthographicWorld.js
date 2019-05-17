@@ -14,40 +14,33 @@ import { interpolate } from 'd3-interpolate'
 import TTNLogo from 'assets/ttn-logo.svg'
 import variables from 'styles/variables'
 import data from 'data/gateway-locations.json'
+import usePrevious from 'hooks/usePrevious'
+
 import { Root, LogoWrapper, Canvas } from './OrthographicWorld.style'
 
 let projection = geoOrthographic()
 let land = topoJSON.feature(world, world.objects.countries)
-let colorGlobe = '#1F2033'
-let colorLand = '#292B44'
 let points = [
   {
     type: 'Point',
     coordinates: [4.88969, 52.37403],
-    location: 'Amsterdam ',
-    icon: '\uF015'
+    location: 'Amsterdam '
   },
   {
     type: 'Point',
     coordinates: [34.8887969, 32.4406351],
-    location: 'Caribe Royale Orlando',
-    icon: '\uF236'
+    location: 'Caribe Royale Orlando'
   }
 ]
 
-function focusGlobeOnPoint(point, scale) {
-  let editablePoint = [point[0], point[1]]
-  projection.rotate(point).scale(scale)
-  editablePoint[1] += 10
-}
-
 function OrthographicWorld(props) {
-  let { isVisible } = props
+  let { currentStep } = props
 
   let [dimensions, setDimensions] = useState({ width: 0, height: 0 })
   let [isDragging, setIsDragging] = useState(false)
   let rootRef = useRef()
   let canvasRef = useRef()
+  let previousStep = usePrevious(currentStep)
 
   let renderCanvas = useCallback(() => {
     let { width, height } = dimensions
@@ -58,13 +51,13 @@ function OrthographicWorld(props) {
 
     context.beginPath()
     path({ type: 'Sphere' })
-    context.fillStyle = colorGlobe
+    context.fillStyle = variables.secondaryBlue
     context.fill()
 
     context.beginPath()
     path(land)
-    context.fillStyle = colorLand
-    context.strokeStyle = colorGlobe
+    context.fillStyle = variables.primaryBlue
+    context.strokeStyle = variables.secondaryBlue
     context.fill()
     context.stroke()
 
@@ -90,21 +83,14 @@ function OrthographicWorld(props) {
   useEffect(() => {
     let { width, height } = dimensions
     let context = canvasRef.current.getContext('2d')
-    let p = geoCentroid(points[0])
-    let r = geoInterpolate(projection.rotate(), [-p[0], -p[1]])
-    let startEndScale = width * 2
-    let middleScale = width / 3
-    let s = interpolate(0.0000001, Math.PI)
+    let [long, lat] = geoCentroid(points[0])
 
     projection
       .fitExtent([[1, 1], [width / 1.2, height / 1.2]], { type: 'Sphere' })
       .translate([width / 2, height / 2])
       .precision(1)
-      .rotate(r(0))
-      .scale(
-        (1 - Math.abs(Math.sin(s(0)))) * startEndScale +
-          Math.abs(Math.sin(s(0))) * middleScale
-      )
+      .scale(2300)
+      .rotate([-long, -lat])
 
     function dragging() {
       let v0, q0, r0
@@ -144,31 +130,26 @@ function OrthographicWorld(props) {
   }, [dimensions, renderCanvas])
 
   useEffect(() => {
-    let { width } = dimensions
-
     function tween() {
-      let p = geoCentroid(points[0])
-      let r = geoInterpolate(projection.rotate(), [-p[0], -p[1]])
-      let startEndScale = width * 2
-      let middleScale = width / 3
-      let s = interpolate(0.0000001, Math.PI)
+      let animateIn = previousStep < currentStep
+      let initialScale = projection.scale()
+      let nextScale = animateIn ? initialScale / 5 : initialScale * 5
+      let [long, lat] = geoCentroid(points[animateIn ? 1 : 0])
+      let s = interpolate(initialScale, nextScale)
+      let r = geoInterpolate(projection.rotate(), [-long, -lat])
 
       return function(t) {
-        focusGlobeOnPoint(
-          r(t),
-          (1 - Math.abs(Math.sin(s(t)))) * startEndScale +
-            Math.abs(Math.sin(s(t))) * middleScale
-        )
+        projection.rotate(r(t)).scale(s(t))
         renderCanvas()
       }
     }
 
-    if (isVisible) {
+    if (currentStep === 3 || (currentStep === 2 && previousStep === 3)) {
       transition()
-        .duration(4000)
-        .tween('rotate', tween)
+        .duration(2000)
+        .tween('scale', tween)
     }
-  }, [isVisible, dimensions, renderCanvas])
+  }, [currentStep, renderCanvas])
 
   // useEffect(() => {
   //   let rotateInterval

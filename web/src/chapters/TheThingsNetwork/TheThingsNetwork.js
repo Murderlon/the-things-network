@@ -68,9 +68,6 @@ export default class TheThingsNetwork extends Component {
 
   render() {
     let { currentStep } = this.state
-    let { features } = data
-    let circumference = 6371000 * Math.PI * 2
-    let angle = (2500 / circumference) * 360
 
     return (
       <ContentWrapper currentStep={currentStep} as="section" id="mapScroll">
@@ -83,8 +80,7 @@ export default class TheThingsNetwork extends Component {
               </p>
             </Legend>
 
-            <OrthographicWorld isVisible={currentStep === 3} />
-
+            <OrthographicWorld currentStep={currentStep} />
           </MapGraphic>
           <div className="mapScrollText">
             <div className="step" data-step={0}>
