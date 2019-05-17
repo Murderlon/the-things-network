@@ -17,14 +17,14 @@ import data from 'data/gateway-locations.json'
 import { Root, LogoWrapper, Canvas } from './OrthographicWorld.style'
 
 let projection = geoOrthographic()
-let land = topoJSON.feature(world, world.objects.land)
+let land = topoJSON.feature(world, world.objects.countries)
 let colorGlobe = '#1F2033'
 let colorLand = '#292B44'
 let points = [
   {
     type: 'Point',
-    coordinates: [-74.2582011, 40.7058316],
-    location: 'Your Location',
+    coordinates: [4.88969, 52.37403],
+    location: 'Amsterdam ',
     icon: '\uF015'
   },
   {
@@ -64,7 +64,9 @@ function OrthographicWorld(props) {
     context.beginPath()
     path(land)
     context.fillStyle = colorLand
+    context.strokeStyle = colorGlobe
     context.fill()
+    context.stroke()
 
     context.beginPath()
     path({ type: 'Sphere' })
@@ -88,12 +90,21 @@ function OrthographicWorld(props) {
   useEffect(() => {
     let { width, height } = dimensions
     let context = canvasRef.current.getContext('2d')
+    let p = geoCentroid(points[0])
+    let r = geoInterpolate(projection.rotate(), [-p[0], -p[1]])
+    let startEndScale = width * 2
+    let middleScale = width / 3
+    let s = interpolate(0.0000001, Math.PI)
 
     projection
-      .fitExtent([[1, 1], [width / 1.5, height / 1.5]], { type: 'Sphere' })
-      .center(points[0].coordinates)
+      .fitExtent([[1, 1], [width / 1.2, height / 1.2]], { type: 'Sphere' })
       .translate([width / 2, height / 2])
       .precision(1)
+      .rotate(r(0))
+      .scale(
+        (1 - Math.abs(Math.sin(s(0)))) * startEndScale +
+          Math.abs(Math.sin(s(0))) * middleScale
+      )
 
     function dragging() {
       let v0, q0, r0
@@ -154,7 +165,7 @@ function OrthographicWorld(props) {
 
     if (isVisible) {
       transition()
-        .duration(3000)
+        .duration(4000)
         .tween('rotate', tween)
     }
   }, [isVisible, dimensions, renderCanvas])
