@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { animated } from 'react-spring'
 
 import variables from 'styles/variables'
 
@@ -13,7 +14,7 @@ export let Root = styled.div`
     currentStep < 3 ? 'none' : 'initial'};
 `
 
-export let LogoWrapper = styled.div`
+export let LogoWrapper = styled(animated.div)`
   display: block;
   position: absolute;
   left: 0;
@@ -29,6 +30,7 @@ export let LogoWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   pointer-events: none;
+  opacity: 0;
 
   svg {
     width: 100%;
@@ -50,4 +52,5 @@ export let Canvas = styled.canvas`
   display: inline-block;
   margin: 0 auto;
   cursor: move;
+  position: relative;
 `

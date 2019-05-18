@@ -3,7 +3,7 @@ import scrollama from 'scrollama'
 import { select } from 'd3-selection'
 import { scaleLinear, scaleSqrt } from 'd3-scale'
 import { extent } from 'd3-array'
-import { Spring } from 'react-spring'
+import { Spring } from 'react-spring/renderprops'
 
 import Layout from 'components/Layout'
 import ResponsiveChart from 'components/data-visualisation/ResponsiveChart'

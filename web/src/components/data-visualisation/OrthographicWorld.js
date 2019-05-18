@@ -3,13 +3,13 @@ import versor from 'versor'
 import * as topoJSON from 'topojson-client'
 import { drag } from 'd3-drag'
 import { geoOrthographic, geoPath, geoInterpolate, geoCentroid } from 'd3-geo'
-import { mouse, select, event } from 'd3-selection'
+import { mouse, select } from 'd3-selection'
 import world from 'world-atlas/world/110m.json'
 import schedule from 'raf-schd'
 import { format } from 'd3-format'
-import { zoom } from 'd3-zoom'
 import { transition } from 'd3-transition'
 import { interpolate } from 'd3-interpolate'
+import { useSpring } from 'react-spring'
 
 import TTNLogo from 'assets/ttn-logo.svg'
 import variables from 'styles/variables'
@@ -24,12 +24,12 @@ let points = [
   {
     type: 'Point',
     coordinates: [4.88969, 52.37403],
-    location: 'Amsterdam '
+    location: 'Amsterdam'
   },
   {
     type: 'Point',
-    coordinates: [34.8887969, 32.4406351],
-    location: 'Caribe Royale Orlando'
+    coordinates: [-41.773632, 35.276114],
+    location: 'Random ocean spot'
   }
 ]
 
@@ -41,6 +41,17 @@ function OrthographicWorld(props) {
   let rootRef = useRef()
   let canvasRef = useRef()
   let previousStep = usePrevious(currentStep)
+  let animatedStyles = useSpring({
+    to: {
+      opacity: currentStep === 3 ? 1 : 0,
+      transform: currentStep === 3 ? 'scale(1.0)' : 'scale(1.2)'
+    },
+    from: {
+      opacity: currentStep === 3 ? 0 : 1,
+      transform: currentStep === 3 ? 'scale(1.2)' : 'scale(1.0)'
+    },
+    delay: previousStep === 2 ? 1400 : 0
+  })
 
   let renderCanvas = useCallback(() => {
     let { width, height } = dimensions
@@ -48,10 +59,20 @@ function OrthographicWorld(props) {
     let path = geoPath(projection, context)
 
     context.clearRect(0, 0, width, height)
+    context.save()
+
+    context.beginPath()
+    path({ type: 'Sphere' })
+    context.shadowColor = variables.green
+    context.shadowBlur = 10
+    context.stroke()
+
+    context.restore()
 
     context.beginPath()
     path({ type: 'Sphere' })
     context.fillStyle = variables.secondaryBlue
+    context.stroke()
     context.fill()
 
     context.beginPath()
@@ -60,10 +81,11 @@ function OrthographicWorld(props) {
     context.strokeStyle = variables.secondaryBlue
     context.fill()
     context.stroke()
+  }, [dimensions])
 
-    context.beginPath()
-    path({ type: 'Sphere' })
-    context.stroke()
+  let renderGateways = useCallback(() => {
+    let context = canvasRef.current.getContext('2d')
+    let path = geoPath(projection, context)
 
     context.beginPath()
     path(data.geoJSON)
@@ -113,21 +135,25 @@ function OrthographicWorld(props) {
     }
 
     select(context.canvas)
-      .call(dragging().on('drag.render', renderCanvas))
-      // .call(
-      //   zoom()
-      //     .on('zoom', () => {
-      //       console.log(initialScale * event.transform.k)
-      //       projection.scale(initialScale * event.transform.k)
-      //       renderCanvas()
-      //     })
-      //     .on('end', () => {
-      //       renderCanvas()
-      //     })
-      // )
+      .call(
+        dragging().on('drag.render', () => {
+          renderCanvas()
+          renderGateways()
+        })
+      )
       .call(renderCanvas)
       .node()
-  }, [dimensions, renderCanvas])
+  }, [dimensions, renderCanvas, renderGateways])
+
+  useEffect(() => {
+    if (currentStep > 0) {
+      renderGateways()
+    }
+
+    if (currentStep === 0 && previousStep === 1) {
+      renderCanvas()
+    }
+  }, [currentStep, previousStep, renderGateways, renderCanvas])
 
   useEffect(() => {
     function tween() {
@@ -141,15 +167,22 @@ function OrthographicWorld(props) {
       return function(t) {
         projection.rotate(r(t)).scale(s(t))
         renderCanvas()
+        if (currentStep > 0) {
+          renderGateways()
+        }
       }
     }
 
-    if (currentStep === 3 || (currentStep === 2 && previousStep === 3)) {
+    if (
+      (currentStep === 3 && previousStep !== 3) ||
+      (currentStep === 2 && previousStep === 3)
+    ) {
       transition()
         .duration(2000)
         .tween('scale', tween)
     }
-  }, [currentStep, renderCanvas])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStep, renderCanvas, renderGateways])
 
   // useEffect(() => {
   //   let rotateInterval
@@ -181,7 +214,7 @@ function OrthographicWorld(props) {
         height={dimensions.height}
         ref={canvasRef}
       />
-      {/* <LogoWrapper>
+      <LogoWrapper style={animatedStyles}>
         <TTNLogo />
         <p>
           <span>
@@ -189,7 +222,7 @@ function OrthographicWorld(props) {
             gateways placed by the people
           </span>
         </p>
-      </LogoWrapper>*/}
+      </LogoWrapper>
     </Root>
   )
 }
