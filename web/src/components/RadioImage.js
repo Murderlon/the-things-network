@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
-import { hideText } from 'polished'
+import { hideText, rgba } from 'polished'
 
 import randomHash from '../helpers/generateRandomHash'
 import variables from '../styles/variables'
@@ -31,11 +31,12 @@ let Radio = styled('input')`
   }
 
   &:not(:checked) + label {
-    opacity: 0.3;
+    border: 5px solid ${variables.primaryBlue};
+    opacity: 0.5;
   }
 
   &:hover:not(:checked) + label {
-    opacity: 0.5;
+    opacity: 0.8;
   }
 `
 

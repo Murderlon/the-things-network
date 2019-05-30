@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="50px" viewBox="0 0 40 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-2" transform="translate(1.000000, 16.000000)" stroke="currentColor" stroke-width="0.999999975">
+            <path d="M2.38693327,15.0115196 L36.4535991,15.0115196" id="path54" transform="translate(19.420266, 15.011520) scale(-1, 1) rotate(-180.000000) translate(-19.420266, -15.011520) "></path>
+            <path d="M0.066666665,18.7021462 L0.066666665,11.970373" id="path56" transform="translate(0.066667, 15.336260) scale(-1, 1) rotate(-180.000000) translate(-0.066667, -15.336260) "></path>
+            <path d="M9.67559976,17.3688129 L9.67559976,13.3031863" id="path58" transform="translate(9.675600, 15.336000) scale(-1, 1) rotate(-180.000000) translate(-9.675600, -15.336000) "></path>
+            <path d="M28.8922659,17.3688129 L28.8922659,13.3031863" id="path60" transform="translate(28.892266, 15.336000) scale(-1, 1) rotate(-180.000000) translate(-28.892266, -15.336000) "></path>
+            <path d="M19.2838662,18.0354795 L19.2838662,12.6365197" id="path62" transform="translate(19.283866, 15.336000) scale(-1, 1) rotate(-180.000000) translate(-19.283866, -15.336000) "></path>
+            <path d="M38.5010657,18.7021462 L38.5010657,11.970373" id="path64" transform="translate(38.501066, 15.336260) scale(-1, 1) rotate(-180.000000) translate(-38.501066, -15.336260) "></path>
+            <polyline id="path66" transform="translate(8.534133, 4.190933) scale(-1, 1) rotate(-180.000000) translate(-8.534133, -4.190933) " points="7.45519981 5.3333332 9.61306643 7.49119981 9.61306643 0.890666644"></polyline>
+            <path d="M12.1879997,2.03493328 C12.1879997,0.910933311 13.0994663,7.10542736e-15 14.2239996,7.10542736e-15 C15.3483996,7.10542736e-15 16.2598663,0.910933311 16.2598663,2.03493328 L16.2598663,5.57239986 C16.2598663,6.69799983 15.3483996,7.60946648 14.2239996,7.60946648 C13.0994663,7.60946648 12.1879997,6.69799983 12.1879997,5.57239986 L12.1879997,2.03493328 Z" id="path68" transform="translate(14.223933, 3.804733) scale(-1, 1) rotate(-180.000000) translate(-14.223933, -3.804733) "></path>
+            <path d="M21.0155995,7.71773314 L21.0155995,0.168266662" id="path70" transform="translate(21.015599, 3.943000) scale(-1, 1) rotate(-180.000000) translate(-21.015599, -3.943000) "></path>
+            <path d="M21.0155995,0.168266662 L24.3401327,5.47146653" id="path72" transform="translate(22.677866, 2.819867) scale(-1, 1) rotate(-180.000000) translate(-22.677866, -2.819867) "></path>
+            <path d="M22.1838661,7.62759981 L24.3401327,3.94426657" id="path74" transform="translate(23.261999, 5.785933) scale(-1, 1) rotate(-180.000000) translate(-23.261999, -5.785933) "></path>
+            <polyline id="path76" transform="translate(29.335466, 4.024533) scale(-1, 1) rotate(-180.000000) translate(-29.335466, -4.024533) " points="27.018266 0.331333325 27.018266 7.71773314 29.1807993 4.75573321 31.6526659 7.62813314 31.6526659 0.331333325"></polyline>
+        </g>
+    </g>
+</svg>

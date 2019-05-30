@@ -44,7 +44,7 @@ class RadioGroup extends Component {
     let { options, selectedOption, onChange } = this.props
     return (
       <Wrapper onChange={onChange}>
-        {options.map(({ label, name, value, backgroundSrc }, i) => {
+        {options.map(({ label, name, value, backgroundSrc }) => {
           let id = `${this.randomId}_${value}`
           return (
             <Fragment key={value}>

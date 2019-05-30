@@ -1,6 +1,6 @@
-import cowImage from 'assets/cow-tracking.png'
-import weatherImage from 'assets/weather-station.jpg'
-import parkingImage from 'assets/parking-sensor.png'
+import cowImage from 'assets/cow.png'
+import weatherImage from 'assets/cloud.png'
+import parkingImage from 'assets/car.png'
 
 export default [
   {

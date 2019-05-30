@@ -6,9 +6,9 @@ import Link from 'components/Link'
 
 import CFLogo from 'assets/cf-logo.svg'
 import TTNLogo from 'assets/ttn-footer.svg'
-import Cog from 'assets/cog.svg'
-import Flag from 'assets/flag.svg'
-import Map from 'assets/maps-pin.svg'
+import coverage from 'assets/coverage.svg'
+import cloud from 'assets/cloud.svg'
+import wench from 'assets/wench.svg'
 
 import {
   Background,
@@ -19,9 +19,14 @@ import {
   Footer
 } from './YouAreTheNetwork.style.js'
 
-let Icon = styled(Cog)`
-  color: white;
-  width: 3em;
+let Icon = styled(wench)`
+  height: 6em;
+  width: auto;
+`
+
+let Coverage = styled(coverage)`
+  height: 6em;
+  width: auto;
 `
 
 export default () => (
@@ -40,7 +45,7 @@ export default () => (
     </Layout.ParentGrid>
     <Layout.ParentGrid as="section">
       <BlockLeft>
-        <Icon as={Map} />
+        <Coverage />
         <h4>Provide up to 10km of abundant connectivity yourself.</h4>
         <p>
           Small, easy to install router between the LoRa-enabeled things and the
@@ -65,7 +70,7 @@ export default () => (
         </Link>
       </BlockCenter>
       <BlockRight>
-        <Icon as={Flag} />
+        <Icon as={cloud} />
         <h4>Spread the word, share the knowledge.</h4>
         <p>
           The Things Network has a strong close knit communities present around
