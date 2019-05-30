@@ -16,11 +16,13 @@ import variables from 'styles/variables'
 import data from 'data/gateway-locations.json'
 import usePrevious from 'hooks/usePrevious'
 
+import POCGateways from '../../geoJSON/poc-gateways.json'
+
 import { Root, LogoWrapper, Canvas } from './OrthographicWorld.style'
 
 let projection = geoOrthographic()
 let land = topoJSON.feature(world, world.objects.countries)
-let points = [
+let focusPoints = [
   {
     type: 'Point',
     coordinates: [4.88969, 52.37403],
@@ -83,15 +85,49 @@ function OrthographicWorld(props) {
     context.stroke()
   }, [dimensions])
 
-  let renderGateways = useCallback(() => {
-    let context = canvasRef.current.getContext('2d')
-    let path = geoPath(projection, context)
+  let renderAllGateways = useCallback(
+    path => {
+      let context = canvasRef.current.getContext('2d')
 
-    context.beginPath()
-    path(data.geoJSON)
-    context.fillStyle = variables.green
-    context.fill()
-  }, [dimensions])
+      context.save()
+
+      context.beginPath()
+      path(data.geoJSON)
+      context.fillStyle = variables.green
+      context.shadowColor = variables.green
+      context.shadowBlur = 2
+      context.fill()
+
+      context.restore()
+    },
+    [dimensions]
+  )
+
+  let renderFirstGateways = useCallback(() => {
+    transition()
+      .duration(1000)
+      .tween('pointRadius', tween)
+
+    function tween() {
+      let context = canvasRef.current.getContext('2d')
+      let r = interpolate(0, 6)
+
+      return function(t) {
+        let path = geoPath(projection, context).pointRadius([r(t)])
+
+        context.save()
+
+        context.beginPath()
+        path(POCGateways)
+        context.fillStyle = variables.green
+        context.shadowColor = variables.green
+        context.shadowBlur = 10
+        context.fill()
+
+        context.restore()
+      }
+    }
+  }, [])
 
   useEffect(() => {
     handleResize()
@@ -105,7 +141,8 @@ function OrthographicWorld(props) {
   useEffect(() => {
     let { width, height } = dimensions
     let context = canvasRef.current.getContext('2d')
-    let [long, lat] = geoCentroid(points[0])
+    let [long, lat] = geoCentroid(focusPoints[0])
+    let path = geoPath(projection, context)
 
     projection
       .fitExtent([[1, 1], [width / 1.2, height / 1.2]], { type: 'Sphere' })
@@ -138,37 +175,47 @@ function OrthographicWorld(props) {
       .call(
         dragging().on('drag.render', () => {
           renderCanvas()
-          renderGateways()
+          renderAllGateways(path)
         })
       )
       .call(renderCanvas)
       .node()
-  }, [dimensions, renderCanvas, renderGateways])
+  }, [dimensions, renderCanvas, renderAllGateways])
 
   useEffect(() => {
-    if (currentStep > 0) {
-      renderGateways()
+    if (currentStep >= 1) {
+      renderFirstGateways()
     }
 
     if (currentStep === 0 && previousStep === 1) {
       renderCanvas()
     }
-  }, [currentStep, previousStep, renderGateways, renderCanvas])
+  }, [
+    currentStep,
+    previousStep,
+    renderFirstGateways,
+    renderAllGateways,
+    renderCanvas
+  ])
 
   useEffect(() => {
     function tween() {
       let animateIn = previousStep < currentStep
       let initialScale = projection.scale()
       let nextScale = animateIn ? initialScale / 5 : initialScale * 5
-      let [long, lat] = geoCentroid(points[animateIn ? 1 : 0])
+      let [long, lat] = geoCentroid(focusPoints[animateIn ? 1 : 0])
       let s = interpolate(initialScale, nextScale)
       let r = geoInterpolate(projection.rotate(), [-long, -lat])
+      let p = interpolate(animateIn ? 0 : 4, animateIn ? 4 : 0)
+      let context = canvasRef.current.getContext('2d')
 
       return function(t) {
+        let path = geoPath(projection, context).pointRadius([p(t)])
+
         projection.rotate(r(t)).scale(s(t))
         renderCanvas()
         if (currentStep > 0) {
-          renderGateways()
+          renderAllGateways(path)
         }
       }
     }
@@ -182,7 +229,7 @@ function OrthographicWorld(props) {
         .tween('scale', tween)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStep, renderCanvas, renderGateways])
+  }, [currentStep, renderCanvas, renderAllGateways])
 
   // useEffect(() => {
   //   let rotateInterval
