@@ -8,7 +8,6 @@ import background from 'assets/world.jpg'
 
 export let Background = styled(Layout.RootGrid)`
   position: relative;
-  min-height: 70vh;
   padding: ${variables.spacing.large} 0;
   margin-bottom: 0;
 
@@ -96,7 +95,7 @@ export let Footer = styled(Layout.ParentGrid)`
 
       svg {
         width: 70%;
-        max-width: 12em;
+        max-width: 16em;
         height: auto;
       }
     }

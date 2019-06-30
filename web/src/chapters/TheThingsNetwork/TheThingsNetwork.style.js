@@ -18,7 +18,7 @@ export let H2 = styled(Heading)`
   }
 
   &::after {
-    content: '0';
+    content: '2';
   }
 `
 

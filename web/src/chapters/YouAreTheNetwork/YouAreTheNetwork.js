@@ -31,9 +31,9 @@ let Coverage = styled(coverage)`
 
 export default () => (
   <Background>
-    <Layout.ParentGrid>
+    <Layout.ParentGrid css={{ margin: 0 }}>
       <Layout.SubGrid fullWidth>
-        <H2>You are the network</H2>
+        <H2 id="you-are-the-network">You are the network</H2>
         <p>
           We believe in enabling businesses and applications to{' '}
           <span className="highlight">flourish to their potential</span>, by
@@ -43,7 +43,7 @@ export default () => (
         </p>
       </Layout.SubGrid>
     </Layout.ParentGrid>
-    <Layout.ParentGrid as="section">
+    <Layout.ParentGrid as="section" css={{ 'margin-top': 0 }}>
       <BlockLeft>
         <Coverage />
         <h4>Provide up to 10km of abundant connectivity yourself.</h4>

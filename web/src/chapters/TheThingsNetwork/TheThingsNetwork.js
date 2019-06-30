@@ -62,7 +62,7 @@ export default class TheThingsNetwork extends Component {
 
     return (
       <ContentWrapper currentStep={currentStep} as="section" id="mapScroll">
-        <H2>The Things Network</H2>
+        <H2 id="the-things-network">The Things Network</H2>
         <LayoutWrapper>
           <MapGraphic className="mapGraphic">
             <Legend>
