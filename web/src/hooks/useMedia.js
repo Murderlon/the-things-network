@@ -1,33 +1,36 @@
 import { useState, useEffect } from 'react'
 
-export default function useMedia(queries, values, defaultValue) {
-  // Array containing a media query list for each query
-  const mediaQueryLists = queries.map(q => window.matchMedia(q))
+/**
+ * useMedia returns a boolean representing a CSS media query.
+ *
+ * @param  {String} mediaQuery CSS media query string
+ * @return {Boolean} Does the media query match?
+ */
+export default function useMedia(mediaQuery) {
+  const initialMatches = window.matchMedia(mediaQuery).matches
+  const [matches, setMatches] = useState(initialMatches)
 
-  // Function that gets value based on matching media query
-  const getValue = () => {
-    // Get index of first media query that matches
-    const index = mediaQueryLists.findIndex(mql => mql.matches)
+  useEffect(() => {
+    let active = true
+    // Create a MediaQueryList (https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList)
+    const mql = window.matchMedia(mediaQuery)
 
-    // Return related value or defaultValue if none
-    return typeof values[index] !== 'undefined' ? values[index] : defaultValue
-  }
+    // Create a listener that updates the state
+    const onchange = () => {
+      // Prevent updating an unmounted component
+      if (!active) return
+      // Set the state
+      setMatches(mql.matches)
+    }
 
-  // State and setter for matched value
-  const [value, setValue] = useState(getValue)
+    // Attach the listener to the MediaQueryList
+    mql.addListener(onchange)
 
-  useEffect(
-    () => {
-      // Event listener callback
-      // Note: By defining getValue outside of useEffect we ensure that it has ...
-      // ... current values of hook args (as this hook callback is created once on mount).
-      const handler = () => setValue(getValue)
-      // Set a listener for each media query with above handler as callback.
-      mediaQueryLists.forEach(mql => mql.addListener(handler))
-      // Remove listeners on cleanup
-      return () => mediaQueryLists.forEach(mql => mql.removeListener(handler))
-    },
-    [] // Empty array ensures effect is only run on mount and unmount
-  )
-  return value
+    return () => {
+      active = false
+      mql.removeListener(onchange)
+    }
+  }, [mediaQuery])
+
+  return matches
 }

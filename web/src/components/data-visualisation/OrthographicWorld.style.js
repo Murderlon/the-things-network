@@ -51,6 +51,9 @@ export let LogoWrapper = styled(animated.div)`
 export let Canvas = styled.canvas`
   display: inline-block;
   margin: 0 auto;
-  cursor: move;
   position: relative;
+
+  @media screen and (min-width: 60rem) {
+    cursor: move;
+  }
 `
