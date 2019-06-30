@@ -15,11 +15,15 @@ import TTNLogo from 'assets/ttn-logo.svg'
 import variables from 'styles/variables'
 import data from 'data/gateway-locations.json'
 import usePrevious from 'hooks/usePrevious'
-import useMedia from 'hooks/useMedia'
 
 import POCGateways from '../../geoJSON/poc-gateways.json'
 
 import { Root, LogoWrapper, Canvas } from './OrthographicWorld.style'
+
+let useMedia
+if (typeof window !== 'undefined') {
+  useMedia = require('hooks/useMedia')
+}
 
 let projection = geoOrthographic().scale(2300)
 let land = topoJSON.feature(world, world.objects.countries)
@@ -44,7 +48,7 @@ function OrthographicWorld(props) {
   let rootRef = useRef()
   let canvasRef = useRef()
   let previousStep = usePrevious(currentStep)
-  let isLargeScreen = useMedia('(min-width: 60rem)')
+  let isLargeScreen = useMedia && useMedia('(min-width: 60rem)')
   let animatedStyles = useSpring({
     to: {
       opacity: currentStep === 3 ? 1 : 0,
@@ -87,23 +91,20 @@ function OrthographicWorld(props) {
     context.stroke()
   }, [dimensions])
 
-  let renderAllGateways = useCallback(
-    path => {
-      let context = canvasRef.current.getContext('2d')
+  let renderAllGateways = useCallback(path => {
+    let context = canvasRef.current.getContext('2d')
 
-      context.save()
+    context.save()
 
-      context.beginPath()
-      path(data.geoJSON)
-      context.fillStyle = variables.green
-      context.shadowColor = variables.green
-      context.shadowBlur = 2
-      context.fill()
+    context.beginPath()
+    path(data.geoJSON)
+    context.fillStyle = variables.green
+    context.shadowColor = variables.green
+    context.shadowBlur = 2
+    context.fill()
 
-      context.restore()
-    },
-    []
-  )
+    context.restore()
+  }, [])
 
   let renderFirstGateways = useCallback(animateIn => {
     let context = canvasRef.current.getContext('2d')
