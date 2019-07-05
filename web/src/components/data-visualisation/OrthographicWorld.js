@@ -15,13 +15,12 @@ import TTNLogo from 'assets/ttn-logo.svg'
 import variables from 'styles/variables'
 import data from 'data/gateway-locations.json'
 import usePrevious from 'hooks/usePrevious'
-import useMedia from 'hooks/useMedia'
 
 import POCGateways from '../../geoJSON/poc-gateways.json'
 
 import { Root, LogoWrapper, Canvas } from './OrthographicWorld.style'
 
-let projection = geoOrthographic().scale(2300)
+let projection = geoOrthographic()
 let land = topoJSON.feature(world, world.objects.countries)
 let focusPoints = [
   {
@@ -44,7 +43,6 @@ function OrthographicWorld(props) {
   let rootRef = useRef()
   let canvasRef = useRef()
   let previousStep = usePrevious(currentStep)
-  let isLargeScreen = useMedia('(min-width: 60rem)')
   let animatedStyles = useSpring({
     to: {
       opacity: currentStep === 3 ? 1 : 0,
@@ -102,18 +100,18 @@ function OrthographicWorld(props) {
 
       context.restore()
     },
-    []
+    [dimensions]
   )
 
-  let renderFirstGateways = useCallback(animateIn => {
-    let context = canvasRef.current.getContext('2d')
-    let r = interpolate(animateIn ? 0 : 6, animateIn ? 6 : 0)
-
+  let renderFirstGateways = useCallback(() => {
     transition()
       .duration(1000)
       .tween('pointRadius', tween)
 
     function tween() {
+      let context = canvasRef.current.getContext('2d')
+      let r = interpolate(0, 6)
+
       return function(t) {
         let path = geoPath(projection, context).pointRadius([r(t)])
 
@@ -145,12 +143,12 @@ function OrthographicWorld(props) {
     let context = canvasRef.current.getContext('2d')
     let [long, lat] = geoCentroid(focusPoints[0])
     let path = geoPath(projection, context)
-    let canvas = select(context.canvas)
 
     projection
       .fitExtent([[1, 1], [width / 1.2, height / 1.2]], { type: 'Sphere' })
       .translate([width / 2, height / 2])
       .precision(1)
+      .scale(2300)
       .rotate([-long, -lat])
 
     function dragging() {
@@ -173,33 +171,38 @@ function OrthographicWorld(props) {
         .on('drag', dragged)
     }
 
-    canvas.call(renderCanvas).node()
-
-    if (isLargeScreen) {
-      canvas.call(
+    select(context.canvas)
+      .call(
         dragging().on('drag.render', () => {
           renderCanvas()
           renderAllGateways(path)
         })
       )
-    }
-  }, [dimensions, renderCanvas, renderAllGateways, isLargeScreen])
+      .call(renderCanvas)
+      .node()
+  }, [dimensions, renderCanvas, renderAllGateways])
 
   useEffect(() => {
-    if (currentStep === 1 && previousStep === 0) {
-      renderFirstGateways(true)
+    if (currentStep >= 1) {
+      renderFirstGateways()
     }
 
     if (currentStep === 0 && previousStep === 1) {
-      renderFirstGateways(false)
+      renderCanvas()
     }
-  }, [currentStep, previousStep, renderFirstGateways])
+  }, [
+    currentStep,
+    previousStep,
+    renderFirstGateways,
+    renderAllGateways,
+    renderCanvas
+  ])
 
   useEffect(() => {
     function tween() {
       let animateIn = previousStep < currentStep
-      let initialScale = animateIn ? 2300 : 460
-      let nextScale = animateIn ? 460 : 2300
+      let initialScale = projection.scale()
+      let nextScale = animateIn ? initialScale / 5 : initialScale * 5
       let [long, lat] = geoCentroid(focusPoints[animateIn ? 1 : 0])
       let s = interpolate(initialScale, nextScale)
       let r = geoInterpolate(projection.rotate(), [-long, -lat])
