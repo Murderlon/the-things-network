@@ -49,7 +49,7 @@
     "d3-transition": "^1.2.0",
     "d3-zoom": "^1.7.3",
     "date-fns": "^1.30.1",
-    "gatsby": "^2.3.25",
+    "gatsby": "^2.32.13",
     "gatsby-plugin-react-helmet": "^3.0.12",
     "gatsby-plugin-react-svg": "^2.1.1",
     "gatsby-plugin-styled-components": "^3.0.7",
